@@ -8,7 +8,7 @@ Dotfiles managed with gnu stow, a free, portable, lightweight symlink farm manag
 ## Install
 Clone onto your laptop:
 
-`git clone git://github.com/mpas/dotfiles.git ~/dotfiles`
+`git clone git://github.com/mpas/dotfiles.git ~/.dotfiles`
 
 ## Using
 After the dotfiles repo is checkout into your home folder navigate to one of the packages for example `vim`.
