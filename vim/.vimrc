@@ -178,6 +178,11 @@ set statusline+=%*
 " Markdown settings
 let g:vim_markdown_folding_disabled=1
 
+" Markdown preview settings
+let vim_markdown_preview_toggle=1
+let vim_markdown_preview_temp_file=1
+let vim_markdown_preview_browser='Google Chrome'
+
 " NerdTree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 " let NERDTreeQuitOnOpen = 1
@@ -187,5 +192,10 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_color_change_percent = 3
 let g:indent_guides_enable_on_vim_startup = 1
 
+" Vimwiki settings
+let g:vimwiki_list = [{'path': '$HOME/Dropbox/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
+
 " Enable close of buffer in VIM using c
 nnoremap c :bp\|bd #<CR>
+
+nnoremap <leader>n :e ~/Dropbox/notes
