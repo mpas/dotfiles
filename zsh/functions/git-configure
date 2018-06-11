@@ -1,0 +1,5 @@
+git_cfg() {
+    git config user.email ${1}
+    shift
+    git config user.name ${@}
+}

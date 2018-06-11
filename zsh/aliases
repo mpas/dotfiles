@@ -1,0 +1,80 @@
+# General
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias mkdir='mkdir -pv'
+alias ls="ls -Al"
+alias h=history
+alias e="$EDITOR"
+alias v="$VISUAL"
+alias eb='e ~/.zshrc'
+alias f='open -a Finder ./'
+alias c='clear'
+
+# Ssh
+alias compile-ssh-config='echo -n > ~/.ssh/config && cat ~/.ssh/*.config > ~/.ssh/config'
+alias ssh='compile-ssh-config && ssh'
+
+# Meld
+alias meld="/Applications/Meld.app/Contents/MacOS/Meld"
+
+# Sourcetree
+alias stree='open -a SourceTree'
+
+# Docker
+alias dc="docker-compose $1"
+alias drit="docker run -it --rm ${1} /bin/bash"
+alias dr="docker run ${1}"
+alias dp="docker system prune"
+
+# Git
+alias gs="git status"
+alias gac="git commit -am ${1}"
+alias gpl="git pull"
+alias gps="git push"
+alias gpsa="git push --all"
+alias gpst="git push --tags"
+alias gco="git checkout ${1}"
+alias gpo="git remote prune origin"
+
+# Groovy
+alias gconsole="groovyConsole"
+
+# Terraform
+alias tf="terraform"
+alias tfg="terraform get --update"
+alias tfp="terraform plan"
+alias tfa="terraform apply"
+
+# ECR Login
+alias ecr='eval "$(aws ecr get-login --no-include-email --region ${1})"'
+
+# CleanUp
+alias cleanupDS="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Process and Networking
+alias myip='curl ip.appspot.com'                    # myip:         Public facing IP Address
+alias netCons='lsof -i'                             # netCons:      Show all open TCP/IP sockets
+alias flushDNS='dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
+alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
+alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
+
+# Python 
+alias sv="source venv/bin/activate"
+
+# pip should only run if there is a virtualenv currently activated
+export PIP_REQUIRE_VIRTUALENV=true
+
+# create commands to override pip restriction.
+# use `gpip` or `gpip3` to force installation of
+# a package in the global python environment
+gpip(){
+   PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
+
+gpip3(){
+   PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
+}
+
+# Enable direnv into bash/zsh
+eval "$(direnv hook bash)"
+eval "$(direnv hook zsh)"

@@ -7,9 +7,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
-" Vimwiki
-Plugin 'vimwiki/vimwiki'
-
 " Asciidoc
 Plugin 'dagwieers/asciidoc-vim'
 
@@ -21,7 +18,7 @@ Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'plasticboy/vim-markdown'
 
 " Docker
-Plugin 'docker/docker'
+Plugin 'ekalinin/dockerfile.vim'
 
 " Git support
 Plugin 'tpope/vim-fugitive'
@@ -44,21 +41,9 @@ Plugin 'neomake/neomake'
 " Theme / Interface
 Plugin 'itchyny/lightline.vim'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'morhetz/gruvbox'
 
 " PlantUML
 Plugin 'aklt/plantuml-syntax'
-
-" Elixir Support
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'avdgaag/vim-phoenix'
-Plugin 'mmorearty/elixir-ctags'
-Plugin 'mattreduce/vim-mix'
-Plugin 'BjRo/vim-extest'
-Plugin 'frost/vim-eh-docs'
-Plugin 'slashmili/alchemist.vim'
-Plugin 'tpope/vim-endwise'
-Plugin 'jadercorrea/elixir_generator.vim'
 call vundle#end()
 
 filetype on                     " Enable file type detection
@@ -66,17 +51,14 @@ filetype plugin indent on       " Allow intelligent auto-indenting for each file
 
 " Appearance options
 colorscheme default
-set bg=dark
-syntax enable
-syntax sync fromstart
 
 " Identation & Tab setting
 set tabstop=2                   " number of visual spaces per TAB
 set shiftwidth=2                " soft space = 2
-set smarttab
 set expandtab                   " tabs are spaces
+set smarttab
 set smartindent
-
+set autoindent
 set softtabstop=2               " let backspace delete indent
 set nowrap                      " wrap long lines
 
@@ -86,37 +68,35 @@ set hlsearch                    " highlight matches
 set ignorecase                  " ignore case when searching
 set smartcase                   " enable smartcase
 set showmatch                   " highlight matching [{()}<<<<<<]
-nmap <Leader>c :let@/=''<cr>    " clear search using <Leader>c
-nnoremap / /\v
-vnoremap / /\v
 
+hi MatchParen cterm=bold ctermbg=none ctermfg=magenta   " set colors for matching braces
 set mouse=a                     " Enable mouse integration
 set backspace=indent,eol,start  " Let backspace work normal everywhere
 set clipboard=unnamed           " Enable integration with system clipboard
-set modelines=0                 " Security
 set number                      " Show line numbers
 set relativenumber              " Show relative linenumbers
 set ruler                       " Show file stats
 set encoding=utf-8              " Encoding
 set fileencoding=utf-8          " Encoding
-set ttyfast                     " Rendering
 set cursorline                  " highlight current line
 set wildmenu                    " visual autocomplete for command menu
-set wrap                        " Line wrapping on by default
-set linebreak
-set scrolloff=5
 set nobackup
+set nowritebackup
 set noswapfile
-set history=1000                " remember more commands and search history
+set history=50                  " remember more commands and search history
 set undolevels=1000             " use many muchos levels of undo
 set wildignore=*.swp,*.bak,*.pyc,*.class
-set title                       " change the terminal's title
 set visualbell                  " don't beep
 set noerrorbells                " don't beep
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:.
 set hidden                      " Allow to create a new buffer and change to new one without the need to save it
+set showcmd                     " display incomplete commands
+set laststatus=2                " Always display the status line
+set nojoinspaces                " Use one space, not two, after punctuation
 let mapleader = "\<Space>"      " Set space as leader
+set textwidth=80                " Make it obvious where 80 characters is
+set colorcolumn=+1
 
 " ----------------------------------------------------------------------
 " Key mappings
@@ -126,21 +106,7 @@ nnoremap <Leader>w :w<CR>       " Save using <Leader>w
 
 nmap <silent> <leader>ev :e $MYVIMRC<CR>    " edit vimrc
 nmap <silent> <leader>sv :so $MYVIMRC<CR>   " save vimrc
-nmap <silent> <Leader>eb :e ~/.zshrc<CR>    " edit .zshr
-
-" Copy and paste to system clipboard using <Leader>p and <Leader>y
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
-
-" Formatting
-vmap Q gq                       " Format the current paragraph
-nmap Q gqap                     " Format the current paragraph
-nnoremap j gj
-nnoremap k gk
+nmap <silent> <Leader>eb :e ~/.zshrc<CR>    " edit .zshrc
 
 " Line movement
 nnoremap <C-j> :m .+1<CR>==
@@ -158,7 +124,14 @@ nnoremap <Tab> :bnext<CR>       " Use <TAB> to change to next buffer
 nnoremap <S-Tab> :bprevious<CR> " Use <TAB> to change to previous buffer
 nnoremap <C-X> :bdelete<CR>     " use <Ctrl-X> to delete the current buffer
 
-nmap <silent> <leader>ch :exec 'silent !open -a "Google Chrome" % &'
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Enable close of buffer in VIM using c
+nnoremap c :bp\|bd #<CR>
 
 " ----------------------------------------------------------------------
 " Plugin settings
@@ -175,27 +148,18 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-" Markdown settings
-let g:vim_markdown_folding_disabled=1
-
 " Markdown preview settings
 let vim_markdown_preview_toggle=1
 let vim_markdown_preview_temp_file=1
 let vim_markdown_preview_browser='Google Chrome'
+let g:vim_markdown_folding_disabled=1
 
 " NerdTree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 " let NERDTreeQuitOnOpen = 1
 
 " vim-indent-guides
+let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_color_change_percent = 3
-let g:indent_guides_enable_on_vim_startup = 1
 
-" Vimwiki settings
-let g:vimwiki_list = [{'path': '$HOME/Dropbox/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
-
-" Enable close of buffer in VIM using c
-nnoremap c :bp\|bd #<CR>
-
-nnoremap <leader>n :e ~/Dropbox/notes
