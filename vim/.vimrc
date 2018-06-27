@@ -16,6 +16,7 @@ Plugin 'hashivim/vim-terraform'
 " Markdown
 Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'godlygeek/tabular'
 
 " Docker
 Plugin 'ekalinin/dockerfile.vim'
@@ -48,19 +49,21 @@ call vundle#end()
 
 filetype on                     " Enable file type detection
 filetype plugin indent on       " Allow intelligent auto-indenting for each filetype and plugin
+set autoread                    " Reload file when it has changed
+au CursorHold * checktime
 
 " Appearance options
 colorscheme default
 
 " Identation & Tab setting
-set tabstop=2                   " number of visual spaces per TAB
-set shiftwidth=2                " soft space = 2
+set tabstop=4                   " number of visual spaces per TAB
+set shiftwidth=4                " soft space = 2
 set expandtab                   " tabs are spaces
 set smarttab
 set smartindent
 set autoindent
-set softtabstop=2               " let backspace delete indent
-set nowrap                      " wrap long lines
+set softtabstop=4               " let backspace delete indent
+" set nowrap                      " wrap long lines
 
 " Search settings
 set incsearch                   " search as characters are entered
@@ -124,12 +127,6 @@ nnoremap <Tab> :bnext<CR>       " Use <TAB> to change to next buffer
 nnoremap <S-Tab> :bprevious<CR> " Use <TAB> to change to previous buffer
 nnoremap <C-X> :bdelete<CR>     " use <Ctrl-X> to delete the current buffer
 
-" Quicker window movement
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
-
 " Enable close of buffer in VIM using c
 nnoremap c :bp\|bd #<CR>
 
@@ -156,7 +153,7 @@ let g:vim_markdown_folding_disabled=1
 
 " NerdTree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
-" let NERDTreeQuitOnOpen = 1
+let g:NERDTreeChDirMode = 2
 
 " vim-indent-guides
 let g:indent_guides_enable_on_vim_startup = 1
