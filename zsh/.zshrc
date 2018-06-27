@@ -25,12 +25,3 @@ for f in ~/dotfiles-local/*; do source $f; done
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/$USER/.sdkman"
 [[ -s "/Users/$USER/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/$USER/.sdkman/bin/sdkman-init.sh"
-
-# # Development settings
-# export DEV_RESOURCE_HOME=/Users/$USER/Development/resources
-# export DEV_RESOURCE_LIB=$DEV_RESOURCE_HOME/libraries
-
-# # PATH settings
-# PATH=$PATH:/usr/local/sbin:/usr/local/bin:$MAVEN_HOME/bin:$JAVA_HOME/bin:/usr/local/go/bin:$GOPATH/bin:$CONSUL_HOME:$ELIXIR_HOME/bin
-
-# export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

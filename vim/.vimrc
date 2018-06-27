@@ -63,7 +63,7 @@ set smarttab
 set smartindent
 set autoindent
 set softtabstop=4               " let backspace delete indent
-" set nowrap                      " wrap long lines
+set nowrap                      " wrap long lines
 
 " Search settings
 set incsearch                   " search as characters are entered
@@ -98,7 +98,7 @@ set showcmd                     " display incomplete commands
 set laststatus=2                " Always display the status line
 set nojoinspaces                " Use one space, not two, after punctuation
 let mapleader = "\<Space>"      " Set space as leader
-set textwidth=80                " Make it obvious where 80 characters is
+set textwidth=120               " Make it obvious where 120 characters is
 set colorcolumn=+1
 
 " ----------------------------------------------------------------------
