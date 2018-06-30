@@ -29,8 +29,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'Shougo/neocomplete.vim'
-Plugin 'irrationalistic/vim-tasks'
-Plugin 'easymotion/vim-easymotion'
+Plugin 'vimwiki'
 
 " Generic Programming Support
 Plugin 'scrooloose/syntastic'
@@ -48,16 +47,20 @@ Plugin 'aklt/plantuml-syntax'
 call vundle#end()
 
 filetype on                     " Enable file type detection
+syntax on                       " Enable syntac highlight
 filetype plugin indent on       " Allow intelligent auto-indenting for each filetype and plugin
 set autoread                    " Reload file when it has changed
 au CursorHold * checktime
 
 " Appearance options
-colorscheme default
+" colorscheme default
+colorscheme desert
+au InsertLeave * colorscheme darkblue
+au InsertEnter * colorscheme elflord
 
 " Identation & Tab setting
 set tabstop=4                   " number of visual spaces per TAB
-set shiftwidth=4                " soft space = 2
+set shiftwidth=4                " soft space = 4
 set expandtab                   " tabs are spaces
 set smarttab
 set smartindent
@@ -160,3 +163,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_color_change_percent = 3
 
+" Vimwiki
+let g:vimwiki_global_ext=0
+let g:vimwiki_root = '~/Dropbox/vimwiki'
+let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]

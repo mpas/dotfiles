@@ -22,6 +22,8 @@ for f in ~/.dotfiles/zsh/functions/*; do source $f; done
 # Override and/or add custom aliasses/functions
 for f in ~/dotfiles-local/*; do source $f; done
 
+export PATH="/usr/local/sbin:$PATH"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/$USER/.sdkman"
 [[ -s "/Users/$USER/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/$USER/.sdkman/bin/sdkman-init.sh"
