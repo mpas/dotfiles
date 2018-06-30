@@ -14,7 +14,6 @@ Plugin 'dagwieers/asciidoc-vim'
 Plugin 'hashivim/vim-terraform'
 
 " Markdown
-Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'godlygeek/tabular'
 
@@ -35,12 +34,14 @@ Plugin 'vimwiki'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-surround'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'tomtom/tcomment_vim'
-Plugin 'neomake/neomake'
+Plugin 'majutsushi/tagbar'
 
 " Theme / Interface
-Plugin 'itchyny/lightline.vim'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 " PlantUML
 Plugin 'aklt/plantuml-syntax'
@@ -53,10 +54,7 @@ set autoread                    " Reload file when it has changed
 au CursorHold * checktime
 
 " Appearance options
-" colorscheme default
-colorscheme desert
-au InsertLeave * colorscheme darkblue
-au InsertEnter * colorscheme elflord
+colorscheme default
 
 " Identation & Tab setting
 set tabstop=4                   " number of visual spaces per TAB
@@ -133,7 +131,7 @@ nnoremap <C-X> :bdelete<CR>     " use <Ctrl-X> to delete the current buffer
 " Enable close of buffer in VIM using c
 nnoremap c :bp\|bd #<CR>
 
-" ----------------------------------------------------------------------
+"-----------------------------------------------------------------------
 " Plugin settings
 " ----------------------------------------------------------------------
 " NeoComplete
@@ -148,12 +146,6 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-" Markdown preview settings
-let vim_markdown_preview_toggle=1
-let vim_markdown_preview_temp_file=1
-let vim_markdown_preview_browser='Google Chrome'
-let g:vim_markdown_folding_disabled=1
-
 " NerdTree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 let g:NERDTreeChDirMode = 2
@@ -162,6 +154,9 @@ let g:NERDTreeChDirMode = 2
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_color_change_percent = 3
+
+" Vim Airline
+" let g:airline#extensions#tabline#enabled = 1
 
 " Vimwiki
 let g:vimwiki_global_ext=0
