@@ -35,6 +35,7 @@ alias gpsa="git push --all"
 alias gpst="git push --tags"
 alias gco="git checkout ${1}"
 alias gpo="git remote prune origin"
+alias gpod="git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done"
 
 # Groovy
 alias gconsole="groovyConsole"
