@@ -27,6 +27,7 @@ alias dr="docker run ${1}"
 alias dp="docker system prune"
 
 # Git
+alias gf="git fetch"
 alias gs="git status"
 alias gac="git commit -am ${1}"
 alias gpl="git pull"
