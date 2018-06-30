@@ -1,57 +1,52 @@
-set nocompatible                " Don't try to be vi compatible
-filetype off                    " Helps force plugins to load correctly when it is turned back on below
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" Install plugins usinf Vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-
+call plug#begin('~/.vim/plugged')
 " Asciidoc
-Plugin 'dagwieers/asciidoc-vim'
+Plug 'dagwieers/asciidoc-vim'
 
 " Terraform
-Plugin 'hashivim/vim-terraform'
-
-" Markdown
-Plugin 'plasticboy/vim-markdown'
-Plugin 'godlygeek/tabular'
+Plug 'hashivim/vim-terraform'
 
 " Docker
-Plugin 'ekalinin/dockerfile.vim'
+Plug 'ekalinin/dockerfile.vim'
 
 " Git support
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 " Utility
-Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'vimwiki'
+Plug 'scrooloose/nerdtree'
+Plug 'kien/ctrlp.vim'
+Plug 'Shougo/neocomplete.vim'
+Plug 'plasticboy/vim-markdown'
+Plug 'vimwiki/vimwiki'
 
 " Generic Programming Support
-Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-surround'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'majutsushi/tagbar'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-surround'
+Plug 'sheerun/vim-polyglot'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tomtom/tcomment_vim'
+Plug 'majutsushi/tagbar'
 
 " Theme / Interface
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " PlantUML
-Plugin 'aklt/plantuml-syntax'
-call vundle#end()
+Plug 'aklt/plantuml-syntax'
+call plug#end()
 
 filetype on                     " Enable file type detection
 syntax on                       " Enable syntac highlight
-filetype plugin indent on       " Allow intelligent auto-indenting for each filetype and plugin
+filetype plugin on
 set autoread                    " Reload file when it has changed
-au CursorHold * checktime
+" au CursorHold * checktime
 
 " Appearance options
 colorscheme default
@@ -105,6 +100,12 @@ set colorcolumn=+1
 " ----------------------------------------------------------------------
 " Key mappings
 " ----------------------------------------------------------------------
+nnoremap <F5> "=strftime("%a %y-%m-%d")<CR>P
+inoremap <F5> <C-R>=strftime("%a %y-%m-%d")<CR>
+
+nnoremap <F6> "=strftime("%H:%M:%S")<CR>P
+inoremap <F6> <C-R>=strftime("%H:%M:%S")<CR>
+
 nnoremap <Leader>o :CtrlP<CR>   " Open CtrlP using <Leader>
 nnoremap <Leader>w :w<CR>       " Save using <Leader>w
 
@@ -150,15 +151,25 @@ set statusline+=%*
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 let g:NERDTreeChDirMode = 2
 
+" NerdCommenter
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDToggleCheckAllLines = 1
+
 " vim-indent-guides
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_color_change_percent = 3
 
 " Vim Airline
-" let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 
 " Vimwiki
 let g:vimwiki_global_ext=0
 let g:vimwiki_root = '~/Dropbox/vimwiki'
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
+"
+" " Vim Markdown
+let g:vim_markdown_folding_disabled = 1
