@@ -5,6 +5,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
+
 " Asciidoc
 Plug 'dagwieers/asciidoc-vim'
 
@@ -20,18 +21,22 @@ Plug 'airblade/vim-gitgutter'
 
 " Utility
 Plug 'scrooloose/nerdtree'
-Plug 'kien/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'Shougo/neocomplete.vim'
 Plug 'plasticboy/vim-markdown'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'vimwiki/vimwiki'
 
 " Generic Programming Support
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-surround'
 Plug 'sheerun/vim-polyglot'
-Plug 'scrooloose/nerdcommenter'
 Plug 'tomtom/tcomment_vim'
 Plug 'majutsushi/tagbar'
+Plug 'mattn/emmet-vim'
+Plug 'w0rp/ale'
+Plug 'terryma/vim-multiple-cursors'
 
 " Theme / Interface
 Plug 'nathanaelkane/vim-indent-guides'
@@ -40,6 +45,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 " PlantUML
 Plug 'aklt/plantuml-syntax'
+
 call plug#end()
 
 filetype on                     " Enable file type detection
@@ -100,6 +106,8 @@ set colorcolumn=+1
 " ----------------------------------------------------------------------
 " Key mappings
 " ----------------------------------------------------------------------
+map ; :Files<CR>
+
 nnoremap <F5> "=strftime("%a %y-%m-%d")<CR>P
 inoremap <F5> <C-R>=strftime("%a %y-%m-%d")<CR>
 
