@@ -12,24 +12,25 @@ Plug 'dagwieers/asciidoc-vim'
 " Terraform
 Plug 'hashivim/vim-terraform'
 
-" Docker
-Plug 'ekalinin/dockerfile.vim'
-
-" Git support
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-
 " Utility
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Shougo/neocomplete.vim'
-Plug 'plasticboy/vim-markdown'
 Plug 'editorconfig/editorconfig-vim'
+
+" Markdown
+Plug 'plasticboy/vim-markdown'
+
+" PlantUML
+Plug 'aklt/plantuml-syntax'
+
+" Vimwiki
 Plug 'vimwiki/vimwiki'
 
 " Generic Programming Support
-Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'sheerun/vim-polyglot'
 Plug 'tomtom/tcomment_vim'
@@ -42,9 +43,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
-" PlantUML
-Plug 'aklt/plantuml-syntax'
+Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
 
@@ -52,10 +51,11 @@ filetype on                     " Enable file type detection
 syntax on                       " Enable syntac highlight
 filetype plugin on
 set autoread                    " Reload file when it has changed
-" au CursorHold * checktime
+au CursorHold * checktime
 
 " Appearance options
-colorscheme default
+set termguicolors
+colorscheme jellybeans
 
 " Identation & Tab setting
 set tabstop=4                   " number of visual spaces per TAB
@@ -72,7 +72,8 @@ set incsearch                   " search as characters are entered
 set hlsearch                    " highlight matches
 set ignorecase                  " ignore case when searching
 set smartcase                   " enable smartcase
-set showmatch                   " highlight matching [{()}<<<<<<]
+" set showmatch                   " highlight matching [{()}<<<<<<]
+set noshowmatch                 " Don't match parentheses/brackets
 
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta   " set colors for matching braces
 set mouse=a                     " Enable mouse integration
@@ -83,7 +84,10 @@ set relativenumber              " Show relative linenumbers
 set ruler                       " Show file stats
 set encoding=utf-8              " Encoding
 set fileencoding=utf-8          " Encoding
-set cursorline                  " highlight current line
+" set cursorline                  " highlight current line
+set nocursorline                " Don't paint cursor line
+set nocursorcolumn              " Don't paint cursor column
+
 set wildmenu                    " visual autocomplete for command menu
 set nobackup
 set nowritebackup
@@ -146,25 +150,9 @@ nnoremap c :bp\|bd #<CR>
 " NeoComplete
 let g:neocomplete#enable_at_startup = 1
 
-" Syntastic settings
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
 " NerdTree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 let g:NERDTreeChDirMode = 2
-
-" NerdCommenter
-let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
-let g:NERDCommentEmptyLines = 1
-let g:NERDTrimTrailingWhitespace = 1
-let g:NERDToggleCheckAllLines = 1
 
 " vim-indent-guides
 let g:indent_guides_enable_on_vim_startup = 1
@@ -181,3 +169,12 @@ let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki', 'syntax': 'markdown', 'ext':
 "
 " " Vim Markdown
 let g:vim_markdown_folding_disabled = 1
+
+" ALE (Asynchronous Lint Engine)
+let g:ale_completion_enabled = 1
+let g:ale_fix_on_save = 1
+
+" Terraform settings
+let g:terraform_align=1                                     " Align to community standards
+autocmd FileType terraform setlocal commentstring=#%s       " Commentary settings
+let g:terraform_fmt_on_save = 1                             " Terraform format on save
