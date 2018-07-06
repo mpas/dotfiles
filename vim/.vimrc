@@ -16,7 +16,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'Shougo/neocomplete.vim'
+" Plug 'Shougo/neocomplete.vim'
 Plug 'editorconfig/editorconfig-vim'
 
 " Markdown
@@ -38,6 +38,7 @@ Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
 Plug 'w0rp/ale'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'ervandew/supertab'
 
 " Theme / Interface
 Plug 'nathanaelkane/vim-indent-guides'
@@ -118,7 +119,6 @@ inoremap <F5> <C-R>=strftime("%a %y-%m-%d")<CR>
 nnoremap <F6> "=strftime("%H:%M:%S")<CR>P
 inoremap <F6> <C-R>=strftime("%H:%M:%S")<CR>
 
-nnoremap <Leader>o :CtrlP<CR>   " Open CtrlP using <Leader>
 nnoremap <Leader>w :w<CR>       " Save using <Leader>w
 
 nmap <silent> <leader>ev :e $MYVIMRC<CR>    " edit vimrc
@@ -148,7 +148,7 @@ nnoremap c :bp\|bd #<CR>
 " Plugin settings
 " ----------------------------------------------------------------------
 " NeoComplete
-let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#enable_at_startup = 1
 
 " NerdTree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
