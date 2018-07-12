@@ -66,14 +66,13 @@ set smarttab
 set smartindent
 set autoindent
 set softtabstop=4               " let backspace delete indent
-set nowrap                      " wrap long lines
+set wrap                        " wrap long lines
 
 " Search settings
 set incsearch                   " search as characters are entered
 set hlsearch                    " highlight matches
 set ignorecase                  " ignore case when searching
 set smartcase                   " enable smartcase
-" set showmatch                   " highlight matching [{()}<<<<<<]
 set noshowmatch                 " Don't match parentheses/brackets
 
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta   " set colors for matching braces
