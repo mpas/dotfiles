@@ -52,6 +52,7 @@ Plug 'mhinz/vim-mix-format'
 let g:mix_format_on_save = 1
 
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'benmills/vimux'
 call plug#end()
 
 filetype on                     " Enable file type detection
@@ -152,9 +153,6 @@ nnoremap c :bp\|bd #<CR>
 "-----------------------------------------------------------------------
 " Plugin settings
 " ----------------------------------------------------------------------
-" NeoComplete
-" let g:neocomplete#enable_at_startup = 1
-
 " NerdTree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 let g:NERDTreeChDirMode = 2
@@ -183,3 +181,10 @@ let g:ale_fix_on_save = 1
 let g:terraform_align=1                                     " Align to community standards
 autocmd FileType terraform setlocal commentstring=#%s       " Commentary settings
 let g:terraform_fmt_on_save = 1                             " Terraform format on save
+
+" Vimux
+" Prompt for a command to run
+map <Leader>vp :VimuxPromptCommand<CR>
+
+" Run last command executed by VimuxRunCommand
+map <Leader>vl :VimuxRunLastCommand<CR>
