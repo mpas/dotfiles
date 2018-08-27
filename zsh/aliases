@@ -62,7 +62,7 @@ alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open
 alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
 
 # Brew update
-alias brew-update='brew update && brew upgrade && brew cleanup && brew cask update && brew cask cleanup'
+alias brew-update='brew update && brew upgrade && brew cleanup'
 
 # Python 
 alias sv="source venv/bin/activate"
