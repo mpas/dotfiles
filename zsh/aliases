@@ -11,7 +11,7 @@ alias f='open -a Finder ./'
 alias c='clear'
 
 # Ssh
-alias compile-ssh-config='echo -n > ~/.ssh/config && cat ~/.ssh/*.config > ~/.ssh/config'
+alias compile-ssh-config='echo -n > ~/.ssh/config && cat ~/.ssh/ssh-configs/*.config > ~/.ssh/config'
 alias ssh='compile-ssh-config && ssh'
 
 # Meld
@@ -38,7 +38,6 @@ alias gco="git checkout ${1}"
 alias gpo="git remote prune origin"
 alias git_cfg_philips='git_cfg "marco.pas@philips.com" "Marco Pas"'
 alias git_cfg_google='git_cfg "marco.pasopas@gmail.com" "Marco Pas"'
-#alias gpod="git fetch -p && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done"
 
 # Groovy
 alias gconsole="groovyConsole"
@@ -61,6 +60,9 @@ alias netCons='lsof -i'                             # netCons:      Show all ope
 alias flushDNS='dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
 alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
 alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
+
+# Brew update
+alias brew-update='brew update && brew upgrade && brew cleanup && brew cask update && brew cask cleanup'
 
 # Python 
 alias sv="source venv/bin/activate"

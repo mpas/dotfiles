@@ -16,8 +16,8 @@ Plug 'hashivim/vim-terraform'
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" Plug 'Shougo/neocomplete.vim'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'godlygeek/tabular'
 
 " Markdown
 Plug 'plasticboy/vim-markdown'
@@ -46,6 +46,12 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'nanotech/jellybeans.vim'
 
+" Elixir
+Plug 'elixir-lang/vim-elixir'
+Plug 'mhinz/vim-mix-format'
+let g:mix_format_on_save = 1
+
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 filetype on                     " Enable file type detection
