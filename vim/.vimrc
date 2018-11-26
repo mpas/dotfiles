@@ -44,9 +44,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'nanotech/jellybeans.vim'
-Plug 'morhetz/gruvbox'
-Plug 'drewtempelmeyer/palenight.vim'
+Plug 'NLKNguyen/papercolor-theme'
 
 " Elixir
 Plug 'elixir-lang/vim-elixir'
@@ -126,8 +124,8 @@ set noshowmatch                 " Don't match parentheses/brackets
 
 " Theme and Styling
 set termguicolors
-let g:gruvbox_contrast_dark = 'dark'
-colorscheme gruvbox
+colorscheme PaperColor
+set background=dark " for the dark version
 
 " ----------------------------------------------------------------------
 " Key mappings
@@ -181,6 +179,7 @@ let g:indent_guides_color_change_percent = 3
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline_section_b = '%{strftime("%H:%M")}'
+let g:airline_theme='papercolor'
 
 " Vimwiki
 let g:vimwiki_global_ext=0
