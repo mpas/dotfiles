@@ -1,3 +1,3 @@
-my_ps() { 
+my-ps() { 
     ps $@ -u $USER -o pid,%cpu,%mem,start,time,bsdtime,command ; 
 }

@@ -1,4 +1,5 @@
-git_delete() {
+# This function deletes all local branches that are gone on the remote
+git-delete() {
     git fetch -p 
     for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`
     do 

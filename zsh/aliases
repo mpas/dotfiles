@@ -28,6 +28,8 @@ alias dp="docker system prune"
 
 # Git
 alias gf="git fetch"
+alias gcl="git clean -xdn"
+alias gclf="git clean -xdf"
 alias gs="git status"
 alias gac="git commit -am ${1}"
 alias gpl="git pull"
@@ -36,8 +38,8 @@ alias gpsa="git push --all"
 alias gpst="git push --tags"
 alias gco="git checkout ${1}"
 alias gpo="git remote prune origin"
-alias git_cfg_philips='git_cfg "marco.pas@philips.com" "Marco Pas"'
-alias git_cfg_google='git_cfg "marco.pasopas@gmail.com" "Marco Pas"'
+alias git-cfg-philips='git-cfg "marco.pas@philips.com" "Marco Pas"'
+alias git-cfg-google='git-cfg "marco.pasopas@gmail.com" "Marco Pas"'
 
 # Groovy
 alias gconsole="groovyConsole"
@@ -62,25 +64,12 @@ alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open
 alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
 
 # Brew update
-alias brew-update='brew update && brew upgrade && brew cleanup'
-
-# Python 
-alias sv="source venv/bin/activate"
-
-# pip should only run if there is a virtualenv currently activated
-export PIP_REQUIRE_VIRTUALENV=true
-
-# create commands to override pip restriction.
-# use `gpip` or `gpip3` to force installation of
-# a package in the global python environment
-gpip(){
-   PIP_REQUIRE_VIRTUALENV="" pip "$@"
-}
-
-gpip3(){
-   PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
-}
+alias brew-update='brew update && brew upgrade && brew cask upgrade && brew cleanup'
 
 # Enable direnv into bash/zsh
 eval "$(direnv hook bash)"
 eval "$(direnv hook zsh)"
+
+# VimWiki / maps to todo
+alias t='vim ~/Dropbox/vimwiki/todo.md'
+alias w='vim -c VimwikiIndex'

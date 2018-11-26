@@ -1,4 +1,4 @@
-git_cfg() {
+git-cfg() {
     git config user.email ${1}
     shift
     git config user.name ${@}

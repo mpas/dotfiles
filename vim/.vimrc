@@ -6,20 +6,32 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-" Asciidoc
-Plug 'dagwieers/asciidoc-vim'
+" Utility
+Plug 'scrooloose/nerdtree'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'editorconfig/editorconfig-vim'
+Plug 'majutsushi/tagbar'
+Plug 'benmills/vimux'
+Plug 'gilsondev/searchtasks.vim'
+Plug 'godlygeek/tabular'
+Plug 'LanguageTool'
+
+" Generic Programming Support
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-surround'
+Plug 'sheerun/vim-polyglot'
+Plug 'tomtom/tcomment_vim'
+Plug 'mattn/emmet-vim'
+Plug 'w0rp/ale'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'ervandew/supertab'
+Plug 'Townk/vim-autoclose'
 
 " Terraform
 Plug 'hashivim/vim-terraform'
 
-" Utility
-Plug 'scrooloose/nerdtree'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'godlygeek/tabular'
-
-" Markdown
+" Markdown / writing
 Plug 'plasticboy/vim-markdown'
 
 " PlantUML
@@ -28,52 +40,82 @@ Plug 'aklt/plantuml-syntax'
 " Vimwiki
 Plug 'vimwiki/vimwiki'
 
-" Generic Programming Support
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-surround'
-Plug 'sheerun/vim-polyglot'
-Plug 'tomtom/tcomment_vim'
-Plug 'majutsushi/tagbar'
-Plug 'mattn/emmet-vim'
-Plug 'w0rp/ale'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'ervandew/supertab'
-
 " Theme / Interface
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'nanotech/jellybeans.vim'
+Plug 'morhetz/gruvbox'
+Plug 'drewtempelmeyer/palenight.vim'
 
 " Elixir
 Plug 'elixir-lang/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 let g:mix_format_on_save = 1
 
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'benmills/vimux'
+" Ruby
+Plug 'vim-ruby/vim-ruby'
+
 call plug#end()
 
-filetype on                     " Enable file type detection
-syntax on                       " Enable syntac highlight
+"""""""""""""""""""""""""""""""""""""
+" Configuration Section
+"""""""""""""""""""""""""""""""""""""
+
+" Generic Settings
+filetype on                     " enable file type detection
+syntax on                       " enable syntac highlight
 filetype plugin on
-set autoread                    " Reload file when it has changed
+set visualbell                  " don't beep
+set noerrorbells                " don't beep
+hi MatchParen cterm=bold ctermbg=none ctermfg=magenta   " set colors for matching braces
+set mouse=a                     " Enable mouse integration
+set backspace=indent,eol,start  " Let backspace work normal everywhere
+set clipboard=unnamed           " Enable integration with system clipboard
+set encoding=utf-8              " Encoding
+set fileencoding=utf-8          " Encoding
+set wildmenu                    " visual autocomplete for command menu
+set nobackup
+set nowritebackup
+set noswapfile
+set nofoldenable                " disable folding
+set history=50                  " remember more commands and search history
+set undolevels=1000             " use many muchos levels of undo
+set wildignore=*.swp,*.bak,*.pyc,*.class
+set hidden                      " Allow to create a new buffer and change to new one without the need to save it
+set showcmd                     " display incomplete commands
+set laststatus=2                " Always display the status line
+set nojoinspaces                " Use one space, not two, after punctuation
+let mapleader = "\<Space>"      " Set space as leader
+
+" Line numbers
+set number                      " show line numbers
+set relativenumber              " show relative linenumbers
+set ruler                       " show file stats
+set cursorline                  " enable highlighting of the current line
+
+" Auto reload file when changed
+set autoread                    " reload file when it has changed
 au CursorHold * checktime
 
-" Appearance options
-set termguicolors
-colorscheme jellybeans
-
 " Identation & Tab setting
+set autoindent
+set expandtab                   " tabs are spaces
 set tabstop=4                   " number of visual spaces per TAB
 set shiftwidth=4                " soft space = 4
-set expandtab                   " tabs are spaces
-set smarttab
+set smarttab                    " insert tabstop number of spaces when TAB is pressed
 set smartindent
-set autoindent
 set softtabstop=4               " let backspace delete indent
+
+" Line breaking and formatting
+set textwidth=120
+set columns=120
+set colorcolumn=121
+set linebreak
+set list                        " list disables linebreak
+set listchars=tab:>.,trail:.,extends:#,nbsp:.
 set wrap                        " wrap long lines
+set showbreak=...
 
 " Search settings
 set incsearch                   " search as characters are entered
@@ -82,37 +124,10 @@ set ignorecase                  " ignore case when searching
 set smartcase                   " enable smartcase
 set noshowmatch                 " Don't match parentheses/brackets
 
-hi MatchParen cterm=bold ctermbg=none ctermfg=magenta   " set colors for matching braces
-set mouse=a                     " Enable mouse integration
-set backspace=indent,eol,start  " Let backspace work normal everywhere
-set clipboard=unnamed           " Enable integration with system clipboard
-set number                      " Show line numbers
-set relativenumber              " Show relative linenumbers
-set ruler                       " Show file stats
-set encoding=utf-8              " Encoding
-set fileencoding=utf-8          " Encoding
-" set cursorline                  " highlight current line
-set nocursorline                " Don't paint cursor line
-set nocursorcolumn              " Don't paint cursor column
-
-set wildmenu                    " visual autocomplete for command menu
-set nobackup
-set nowritebackup
-set noswapfile
-set history=50                  " remember more commands and search history
-set undolevels=1000             " use many muchos levels of undo
-set wildignore=*.swp,*.bak,*.pyc,*.class
-set visualbell                  " don't beep
-set noerrorbells                " don't beep
-set list
-set listchars=tab:>.,trail:.,extends:#,nbsp:.
-set hidden                      " Allow to create a new buffer and change to new one without the need to save it
-set showcmd                     " display incomplete commands
-set laststatus=2                " Always display the status line
-set nojoinspaces                " Use one space, not two, after punctuation
-let mapleader = "\<Space>"      " Set space as leader
-set textwidth=120               " Make it obvious where 120 characters is
-set colorcolumn=+1
+" Theme and Styling
+set termguicolors
+let g:gruvbox_contrast_dark = 'dark'
+colorscheme gruvbox
 
 " ----------------------------------------------------------------------
 " Key mappings
@@ -164,12 +179,14 @@ let g:indent_guides_color_change_percent = 3
 
 " Vim Airline
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline_section_b = '%{strftime("%H:%M")}'
 
 " Vimwiki
 let g:vimwiki_global_ext=0
 let g:vimwiki_root = '~/Dropbox/vimwiki'
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
-"
+
 " " Vim Markdown
 let g:vim_markdown_folding_disabled = 1
 
@@ -181,6 +198,9 @@ let g:ale_fix_on_save = 1
 let g:terraform_align=1                                     " Align to community standards
 autocmd FileType terraform setlocal commentstring=#%s       " Commentary settings
 let g:terraform_fmt_on_save = 1                             " Terraform format on save
+
+" Tabbar
+nmap <F8> :TagbarToggle<CR>
 
 " Vimux
 " Prompt for a command to run
