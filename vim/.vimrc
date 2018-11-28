@@ -163,6 +163,9 @@ nnoremap <C-X> :bdelete<CR>     " use <Ctrl-X> to delete the current buffer
 " Enable close of buffer in VIM using c
 nnoremap c :bp\|bd #<CR>
 
+" Format JSON
+nmap =j :%!python -m json.tool<CR>
+
 "-----------------------------------------------------------------------
 " Plugin settings
 " ----------------------------------------------------------------------
