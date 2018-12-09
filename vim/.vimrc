@@ -18,6 +18,7 @@ Plug 'LanguageTool'
 
 " Generic Programming Support
 Plug 'tpope/vim-fugitive'
+Plug 'alvan/vim-closetag'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'sheerun/vim-polyglot'
@@ -44,7 +45,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'joshdick/onedark.vim'
 
 " Elixir
 Plug 'elixir-lang/vim-elixir'
@@ -59,11 +60,11 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""
 " Configuration Section
 """""""""""""""""""""""""""""""""""""
-
 " Generic Settings
 filetype on                     " enable file type detection
-syntax on                       " enable syntac highlight
 filetype plugin on
+filetype indent on
+syntax enable                   " enable syntac highlight
 set visualbell                  " don't beep
 set noerrorbells                " don't beep
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta   " set colors for matching braces
@@ -124,8 +125,7 @@ set noshowmatch                 " Don't match parentheses/brackets
 
 " Theme and Styling
 set termguicolors
-colorscheme PaperColor
-set background=dark " for the dark version
+colorscheme onedark
 
 " ----------------------------------------------------------------------
 " Key mappings
@@ -163,9 +163,6 @@ nnoremap <C-X> :bdelete<CR>     " use <Ctrl-X> to delete the current buffer
 " Enable close of buffer in VIM using c
 nnoremap c :bp\|bd #<CR>
 
-" Format JSON
-nmap =j :%!python -m json.tool<CR>
-
 "-----------------------------------------------------------------------
 " Plugin settings
 " ----------------------------------------------------------------------
@@ -182,7 +179,7 @@ let g:indent_guides_color_change_percent = 3
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline_section_b = '%{strftime("%H:%M")}'
-let g:airline_theme='papercolor'
+let g:airline_theme='onedark'
 
 " Vimwiki
 let g:vimwiki_global_ext=0
@@ -210,3 +207,6 @@ map <Leader>vp :VimuxPromptCommand<CR>
 
 " Run last command executed by VimuxRunCommand
 map <Leader>vl :VimuxRunLastCommand<CR>
+
+command! FormatXml execute "%!xmllint --format -"
+command! FormatJson execute "%!python -m json.tool"
