@@ -67,6 +67,7 @@ filetype indent on
 syntax enable                   " enable syntac highlight
 set visualbell                  " don't beep
 set noerrorbells                " don't beep
+hi Comment term=bold ctermfg=6 guifg=Yellow3            " set custom highlight color
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta   " set colors for matching braces
 set mouse=a                     " Enable mouse integration
 set backspace=indent,eol,start  " Let backspace work normal everywhere
@@ -210,3 +211,4 @@ map <Leader>vl :VimuxRunLastCommand<CR>
 
 command! FormatXml execute "%!xmllint --format -"
 command! FormatJson execute "%!python -m json.tool"
+
