@@ -1,0 +1,18 @@
+set main-view = line-number:yes,interval=5 id date author commit-title:graph=yes,refs=yes
+set status-view = status:display=long file-name:display=always
+
+bind status a !git commit --amend
+
+bind main R !git rebase -i %(commit)
+bind diff R !git rebase -i %(commit)
+
+bind generic G none
+
+# vim bindings
+bind generic g move-first-line
+bind generic G move-last-line
+
+bind diff F !git commit --fixup %(commit)
+bind diff S !git commit --squash %(commit)
+bind main F !git commit --fixup %(commit)
+bind main S !git commit --squash %(commit)

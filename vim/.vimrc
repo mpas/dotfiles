@@ -9,12 +9,14 @@ call plug#begin('~/.vim/plugged')
 " Utility
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'majutsushi/tagbar'
 Plug 'benmills/vimux'
 Plug 'gilsondev/searchtasks.vim'
 Plug 'godlygeek/tabular'
 Plug 'LanguageTool'
+Plug 'tpope/vim-eunuch'
 
 " Generic Programming Support
 Plug 'tpope/vim-fugitive'
@@ -43,8 +45,7 @@ Plug 'vimwiki/vimwiki'
 
 " Theme / Interface
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'joshdick/onedark.vim'
 
 " Elixir
@@ -176,18 +177,12 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_color_change_percent = 3
 
-" Vim Airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline_section_b = '%{strftime("%H:%M")}'
-let g:airline_theme='onedark'
-
 " Vimwiki
 let g:vimwiki_global_ext=0
 let g:vimwiki_root = '~/Dropbox/vimwiki'
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
 
-" " Vim Markdown
+" Vim Markdown
 let g:vim_markdown_folding_disabled = 1
 
 " ALE (Asynchronous Lint Engine)
@@ -212,3 +207,18 @@ map <Leader>vl :VimuxRunLastCommand<CR>
 command! FormatXml execute "%!xmllint --format -"
 command! FormatJson execute "%!python -m json.tool"
 
+" Lightline settings
+let g:lightline = {
+    \       'active': {
+    \           'right': [ 
+    \               [ 'mode', 'paste' ],
+    \               [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+    \           ]
+    \       },
+    \       'component': {
+    \           'lineinfo': ' %3l:%-2v',
+    \       },
+    \       'component_function': {
+    \           'gitbranch': 'fugitive#head',
+    \       }
+    \ }
