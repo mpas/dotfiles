@@ -46,6 +46,7 @@ Plug 'vimwiki/vimwiki'
 " Theme / Interface
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
 Plug 'joshdick/onedark.vim'
 
 " Elixir
@@ -146,6 +147,13 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>    " edit vimrc
 nmap <silent> <leader>sv :so $MYVIMRC<CR>   " save vimrc
 nmap <silent> <Leader>eb :e ~/.zshrc<CR>    " edit .zshrc
 
+" Quick VimWiki mapping
+nmap <silent> <Leader>gt :e ~/Dropbox/vimwiki/todo.md<CR>
+nmap <silent> <Leader>gp :e ~/Dropbox/vimwiki/philips/index.md<CR>
+
+map <Leader>r :NERDTreeFind<CR>                             " Change working directory in NerdTree
+
+
 " Line movement
 nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-k> :m .-2<CR>==
@@ -161,6 +169,7 @@ nmap <leader>T :enew<cr>        " Open new buffer
 nnoremap <Tab> :bnext<CR>       " Use <TAB> to change to next buffer
 nnoremap <S-Tab> :bprevious<CR> " Use <TAB> to change to previous buffer
 nnoremap <C-X> :bdelete<CR>     " use <Ctrl-X> to delete the current buffer
+noremap <C-p> <ESC>:Buffers<CR> " Use CTRL-p to switch buffers
 
 " Enable close of buffer in VIM using c
 nnoremap c :bp\|bd #<CR>
@@ -222,3 +231,15 @@ let g:lightline = {
     \           'gitbranch': 'fugitive#head',
     \       }
     \ }
+
+let g:lightline#bufferline#filename_modifier = ':t'
+" let g:lightline#bufferline#show_number  = 1
+" let g:lightline#bufferline#shorten_path = 2
+" let g:lightline#bufferline#unnamed      = '[No Name]'
+
+" let g:lightline                  = {}
+let g:lightline.tabline          = {'left': [['buffers']]}
+let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+let g:lightline.component_type   = {'buffers': 'tabsel'}
+set showtabline=2
+autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
