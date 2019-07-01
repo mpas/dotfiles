@@ -27,10 +27,24 @@ export PATH="/usr/local/sbin:$PATH"
 # miniconda - for Python development
 export PATH="~/miniconda3/bin:$PATH"
 
+# rbenv
+export PATH=$HOME/.rbenv/bin:/usr/local/bin:$HOME/.bin:$PATH
+eval "$(rbenv init - zsh)"
+
+# slide-serve
+export PATH=$HOME/development/resources/slide-serve_v0.5.2:$PATH
+
+
 # fzf - fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND="fd --type f"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/$USER/.sdkman"
