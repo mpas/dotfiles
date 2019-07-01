@@ -17,6 +17,7 @@ Plug 'gilsondev/searchtasks.vim'
 Plug 'godlygeek/tabular'
 Plug 'LanguageTool'
 Plug 'tpope/vim-eunuch'
+Plug 'mattn/calendar-vim'
 
 " Generic Programming Support
 Plug 'tpope/vim-fugitive'
@@ -40,14 +41,13 @@ Plug 'plasticboy/vim-markdown'
 " PlantUML
 Plug 'aklt/plantuml-syntax'
 
-" Vimwiki
-Plug 'vimwiki/vimwiki'
-
 " Theme / Interface
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
-Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
+" Plug 'chriskempson/base16-vim'
+Plug 'danielwe/base16-vim'
 
 " Elixir
 Plug 'elixir-lang/vim-elixir'
@@ -69,8 +69,6 @@ filetype indent on
 syntax enable                   " enable syntac highlight
 set visualbell                  " don't beep
 set noerrorbells                " don't beep
-hi Comment term=bold ctermfg=6 guifg=Yellow3            " set custom highlight color
-hi MatchParen cterm=bold ctermbg=none ctermfg=magenta   " set colors for matching braces
 set mouse=a                     " Enable mouse integration
 set backspace=indent,eol,start  " Let backspace work normal everywhere
 set clipboard=unnamed           " Enable integration with system clipboard
@@ -101,12 +99,12 @@ set autoread                    " reload file when it has changed
 au CursorHold * checktime
 
 " Identation & Tab setting
-set autoindent
+" set autoindent
 set expandtab                   " tabs are spaces
 set tabstop=4                   " number of visual spaces per TAB
 set shiftwidth=4                " soft space = 4
 set smarttab                    " insert tabstop number of spaces when TAB is pressed
-set smartindent
+" set smartindent
 set softtabstop=4               " let backspace delete indent
 
 " Line breaking and formatting
@@ -128,7 +126,7 @@ set noshowmatch                 " Don't match parentheses/brackets
 
 " Theme and Styling
 set termguicolors
-colorscheme onedark
+colorscheme base16-eighties
 
 " ----------------------------------------------------------------------
 " Key mappings
@@ -148,11 +146,15 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>   " save vimrc
 nmap <silent> <Leader>eb :e ~/.zshrc<CR>    " edit .zshrc
 
 " Quick VimWiki mapping
-nmap <silent> <Leader>gt :e ~/Dropbox/vimwiki/todo.md<CR>
-nmap <silent> <Leader>gp :e ~/Dropbox/vimwiki/philips/index.md<CR>
+nmap <silent> <Leader>gt :e ~/Dropbox/vimwiki/todo.md<CR>           " quick open todo list
+nmap <silent> <Leader>gp :e ~/Dropbox/vimwiki/philips/index.md<CR>  " goto philips page
+nmap <leader>c :Calendar<CR>                                        " open calendar
 
+" NerdTree
 map <Leader>r :NERDTreeFind<CR>                             " Change working directory in NerdTree
-
+let NERDTreeAutoDeleteBuffer=1
+let NERDTreeDirArrows=1
+let NERDTreeShowBookmarks=1
 
 " Line movement
 nnoremap <C-j> :m .+1<CR>==
@@ -213,6 +215,8 @@ map <Leader>vp :VimuxPromptCommand<CR>
 " Run last command executed by VimuxRunCommand
 map <Leader>vl :VimuxRunLastCommand<CR>
 
+" set formatting for xml
+let $XMLLINT_INDENT="    "
 command! FormatXml execute "%!xmllint --format -"
 command! FormatJson execute "%!python -m json.tool"
 
@@ -233,13 +237,21 @@ let g:lightline = {
     \ }
 
 let g:lightline#bufferline#filename_modifier = ':t'
-" let g:lightline#bufferline#show_number  = 1
-" let g:lightline#bufferline#shorten_path = 2
-" let g:lightline#bufferline#unnamed      = '[No Name]'
-
-" let g:lightline                  = {}
 let g:lightline.tabline          = {'left': [['buffers']]}
 let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
 let g:lightline.component_type   = {'buffers': 'tabsel'}
 set showtabline=2
 autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
+
+
+" add yaml stuffs
+au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
+
+hi Visual guifg=white guibg=gray50 gui=none
+

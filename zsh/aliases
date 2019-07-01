@@ -70,6 +70,5 @@ alias brew-update='brew update && brew upgrade && brew cask upgrade && brew clea
 eval "$(direnv hook bash)"
 eval "$(direnv hook zsh)"
 
-# VimWiki / maps to todo
-alias t='vim ~/Dropbox/vimwiki/todo.md'
-alias w='vim -c VimwikiIndex'
+alias t='code ~/Dropbox/notes/ ~/Dropbox/notes/todo.md'
+alias n='code ~/Dropbox/notes'
