@@ -7,6 +7,7 @@ alias h=history
 alias e="$EDITOR"
 alias v="$VISUAL"
 alias eb='e ~/.zshrc'
+alias rb='source ~/.zshrc'
 alias f='open -a Finder ./'
 alias c='clear'
 
@@ -70,5 +71,5 @@ alias brew-update='brew update && brew upgrade && brew cask upgrade && brew clea
 eval "$(direnv hook bash)"
 eval "$(direnv hook zsh)"
 
-alias t='code ~/Dropbox/notes/ ~/Dropbox/notes/todo.md'
-alias n='code ~/Dropbox/notes'
+alias t='vim ~/Dropbox/vimwiki/todo.md'
+alias n='vim ~/Dropbox/vimwiki/index.md'
