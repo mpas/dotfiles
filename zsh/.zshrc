@@ -7,20 +7,23 @@
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+ source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# Dotfiles
+export DOT=$HOME/.dotfiles
+
 # Configure
-for f in ~/.dotfiles/zsh/configs/*; do source $f; done
+for f in $DOT/zsh/configs/*; do source $f; done
 
 # Aliases
-[[ -f ~/.dotfiles/zsh/aliases ]] && source ~/.dotfiles/zsh/aliases
+[[ -f $DOT/zsh/aliases ]] && source $DOT/zsh/aliases
 
 # Functions
-for f in ~/.dotfiles/zsh/functions/*; do source $f; done
+for f in $DOT/zsh/functions/*; do source $f; done
 
 # Override and/or add custom aliasses/functions
-for f in ~/dotfiles-local/*; do source $f; done
+# for f in ~/dotfiles-local/*; do source $f; done
 
 export PATH="/usr/local/sbin:$PATH"
 
@@ -31,20 +34,10 @@ export PATH="~/miniconda3/bin:$PATH"
 export PATH=$HOME/.rbenv/bin:/usr/local/bin:$HOME/.bin:$PATH
 eval "$(rbenv init - zsh)"
 
-# slide-serve
-export PATH=$HOME/development/resources/slide-serve_v0.5.2:$PATH
-
-
 # fzf - fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND="fd --type f"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-# Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] && \
-    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-        eval "$("$BASE16_SHELL/profile_helper.sh")"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/$USER/.sdkman"

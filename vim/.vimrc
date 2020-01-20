@@ -12,12 +12,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'majutsushi/tagbar'
-Plug 'benmills/vimux'
 Plug 'gilsondev/searchtasks.vim'
 Plug 'godlygeek/tabular'
-Plug 'LanguageTool'
-Plug 'tpope/vim-eunuch'
-Plug 'mattn/calendar-vim'
 
 " Generic Programming Support
 Plug 'tpope/vim-fugitive'
@@ -45,11 +41,9 @@ Plug 'aklt/plantuml-syntax'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
-Plug 'morhetz/gruvbox'
-" Plug 'chriskempson/base16-vim'
-Plug 'danielwe/base16-vim'
+Plug 'arcticicestudio/nord-vim'
 
-" Elixir
+" Elixer
 Plug 'elixir-lang/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 let g:mix_format_on_save = 1
@@ -126,7 +120,7 @@ set noshowmatch                 " Don't match parentheses/brackets
 
 " Theme and Styling
 set termguicolors
-colorscheme base16-eighties
+colorscheme nord
 
 " ----------------------------------------------------------------------
 " Key mappings
@@ -188,11 +182,6 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_color_change_percent = 3
 
-" Vimwiki
-let g:vimwiki_global_ext=0
-let g:vimwiki_root = '~/Dropbox/vimwiki'
-let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
-
 " Vim Markdown
 let g:vim_markdown_folding_disabled = 1
 
@@ -207,13 +196,6 @@ let g:terraform_fmt_on_save = 1                             " Terraform format o
 
 " Tabbar
 nmap <F8> :TagbarToggle<CR>
-
-" Vimux
-" Prompt for a command to run
-map <Leader>vp :VimuxPromptCommand<CR>
-
-" Run last command executed by VimuxRunCommand
-map <Leader>vl :VimuxRunLastCommand<CR>
 
 " set formatting for xml
 let $XMLLINT_INDENT="    "
@@ -243,15 +225,6 @@ let g:lightline.component_type   = {'buffers': 'tabsel'}
 set showtabline=2
 autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
 
-
 " add yaml stuffs
 au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-
-if filereadable(expand("~/.vimrc_background"))
-  let base16colorspace=256
-  source ~/.vimrc_background
-endif
-
-hi Visual guifg=white guibg=gray50 gui=none
-
