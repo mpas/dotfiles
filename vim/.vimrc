@@ -204,6 +204,7 @@ command! FormatJson execute "%!python -m json.tool"
 
 " Lightline settings
 let g:lightline = {
+    \ 'colorscheme': 'wombat',
     \       'active': {
     \           'right': [ 
     \               [ 'mode', 'paste' ],
