@@ -12,14 +12,15 @@ alias f='open -a Finder ./'
 alias c='clear'
 
 # Ssh
-alias compile-ssh-config='echo -n > ~/.ssh/config && cat ~/.ssh/ssh-configs/*.config > ~/.ssh/config'
-alias ssh='compile-ssh-config && ssh'
+alias compile-ssh-config="echo -n > ~/.ssh/config && cat ~/.ssh/ssh-configs/*.config > ~/.ssh/config"
+alias ssh="compile-ssh-config && ssh"
+alias copy_ssh="pbcopy < ~/.ssh/id_rsa.pub"
 
 # Meld
 alias meld="/Applications/Meld.app/Contents/MacOS/Meld"
 
 # Sourcetree
-alias stree='open -a SourceTree'
+alias stree="open -a SourceTree"
 
 # Docker
 alias dc="docker-compose $1"

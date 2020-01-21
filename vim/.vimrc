@@ -37,6 +37,9 @@ Plug 'plasticboy/vim-markdown'
 " PlantUML
 Plug 'aklt/plantuml-syntax'
 
+" Yaml
+Plug 'mrk21/yaml-vim'
+
 " Theme / Interface
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'itchyny/lightline.vim'
