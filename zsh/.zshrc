@@ -30,10 +30,6 @@ export PATH="/usr/local/sbin:$PATH"
 # miniconda - for Python development
 export PATH="~/miniconda3/bin:$PATH"
 
-# rbenv
-export PATH=$HOME/.rbenv/bin:/usr/local/bin:$HOME/.bin:$PATH
-eval "$(rbenv init - zsh)"
-
 # fzf - fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND="fd --type f"

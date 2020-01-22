@@ -67,8 +67,8 @@ alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listenin
 
 # Brew update
 alias brew-update='brew update && brew upgrade && brew cask upgrade && brew cleanup'
-alias brew-backup='cd ~/.dotfiles/brew && rm -f Brewfile && brew bundle dump && cd -'
-alias brew-backup-restore='cd ~/.dotfiles/brew/ && brew bundle && cd -'
+alias brew-backup='cd ~/.dotfiles/app-preferences/brew && rm -f Brewfile && brew bundle dump && cd -'
+alias brew-backup-restore='cd ~/.dotfiles/app-preferences/brew/ && brew bundle && cd -'
 
 # Enable direnv into bash/zsh
 eval "$(direnv hook bash)"
