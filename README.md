@@ -3,7 +3,7 @@
 Dotfiles managed with gnu stow, a free, portable, lightweight symlink farm manager. This allows you to keep a versioned directory of all config files that are virtually linked into place via a single command. This makes sharing these files among many users (root) and computers super simple. and does not clutter your home directory with version control files.
 
 ## Requirements
-* Stow installed (e.g. `brew install stow`)
+* Git installed
 
 ## Install
 Clone onto your laptop:
@@ -16,4 +16,21 @@ After the dotfiles repo is checkout into your home folder navigate to one of the
 * cd ~\.dotfiles
 * stow vim
 
-Do this with all settings that you want to be linked.
+Do this with all settings that you want to be linked or run the `setup.sh` script to install everything.
+
+## Install all
+
+- Execute the setup script
+    - `$ ~/.dotfiles/setup.sh`
+
+## Addons
+
+- Lastpass
+- ExpressVPN
+- Configure:
+    - Alfred
+    - iTerm
+
+## TODO
+
+`brew cask install little-snitch`
