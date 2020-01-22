@@ -22,6 +22,8 @@ Do this with all settings that you want to be linked or run the `setup.sh` scrip
 
 - Execute the setup script
     - `$ ~/.dotfiles/setup.sh`
+- Vim
+    - `PlugInstall`
 
 ## Addons
 
