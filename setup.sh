@@ -1,31 +1,6 @@
 #!/usr/bin/env bash
 
-# Install brew
-echo "Installing brew..."
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-echo "Installing brew packages..."
-cd ~/.dotfiles/app-preferences/brew
-brew bundle
-
-echo "Installing dotfiles..."
-cd ~/.dotfiles
-stow asdf
-stow prezto
-stow tig
-stow ranger
-stow tmux
-stow vim
-
-echo "Installing asdf versions"
-cd ~
-asdf plugin-add java https://github.com/halcyon/asdf-java.git
-asdf plugin-add maven
-asdf plugin-add gradle https://github.com/rfrancis/asdf-gradle.git
-asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
-asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
-asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-asdf plugin-add terraform https://github.com/Banno/asdf-hashicorp.git
-asdf plugin-add terraform-validator https://github.com/looztra/asdf-terraform-validator
-asdf plugin-add yarn
+./01-install_brew.sh
+./02-install_prezto.sh
+./03-stow_files.sh
+./04-install_asdf.sh
