@@ -27,7 +27,6 @@ Plug 'w0rp/ale'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'ervandew/supertab'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'ryanoasis/vim-devicons'
 
 " Terraform
 Plug 'hashivim/vim-terraform'
