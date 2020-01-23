@@ -8,8 +8,9 @@ call plug#begin('~/.vim/plugged')
 
 " Utility
 Plug 'scrooloose/nerdtree'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'junegunn/fzf.vim'
+Plug '/usr/local/opt/fzf'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'majutsushi/tagbar'
 Plug 'gilsondev/searchtasks.vim'
@@ -17,6 +18,7 @@ Plug 'godlygeek/tabular'
 
 " Generic Programming Support
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sleuth'
 Plug 'alvan/vim-closetag'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
@@ -53,6 +55,7 @@ let g:mix_format_on_save = 1
 
 " Ruby
 Plug 'vim-ruby/vim-ruby'
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -128,8 +131,6 @@ colorscheme nord
 " ----------------------------------------------------------------------
 " Key mappings
 " ----------------------------------------------------------------------
-map ; :Files<CR>
-
 nnoremap <F5> "=strftime("%a %y-%m-%d")<CR>P
 inoremap <F5> <C-R>=strftime("%a %y-%m-%d")<CR>
 
@@ -142,16 +143,16 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>    " edit vimrc
 nmap <silent> <leader>sv :so $MYVIMRC<CR>   " save vimrc
 nmap <silent> <Leader>eb :e ~/.zshrc<CR>    " edit .zshrc
 
-" Quick VimWiki mapping
-nmap <silent> <Leader>gt :e ~/Dropbox/vimwiki/todo.md<CR>           " quick open todo list
-nmap <silent> <Leader>gp :e ~/Dropbox/vimwiki/philips/index.md<CR>  " goto philips page
-nmap <leader>c :Calendar<CR>                                        " open calendar
+" Fzf
+map ; :Files<CR>
 
 " NerdTree
 map <Leader>r :NERDTreeFind<CR>                             " Change working directory in NerdTree
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeDirArrows=1
 let NERDTreeShowBookmarks=1
+let g:NERDTreeUpdateOnCursorHold=0
+let g:NERDTreeUpdateOnWrite=0
 
 " Line movement
 nnoremap <C-j> :m .+1<CR>==

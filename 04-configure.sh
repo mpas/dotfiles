@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Install fzf
+echo "Installing fzf..."
+cd ~
+$(brew --prefix)/opt/fzf/install --all
+cd -
+
 # Install asdf plugins
 echo "Installing asf plugins..."
 cd ~
@@ -16,3 +22,4 @@ asdf plugin-add yarn
 
 # Install asdf versions
 asdf install
+cd -
