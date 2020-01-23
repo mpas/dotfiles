@@ -15,7 +15,6 @@ Plug 'editorconfig/editorconfig-vim'
 
 " Generic Programming Support
 Plug 'majutsushi/tagbar'
-Plug 'luochen1990/rainbow'
 Plug 'godlygeek/tabular'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
@@ -26,7 +25,6 @@ Plug 'tpope/vim-commentary'
 Plug 'w0rp/ale'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'ervandew/supertab'
-Plug 'nathanaelkane/vim-indent-guides'
 
 " Terraform
 Plug 'hashivim/vim-terraform'
@@ -42,8 +40,11 @@ Plug 'mrk21/yaml-vim'
 
 " Theme / Interface
 Plug 'arcticicestudio/nord-vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
+Plug 'ryanoasis/vim-devicons'
+Plug 'luochen1990/rainbow'
 
 " Elixir
 Plug 'elixir-lang/vim-elixir'
@@ -52,7 +53,6 @@ let g:mix_format_on_save = 1
 
 " Ruby
 Plug 'vim-ruby/vim-ruby'
-
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""
@@ -188,9 +188,6 @@ set updatetime=300
 " Fzf
 map ; :Files<CR>
 
-" Airline
-let g:airline#extensions#tabline#enabled = 1
-
 " Rainbow
 let g:rainbow_active = 1
 
@@ -213,6 +210,30 @@ let g:terraform_fmt_on_save = 1                             " Terraform format o
 
 " Tabbar
 nmap <F8> :TagbarToggle<CR>
+
+" Lightline settings
+let g:lightline = {
+    \ 'colorscheme': 'nord',
+    \       'active': {
+    \           'right': [
+    \               [ 'mode', 'paste' ],
+    \               [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+    \           ]
+    \       },
+    \       'component': {
+    \           'lineinfo': ' %3l:%-2v',
+    \       },
+    \       'component_function': {
+    \           'gitbranch': 'fugitive#head',
+    \       }
+    \ }
+
+let g:lightline#bufferline#filename_modifier = ':t'
+let g:lightline.tabline          = {'left': [['buffers']]}
+let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+let g:lightline.component_type   = {'buffers': 'tabsel'}
+set showtabline=2
+autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
 
 " set formatting for xml
 let $XMLLINT_INDENT="    "
