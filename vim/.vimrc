@@ -12,23 +12,22 @@ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'junegunn/fzf.vim'
 Plug '/usr/local/opt/fzf'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'majutsushi/tagbar'
-Plug 'gilsondev/searchtasks.vim'
-Plug 'godlygeek/tabular'
 
 " Generic Programming Support
+Plug 'majutsushi/tagbar'
+Plug 'luochen1990/rainbow'
+Plug 'godlygeek/tabular'
+Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-sleuth'
-Plug 'alvan/vim-closetag'
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-surround'
+Plug 'tpope/vim-sleuth'
 Plug 'sheerun/vim-polyglot'
-Plug 'tomtom/tcomment_vim'
-Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-commentary'
 Plug 'w0rp/ale'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'ervandew/supertab'
-Plug 'Townk/vim-autoclose'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'ryanoasis/vim-devicons'
 
 " Terraform
 Plug 'hashivim/vim-terraform'
@@ -43,25 +42,24 @@ Plug 'aklt/plantuml-syntax'
 Plug 'mrk21/yaml-vim'
 
 " Theme / Interface
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'itchyny/lightline.vim'
-Plug 'mengelbrecht/lightline-bufferline'
 Plug 'arcticicestudio/nord-vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
-" Elixer
+" Elixir
 Plug 'elixir-lang/vim-elixir'
 Plug 'mhinz/vim-mix-format'
 let g:mix_format_on_save = 1
 
 " Ruby
 Plug 'vim-ruby/vim-ruby'
-Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""
 " Configuration Section
 """""""""""""""""""""""""""""""""""""
+
 " Generic Settings
 filetype on                     " enable file type detection
 filetype plugin on
@@ -129,7 +127,7 @@ set termguicolors
 colorscheme nord
 
 " ----------------------------------------------------------------------
-" Key mappings
+" Generic key mappings
 " ----------------------------------------------------------------------
 nnoremap <F5> "=strftime("%a %y-%m-%d")<CR>P
 inoremap <F5> <C-R>=strftime("%a %y-%m-%d")<CR>
@@ -142,17 +140,6 @@ nnoremap <Leader>w :w<CR>       " Save using <Leader>w
 nmap <silent> <leader>ev :e $MYVIMRC<CR>    " edit vimrc
 nmap <silent> <leader>sv :so $MYVIMRC<CR>   " save vimrc
 nmap <silent> <Leader>eb :e ~/.zshrc<CR>    " edit .zshrc
-
-" Fzf
-map ; :Files<CR>
-
-" NerdTree
-map <Leader>r :NERDTreeFind<CR>                             " Change working directory in NerdTree
-let NERDTreeAutoDeleteBuffer=1
-let NERDTreeDirArrows=1
-let NERDTreeShowBookmarks=1
-let g:NERDTreeUpdateOnCursorHold=0
-let g:NERDTreeUpdateOnWrite=0
 
 " Line movement
 nnoremap <C-j> :m .+1<CR>==
@@ -181,6 +168,33 @@ nnoremap c :bp\|bd #<CR>
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 let g:NERDTreeChDirMode = 2
 
+map <Leader>r :NERDTreeFind<CR>                             " Change working directory in NerdTree
+let NERDTreeAutoDeleteBuffer=1
+let NERDTreeDirArrows=1
+let NERDTreeShowBookmarks=1
+let g:NERDTreeUpdateOnCursorHold=0
+let g:NERDTreeUpdateOnWrite=0
+
+function! NERDTreeRefresh()
+    if &filetype == "nerdtree"
+        silent exe substitute(mapcheck("R"), "<CR>", "", "")
+    endif
+endfunction
+
+autocmd BufEnter * call NERDTreeRefresh()
+
+" Git Gutter
+set updatetime=300
+
+" Fzf
+map ; :Files<CR>
+
+" Airline
+let g:airline#extensions#tabline#enabled = 1
+
+" Rainbow
+let g:rainbow_active = 1
+
 " vim-indent-guides
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
@@ -206,30 +220,10 @@ let $XMLLINT_INDENT="    "
 command! FormatXml execute "%!xmllint --format -"
 command! FormatJson execute "%!python -m json.tool"
 
-" Lightline settings
-let g:lightline = {
-    \ 'colorscheme': 'wombat',
-    \       'active': {
-    \           'right': [ 
-    \               [ 'mode', 'paste' ],
-    \               [ 'gitbranch', 'readonly', 'filename', 'modified' ]
-    \           ]
-    \       },
-    \       'component': {
-    \           'lineinfo': ' %3l:%-2v',
-    \       },
-    \       'component_function': {
-    \           'gitbranch': 'fugitive#head',
-    \       }
-    \ }
-
-let g:lightline#bufferline#filename_modifier = ':t'
-let g:lightline.tabline          = {'left': [['buffers']]}
-let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
-let g:lightline.component_type   = {'buffers': 'tabsel'}
-set showtabline=2
-autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
-
 " add yaml stuffs
 au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+" set visual color section 
+hi Visual guifg=Black guibg=LightBlue gui=none
+
