@@ -12,8 +12,10 @@ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'junegunn/fzf.vim'
 Plug '/usr/local/opt/fzf'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'junegunn/goyo.vim'
 
 " Generic Programming Support
+Plug 'gilsondev/searchtasks.vim'
 Plug 'majutsushi/tagbar'
 Plug 'godlygeek/tabular'
 Plug 'jiangmiao/auto-pairs'
@@ -31,6 +33,8 @@ Plug 'hashivim/vim-terraform'
 
 " Markdown / writing
 Plug 'plasticboy/vim-markdown'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 " PlantUML
 Plug 'aklt/plantuml-syntax'
@@ -39,107 +43,158 @@ Plug 'aklt/plantuml-syntax'
 Plug 'mrk21/yaml-vim'
 
 " Theme / Interface
-Plug 'arcticicestudio/nord-vim'
+Plug 'ryanoasis/vim-devicons'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'luochen1990/rainbow'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
-Plug 'ryanoasis/vim-devicons'
-Plug 'luochen1990/rainbow'
+Plug 'arcticicestudio/nord-vim'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'rakr/vim-one'
+Plug 'NLKNguyen/papercolor-theme'
 
 " Elixir
 Plug 'elixir-lang/vim-elixir'
 Plug 'mhinz/vim-mix-format'
-let g:mix_format_on_save = 1
 
 " Ruby
 Plug 'vim-ruby/vim-ruby'
+
+" Toml
+Plug 'cespare/vim-toml'
+
 call plug#end()
 
-"""""""""""""""""""""""""""""""""""""
-" Configuration Section
-"""""""""""""""""""""""""""""""""""""
-
-" Generic Settings
-filetype on                     " enable file type detection
-filetype plugin on
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin on                  " Enable filetype plugins
 filetype indent on
-syntax enable                   " enable syntac highlight
-set visualbell                  " don't beep
-set noerrorbells                " don't beep
-set mouse=a                     " Enable mouse integration
-set backspace=indent,eol,start  " Let backspace work normal everywhere
-set clipboard=unnamed           " Enable integration with system clipboard
-set encoding=utf-8              " Encoding
-set fileencoding=utf-8          " Encoding
-set wildmenu                    " visual autocomplete for command menu
-set nobackup
+set autoread                        " Set to auto read when a file is changed from the outside
+au CursorHold * checktime
+let mapleader = "\<Space>"          " Set space as leader
+set encoding=utf8                   " Set utf8 as standard encoding and en_US as the standard language
+set ffs=unix,dos,mac                " Use Unix as the standard file type
+set nobackup                        " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nowritebackup
 set noswapfile
-set nofoldenable                " disable folding
-set history=50                  " remember more commands and search history
-set undolevels=1000             " use many muchos levels of undo
-set wildignore=*.swp,*.bak,*.pyc,*.class
-set hidden                      " Allow to create a new buffer and change to new one without the need to save it
-set showcmd                     " display incomplete commands
-set laststatus=2                " Always display the status line
-set nojoinspaces                " Use one space, not two, after punctuation
-let mapleader = "\<Space>"      " Set space as leader
-
-" Line numbers
-set number                      " show line numbers
-set relativenumber              " show relative linenumbers
-set ruler                       " show file stats
-set cursorline                  " enable highlighting of the current line
-
-" Auto reload file when changed
-set autoread                    " reload file when it has changed
-au CursorHold * checktime
-
-" Identation & Tab setting
-" set autoindent
-set expandtab                   " tabs are spaces
-set tabstop=4                   " number of visual spaces per TAB
-set shiftwidth=4                " soft space = 4
-set smarttab                    " insert tabstop number of spaces when TAB is pressed
-" set smartindent
-set softtabstop=4               " let backspace delete indent
-
-" Line breaking and formatting
-set textwidth=120
-set columns=120
-set colorcolumn=121
-set linebreak
-set list                        " list disables linebreak
+set mouse=a                         " Enable mouse integration
+set nojoinspaces                    " Use one space, not two, after punctuation
+set number relativenumber           " show line numbers
+set clipboard=unnamed               " Enable integration with system clipboard
+set nofoldenable                    " disable folding
+set history=50                      " remember more commands and search history
+set undolevels=1000                 " use many muchos levels of undo
 set listchars=tab:>.,trail:.,extends:#,nbsp:.
-set wrap                        " wrap long lines
-set showbreak=...
+set hidden                          " Allow to create a new buffer and change to new one without the need to save it
+set showcmd                         " display incomplete commands
+syntax enable                       " Enable syntax highlighting
 
-" Search settings
-set incsearch                   " search as characters are entered
-set hlsearch                    " highlight matches
-set ignorecase                  " ignore case when searching
-set smartcase                   " enable smartcase
-set noshowmatch                 " Don't match parentheses/brackets
+" Return to last edit position when opening files (You want this!)
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-" Theme and Styling
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VIM user interface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set so=7                            " Set 7 lines to the cursor - when moving vertically using j/k
+set wildmenu                        " Turn on the Wild menu
+set wildignore=*.o,*~,*.pyc         " Ignore compiled files
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+set ruler                           " Always show current position
+set cmdheight=1                     " Height of the command bar
+set hid                             " A buffer becomes hidden when it is abandoned
+set backspace=eol,start,indent      " Configure backspace so it acts as it should act
+set whichwrap+=<,>,h,l
+set ignorecase                      " Ignore case when searching
+set smartcase                       " When searching try to be smart about cases
+set hlsearch                        " Highlight search results
+set incsearch                       " Makes search act like search in modern browsers
+set magic                           " For regular expressions turn magic on
+set showmatch                       " Show matching brackets when text indicator is over them
+set noerrorbells                    " No annoying sound on errors
+set novisualbell
+set t_vb=
+set tm=500
+if has("gui_macvim")                " Properly disable sound on errors on MacVim
+    autocmd GUIEnter * set vb t_vb=
+endif
+set foldcolumn=1                    " Add a bit extra margin to the left
+set cursorline                      " enable highlighting of the current line
+set laststatus=2                    " Always show the status line
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
 colorscheme nord
+let g:nord_cursor_line_number_background = 1
+set guifont=hack\ nerd\ font:h16
 
-" ----------------------------------------------------------------------
-" Generic key mappings
-" ----------------------------------------------------------------------
+" set visual color section 
+hi Visual guifg=Black guibg=LightBlue gui=none
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Text, tab and indent related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set expandtab                       " Use spaces instead of tabs
+set smarttab                        " Be smart when using tabs ;)
+set shiftwidth=4                    " 1 tab == 4 spaces
+set tabstop=4
+set linebreak                       " Linebreak on 500 characters
+set textwidth=120
+set softtabstop=4                   " Let backspace delete indent
+set autoindent                      " Auto indent
+set smartindent                     " Smart indent
+set wrap                            " Wrap lines
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Generic key mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remap VIM 0 to first non-blank character
+map 0 ^
+map ; :Files<CR>
+
+" Insert date
 nnoremap <F5> "=strftime("%a %y-%m-%d")<CR>P
 inoremap <F5> <C-R>=strftime("%a %y-%m-%d")<CR>
-
+" Insert time
 nnoremap <F6> "=strftime("%H:%M:%S")<CR>P
 inoremap <F6> <C-R>=strftime("%H:%M:%S")<CR>
 
-nnoremap <Leader>w :w<CR>       " Save using <Leader>w
+" Save using <Leader>w
+nnoremap <Leader>w :w<CR>
 
-nmap <silent> <leader>ev :e $MYVIMRC<CR>    " edit vimrc
-nmap <silent> <leader>sv :so $MYVIMRC<CR>   " save vimrc
-nmap <silent> <Leader>eb :e ~/.zshrc<CR>    " edit .zshrc
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
 
+" Move lines
+"move current line to the end of buffer without moving cursor
+nnoremap <leader>mv ddGp``
+"copy current line to the end of buffer without moving cursor
+nnoremap <leader>cp YGp``
+
+" edit / source vimrc
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" edit .zshrc
+nmap <silent> <Leader>eb :e ~/.zshrc<CR>    
+
+" notes and todo
+nmap <silent> <Leader>gt :e ~/Dropbox/notes/todo.md<CR>
+nmap <silent> <Leader>gn :NERDTree ~/Dropbox/notes<CR>
+
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+" Pressing <leader>ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Moving around, tabs, windows and buffers
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Line movement
 nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-k> :m .-2<CR>==
@@ -157,16 +212,24 @@ nnoremap <S-Tab> :bprevious<CR> " Use <TAB> to change to previous buffer
 nnoremap <C-X> :bdelete<CR>     " use <Ctrl-X> to delete the current buffer
 noremap <C-p> <ESC>:Buffers<CR> " Use CTRL-p to switch buffers
 
+" Close all the buffers
+map <leader>ba :bufdo bd<cr>
+
 " Enable close of buffer in VIM using c
 nnoremap c :bp\|bd #<CR>
 
-"-----------------------------------------------------------------------
-" Plugin settings
-" ----------------------------------------------------------------------
+" Use <Ctrl-X> to delete the current buffer
+nnoremap <C-X> :bdelete<CR>     
+
+" Use CTRL-p to switch buffers
+noremap <C-p> <ESC>:Buffers<CR> 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NerdTree
 nnoremap <Leader>f :NERDTreeToggle<Enter>
 let g:NERDTreeChDirMode = 2
-
 map <Leader>r :NERDTreeFind<CR>                             " Change working directory in NerdTree
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeDirArrows=1
@@ -181,6 +244,20 @@ function! NERDTreeRefresh()
 endfunction
 
 autocmd BufEnter * call NERDTreeRefresh()
+
+" Vim Table Mode
+let g:table_mode_corner="|"
+noremap <Leader>tm :TableModeToggle<CR>     " Enable/Disable tablemode
+
+" Elixir
+let g:mix_format_on_save = 1
+
+" Devicons
+let g:webdevicons_enable = 1
+
+" Goyo
+let g:goyo_width=160
+nmap <leader>gy :Goyo<CR>       " Enable/Disable Goyo mode
 
 " Git Gutter
 set updatetime=300
@@ -208,7 +285,7 @@ let g:terraform_align=1                                     " Align to community
 autocmd FileType terraform setlocal commentstring=#%s       " Commentary settings
 let g:terraform_fmt_on_save = 1                             " Terraform format on save
 
-" Tabbar
+" Tagbar
 nmap <F8> :TagbarToggle<CR>
 
 " Lightline settings
@@ -243,7 +320,3 @@ command! FormatJson execute "%!python -m json.tool"
 " add yaml stuffs
 au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-
-" set visual color section 
-hi Visual guifg=Black guibg=LightBlue gui=none
-
