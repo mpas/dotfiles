@@ -4,3 +4,4 @@ gradle 6.1
 nodejs 13.6.0
 terraform 0.12.19
 terraform-validator latest
+crystal 0.32.1
