@@ -20,6 +20,7 @@ asdf plugin-add terraform https://github.com/Banno/asdf-hashicorp.git
 asdf plugin-add terraform-validator https://github.com/looztra/asdf-terraform-validator
 asdf plugin-add yarn
 asdf plugin-add crystal https://github.com/asdf-community/asdf-crystal.git
+asdf plugin-add micronaut https://github.com/weibemoura/asdf-micronaut.git
 
 # Install asdf versions
 asdf install
