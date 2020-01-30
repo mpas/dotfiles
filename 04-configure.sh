@@ -9,6 +9,7 @@ cd -
 # Install asdf plugins
 echo "Installing asf plugins..."
 cd ~
+asdf plugin-add python
 asdf plugin-add java https://github.com/halcyon/asdf-java.git
 asdf plugin-add maven
 asdf plugin-add gradle https://github.com/rfrancis/asdf-gradle.git
