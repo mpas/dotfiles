@@ -6,34 +6,34 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-" Utility
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'junegunn/fzf.vim'
 Plug '/usr/local/opt/fzf'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/goyo.vim'
-
-" Generic Programming Support
+Plug 'pbrisbin/vim-mkdir'
 Plug 'gilsondev/searchtasks.vim'
 Plug 'majutsushi/tagbar'
 Plug 'godlygeek/tabular'
 Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-sleuth'
 Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-commentary'
 Plug 'w0rp/ale'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'ervandew/supertab'
+Plug 'vimwiki/vimwiki'
+Plug 'mattn/calendar-vim'
 
 " Terraform
 Plug 'hashivim/vim-terraform'
 
 " Markdown / writing
-Plug 'plasticboy/vim-markdown'
 Plug 'dhruvasagar/vim-table-mode'
+Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 " PlantUML
@@ -48,9 +48,6 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'luochen1990/rainbow'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
-Plug 'arcticicestudio/nord-vim'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'rakr/vim-one'
 Plug 'NLKNguyen/papercolor-theme'
 
 " Elixir
@@ -73,6 +70,7 @@ filetype indent on
 set autoread                        " Set to auto read when a file is changed from the outside
 au CursorHold * checktime
 let mapleader = "\<Space>"          " Set space as leader
+let maplocalleader = "\\"
 set encoding=utf8                   " Set utf8 as standard encoding and en_US as the standard language
 set ffs=unix,dos,mac                " Use Unix as the standard file type
 set nobackup                        " Turn backup off, since most stuff is in SVN, git et.c anyway...
@@ -82,7 +80,6 @@ set mouse=a                         " Enable mouse integration
 set nojoinspaces                    " Use one space, not two, after punctuation
 set number relativenumber           " show line numbers
 set clipboard=unnamed               " Enable integration with system clipboard
-set nofoldenable                    " disable folding
 set history=50                      " remember more commands and search history
 set undolevels=1000                 " use many muchos levels of undo
 set listchars=tab:>.,trail:.,extends:#,nbsp:.
@@ -105,20 +102,19 @@ set cmdheight=1                     " Height of the command bar
 set hid                             " A buffer becomes hidden when it is abandoned
 set backspace=eol,start,indent      " Configure backspace so it acts as it should act
 set whichwrap+=<,>,h,l
-set ignorecase                      " Ignore case when searching
 set smartcase                       " When searching try to be smart about cases
 set hlsearch                        " Highlight search results
 set incsearch                       " Makes search act like search in modern browsers
 set magic                           " For regular expressions turn magic on
 set showmatch                       " Show matching brackets when text indicator is over them
 set noerrorbells                    " No annoying sound on errors
+set ignorecase                      " Ignore case when searching
 set novisualbell
 set t_vb=
 set tm=500
 if has("gui_macvim")                " Properly disable sound on errors on MacVim
     autocmd GUIEnter * set vb t_vb=
 endif
-set foldcolumn=1                    " Add a bit extra margin to the left
 set cursorline                      " enable highlighting of the current line
 set laststatus=2                    " Always show the status line
 
@@ -126,12 +122,12 @@ set laststatus=2                    " Always show the status line
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
-colorscheme nord
-let g:nord_cursor_line_number_background = 1
 set guifont=hack\ nerd\ font:h16
+set background=light
+colorscheme PaperColor
 
 " set visual color section 
-hi Visual guifg=Black guibg=LightBlue gui=none
+" hi Visual guifg=Black guibg=LightBlue gui=none
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -181,7 +177,7 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 nmap <silent> <Leader>eb :e ~/.zshrc<CR>    
 
 " notes and todo
-nmap <silent> <Leader>gt :e ~/Dropbox/notes/todo.md<CR>
+" nmap <silent> <Leader>gt :e ~/Dropbox/notes/todo.md<CR>
 nmap <silent> <Leader>gn :NERDTree ~/Dropbox/notes<CR>
 
 " Visual mode pressing * or # searches for the current selection
@@ -191,6 +187,10 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 " Pressing <leader>ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
+
+" Zoom behaviour
+noremap Zz <c-w>_ \| <c-w>\|
+noremap Zo <c-w>noremap Zo <c-w>==
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
@@ -274,7 +274,10 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_color_change_percent = 3
 
 " Vim Markdown
-let g:vim_markdown_folding_disabled = 1
+let vim_markdown_folding_disabled = 1
+let g:markdown_folding = 1
+let g:vim_markdown_follow_anchor = 1
+let g:vim_markdown_strikethrough = 1
 
 " ALE (Asynchronous Lint Engine)
 let g:ale_completion_enabled = 1
@@ -290,7 +293,7 @@ nmap <F8> :TagbarToggle<CR>
 
 " Lightline settings
 let g:lightline = {
-    \ 'colorscheme': 'nord',
+    \ 'colorscheme': 'PaperColor',
     \       'active': {
     \           'right': [
     \               [ 'mode', 'paste' ],
@@ -320,3 +323,9 @@ command! FormatJson execute "%!python -m json.tool"
 " add yaml stuffs
 au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+" VimWiki
+let g:vimwiki_folding = 'expr:quick'
+let g:vimwiki_list = [{'path': '~/Dropbox/notes/',
+              \ 'syntax': 'markdown', 'ext': '.md'}]
+autocmd FileType vimwiki set ft=markdown

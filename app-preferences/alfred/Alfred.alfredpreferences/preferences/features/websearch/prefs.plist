@@ -4,6 +4,19 @@
 <dict>
 	<key>customSites</key>
 	<dict>
+		<key>1456E123-8D02-4062-B746-CFDBD4FEE1C9</key>
+		<dict>
+			<key>enabled</key>
+			<true/>
+			<key>keyword</key>
+			<string>moviemeter</string>
+			<key>text</key>
+			<string>Search MovieMeter for '{query}'</string>
+			<key>url</key>
+			<string>https://www.moviemeter.nl/site/search?q={query}</string>
+			<key>utf8</key>
+			<true/>
+		</dict>
 		<key>524B1F73-4DE6-4DB9-B01B-A84AA0B61B8C</key>
 		<dict>
 			<key>enabled</key>
@@ -11,7 +24,7 @@
 			<key>keyword</key>
 			<string>gitlab</string>
 			<key>text</key>
-			<string>GitLab</string>
+			<string>Search GitLab for '{query}'</string>
 			<key>url</key>
 			<string>https://gitlab.ta.philips.com/search?search={query}</string>
 			<key>utf8</key>
