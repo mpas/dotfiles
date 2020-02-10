@@ -160,21 +160,24 @@ inoremap <F6> <C-R>=strftime("%H:%M:%S")<CR>
 " Save using <Leader>w
 nnoremap <Leader>w :w<CR>
 
-" Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
+" Disable highlight when <Leader><CR> is pressed
+nmap <silent> <Leader><CR> :noh<CR>
 
 " Move lines
 "move current line to the end of buffer without moving cursor
-nnoremap <leader>mv ddGp``
+nnoremap <Leader>mv ddGp``
 "copy current line to the end of buffer without moving cursor
-nnoremap <leader>cp YGp``
+nnoremap <Leader>cp YGp``
 
 " edit / source vimrc
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <silent> <Leader>ev :e $MYVIMRC<CR>
+nmap <silent> <Leader>sv :so $MYVIMRC<CR>
 
 " edit .zshrc
 nmap <silent> <Leader>eb :e ~/.zshrc<CR>    
+
+" clean views
+nmap <silent> <Leader>cv :!rm -f ~/.vim/view/*=<CR>
 
 " notes and todo
 " nmap <silent> <Leader>gt :e ~/Dropbox/notes/todo.md<CR>
@@ -185,12 +188,19 @@ nmap <silent> <Leader>gn :NERDTree ~/Dropbox/notes<CR>
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
-" Pressing <leader>ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+" Pressing <Leader>ss will toggle and untoggle spell checking
+map <Leader>ss :setlocal spell!<CR>
 
 " Zoom behaviour
 noremap Zz <c-w>_ \| <c-w>\|
 noremap Zo <c-w>noremap Zo <c-w>==
+
+" Remember Folds
+augroup AutoSaveFolds
+  autocmd!
+  autocmd BufWinLeave *.* mkview!
+  autocmd BufWinEnter *.* silent loadview
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
@@ -204,16 +214,16 @@ vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " Buffer handling
-nmap <leader>l :bnext<CR>       " Goto next buffer
-nmap <leader>h :bprevious<CR>   " Goto previous buffer
-nmap <leader>T :enew<cr>        " Open new buffer
+nmap <Leader>l :bnext<CR>       " Goto next buffer
+nmap <Leader>h :bprevious<CR>   " Goto previous buffer
+nmap <Leader>T :enew<CR>        " Open new buffer
 nnoremap <Tab> :bnext<CR>       " Use <TAB> to change to next buffer
 nnoremap <S-Tab> :bprevious<CR> " Use <TAB> to change to previous buffer
 nnoremap <C-X> :bdelete<CR>     " use <Ctrl-X> to delete the current buffer
 noremap <C-p> <ESC>:Buffers<CR> " Use CTRL-p to switch buffers
 
 " Close all the buffers
-map <leader>ba :bufdo bd<cr>
+map <Leader>ba :bufdo bd<CR>
 
 " Enable close of buffer in VIM using c
 nnoremap c :bp\|bd #<CR>
@@ -257,7 +267,7 @@ let g:webdevicons_enable = 1
 
 " Goyo
 let g:goyo_width=160
-nmap <leader>gy :Goyo<CR>       " Enable/Disable Goyo mode
+nmap <Leader>gy :Goyo<CR>       " Enable/Disable Goyo mode
 
 " Git Gutter
 set updatetime=300

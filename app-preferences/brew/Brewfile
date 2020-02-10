@@ -48,7 +48,7 @@ brew "tmux"
 brew "tree"
 brew "unrar"
 brew "unzip"
-brew "vim", link: false
+brew "vim"
 brew "watch"
 brew "wget"
 brew "youtube-dl"
