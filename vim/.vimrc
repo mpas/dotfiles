@@ -6,11 +6,11 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'mtth/scratch.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'junegunn/fzf.vim'
 Plug '/usr/local/opt/fzf'
+Plug 'mtth/scratch.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/goyo.vim'
 Plug 'pbrisbin/vim-mkdir'
@@ -23,6 +23,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'sheerun/vim-polyglot'
+Plug 'dpc/vim-smarttabs'
 Plug 'w0rp/ale'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'ervandew/supertab'
@@ -34,7 +35,6 @@ Plug 'hashivim/vim-terraform'
 
 " Markdown / writing
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 " PlantUML
@@ -52,8 +52,8 @@ Plug 'mengelbrecht/lightline-bufferline'
 Plug 'NLKNguyen/papercolor-theme'
 
 " Elixir
-Plug 'elixir-lang/vim-elixir'
-Plug 'mhinz/vim-mix-format'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'elixir-editors/vim-elixir'
 
 " Ruby
 Plug 'vim-ruby/vim-ruby'
@@ -66,27 +66,28 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype plugin on                  " Enable filetype plugins
+" Enable filetype plugins
+filetype plugin on
 filetype indent on
-set autoread                        " Set to auto read when a file is changed from the outside
+set autoread                "Set to auto read when a file is changed from the outside
 au CursorHold * checktime
-let mapleader = "\<Space>"          " Set space as leader
+let mapleader = "\<Space>"  " Set space as leader
 let maplocalleader = "\\"
-set encoding=utf8                   " Set utf8 as standard encoding and en_US as the standard language
-set ffs=unix,dos,mac                " Use Unix as the standard file type
-set nobackup                        " Turn backup off, since most stuff is in SVN, git et.c anyway...
+set encoding=utf8           " Set utf8 as standard encoding and en_US as the standard language
+set ffs=unix,dos,mac            " Use Unix as the standard file type
+set nobackup                " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nowritebackup
 set noswapfile
-set mouse=a                         " Enable mouse integration
-set nojoinspaces                    " Use one space, not two, after punctuation
-set number relativenumber           " show line numbers
-set clipboard=unnamed               " Enable integration with system clipboard
-set history=50                      " remember more commands and search history
-set undolevels=1000                 " use many muchos levels of undo
+set mouse=a                 " Enable mouse integration
+set nojoinspaces            " Use one space, not two, after punctuation
+set number relativenumber   " show line numbers
+set clipboard=unnamed       " Enable integration with system clipboard
+set history=50              " remember more commands and search history
+set undolevels=1000         " use many muchos levels of undo
 set listchars=tab:>.,trail:.,extends:#,nbsp:.
-set hidden                          " Allow to create a new buffer and change to new one without the need to save it
-set showcmd                         " display incomplete commands
-syntax enable                       " Enable syntax highlighting
+set hidden                  " Allow to create a new buffer and change to new one without the need to save it
+set showcmd                 " display incomplete commands
+syntax enable               " Enable syntax highlighting
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -94,30 +95,30 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set so=7                            " Set 7 lines to the cursor - when moving vertically using j/k
-set wildmenu                        " Turn on the Wild menu
-set wildignore=*.o,*~,*.pyc         " Ignore compiled files
+set so=7                        " Set 7 lines to the cursor - when moving vertically using j/k
+set wildmenu                    " Turn on the Wild menu
+set wildignore=*.o,*~,*.pyc     " Ignore compiled files
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-set ruler                           " Always show current position
-set cmdheight=1                     " Height of the command bar
-set hid                             " A buffer becomes hidden when it is abandoned
-set backspace=eol,start,indent      " Configure backspace so it acts as it should act
+set ruler                       " Always show current position
+set cmdheight=1                 " Height of the command bar
+set hid                         " A buffer becomes hidden when it is abandoned
+set backspace=eol,start,indent  " Configure backspace so it acts as it should act
 set whichwrap+=<,>,h,l
-set smartcase                       " When searching try to be smart about cases
-set hlsearch                        " Highlight search results
-set incsearch                       " Makes search act like search in modern browsers
-set magic                           " For regular expressions turn magic on
-set showmatch                       " Show matching brackets when text indicator is over them
-set noerrorbells                    " No annoying sound on errors
-set ignorecase                      " Ignore case when searching
+set smartcase                   " When searching try to be smart about cases
+set hlsearch                    " Highlight search results
+set incsearch                   " Makes search act like search in modern browsers
+set magic                       " For regular expressions turn magic on
+set showmatch                   " Show matching brackets when text indicator is over them
+set noerrorbells                " No annoying sound on errors
+set ignorecase                  " Ignore case when searching
 set novisualbell
 set t_vb=
 set tm=500
-if has("gui_macvim")                " Properly disable sound on errors on MacVim
+if has("gui_macvim")            " Properly disable sound on errors on MacVim
     autocmd GUIEnter * set vb t_vb=
 endif
-set cursorline                      " enable highlighting of the current line
-set laststatus=2                    " Always show the status line
+set cursorline                  " enable highlighting of the current line
+set laststatus=2                " Always show the status line
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -133,16 +134,15 @@ colorscheme PaperColor
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set expandtab                       " Use spaces instead of tabs
-set smarttab                        " Be smart when using tabs ;)
-set shiftwidth=4                    " 1 tab == 4 spaces
+set autoindent
+set noexpandtab
 set tabstop=4
-set linebreak                       " Linebreak on 500 characters
+set softtabstop=0
+set shiftwidth=4
+set linebreak
 set textwidth=120
-set softtabstop=4                   " Let backspace delete indent
-set autoindent                      " Auto indent
-set smartindent                     " Smart indent
-set wrap                            " Wrap lines
+set smartindent
+set wrap
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Generic key mappings
@@ -226,7 +226,7 @@ nmap <leader>h :bprevious<CR>   " Goto previous buffer
 nmap <leader>T :enew<CR>        " Open new buffer
 nnoremap <Tab> :bnext<CR>       " Use <TAB> to change to next buffer
 nnoremap <S-Tab> :bprevious<CR> " Use <TAB> to change to previous buffer
-nnoremap <C-X> :bdelete<CR>     " use <Ctrl-X> to delete the current buffer
+nnoremap <C-X> :bdelete<CR>     " Use <Ctrl-X> to delete the current buffer
 noremap <C-p> <ESC>:Buffers<CR> " Use CTRL-p to switch buffers
 
 " Close all the buffers
@@ -236,7 +236,7 @@ map <leader>ba :bufdo bd<CR>
 nnoremap c :bp\|bd #<CR>
 
 " Use <Ctrl-X> to delete the current buffer
-nnoremap <C-X> :bdelete<CR>     
+nnoremap <C-X> :bdelete<CR>
 
 " Use CTRL-p to switch buffers
 noremap <C-p> <ESC>:Buffers<CR> 
@@ -244,10 +244,13 @@ noremap <C-p> <ESC>:Buffers<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Polyglot
+let g:polyglot_disabled = ['markdown']
+
 " NerdTree
 nnoremap <leader>f :NERDTreeToggle<Enter>
 let g:NERDTreeChDirMode = 2
-map <leader>r :NERDTreeFind<CR>                             " Change working directory in NerdTree
+map <leader>r :NERDTreeFind<CR>     " Change working directory in NerdTree
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeDirArrows=1
 let NERDTreeShowBookmarks=1
@@ -255,9 +258,9 @@ let g:NERDTreeUpdateOnCursorHold=0
 let g:NERDTreeUpdateOnWrite=0
 
 function! NERDTreeRefresh()
-    if &filetype == "nerdtree"
-        silent exe substitute(mapcheck("R"), "<CR>", "", "")
-    endif
+  if &filetype == "nerdtree"
+    silent exe substitute(mapcheck("R"), "<CR>", "", "")
+  endif
 endfunction
 
 autocmd BufEnter * call NERDTreeRefresh()
@@ -274,7 +277,7 @@ let g:webdevicons_enable = 1
 
 " Goyo
 let g:goyo_width=160
-nmap <leader>gy :Goyo<CR>       " Enable/Disable Goyo mode
+nmap <leader>gy :Goyo<CR>                   " Enable/Disable Goyo mode
 
 " Git Gutter
 set updatetime=300
@@ -290,20 +293,14 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_color_change_percent = 3
 
-" Vim Markdown
-let vim_markdown_folding_disabled = 1
-let g:markdown_folding = 1
-let g:vim_markdown_follow_anchor = 1
-let g:vim_markdown_strikethrough = 1
-
 " ALE (Asynchronous Lint Engine)
 let g:ale_completion_enabled = 1
 let g:ale_fix_on_save = 1
 
 " Terraform settings
-let g:terraform_align=1                                     " Align to community standards
-autocmd FileType terraform setlocal commentstring=#%s       " Commentary settings
-let g:terraform_fmt_on_save = 1                             " Terraform format on save
+let g:terraform_align=1                                 " Align to community standards
+autocmd FileType terraform setlocal commentstring=#%s   " Commentary settings
+let g:terraform_fmt_on_save = 1                         " Terraform format on save
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
@@ -311,24 +308,20 @@ nmap <F8> :TagbarToggle<CR>
 " Lightline settings
 let g:lightline = {
     \ 'colorscheme': 'PaperColor',
-    \       'active': {
-    \           'right': [
-    \               [ 'mode', 'paste' ],
-    \               [ 'gitbranch', 'readonly', 'filename', 'modified' ]
-    \           ]
-    \       },
-    \       'component': {
-    \           'lineinfo': ' %3l:%-2v',
-    \       },
-    \       'component_function': {
-    \           'gitbranch': 'fugitive#head',
-    \       }
+    \ 'active': {
+    \ 'right': [
+    \   [ 'mode', 'paste' ],
+    \   [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+    \ ]
+    \ },
+    \ 'component': { 'lineinfo': ' %3l:%-2v', },
+    \ 'component_function': { 'gitbranch': 'fugitive#head', }
     \ }
 
 let g:lightline#bufferline#filename_modifier = ':t'
-let g:lightline.tabline          = {'left': [['buffers']]}
+let g:lightline.tabline = {'left': [['buffers']]}
 let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
-let g:lightline.component_type   = {'buffers': 'tabsel'}
+let g:lightline.component_type = {'buffers': 'tabsel'}
 set showtabline=2
 autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
 
@@ -342,7 +335,6 @@ au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " VimWiki
-let g:vimwiki_folding = 'expr:quick'
-let g:vimwiki_list = [{'path': '~/Dropbox/notes/',
-              \ 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_folding = 'expr'
+let g:vimwiki_list = [{'path': '~/Dropbox/notes/', 'syntax': 'markdown', 'ext': '.md'}]
 autocmd FileType vimwiki set ft=markdown
