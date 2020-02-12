@@ -8,3 +8,4 @@ stow tig
 stow ranger
 stow tmux
 stow vim
+stow conda
