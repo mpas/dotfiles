@@ -74,5 +74,5 @@ alias brew-backup-restore='cd ~/.dotfiles/app-preferences/brew/ && brew bundle &
 eval "$(direnv hook bash)"
 eval "$(direnv hook zsh)"
 
-alias t='vim ~/Dropbox/vimwiki/todo.md'
-alias n='vim ~/Dropbox/vimwiki/index.md'
+alias t='vim ~/Dropbox/notes/todo.md'
+alias n='vim ~/Dropbox/notes/index.md'
