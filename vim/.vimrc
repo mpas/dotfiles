@@ -27,15 +27,16 @@ Plug 'dpc/vim-smarttabs'
 Plug 'w0rp/ale'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'ervandew/supertab'
-Plug 'vimwiki/vimwiki'
-Plug 'mattn/calendar-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Terraform
 Plug 'hashivim/vim-terraform'
 
 " Markdown / writing
-Plug 'dhruvasagar/vim-table-mode'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'dhruvasagar/vim-table-mode', { 'for': 'markdown' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'jkramer/vim-checkbox', { 'for': 'markdown' }
 
 " PlantUML
 Plug 'aklt/plantuml-syntax'
@@ -43,16 +44,18 @@ Plug 'aklt/plantuml-syntax'
 " Yaml
 Plug 'mrk21/yaml-vim'
 
-" Theme / Interface
+" Interface
 Plug 'ryanoasis/vim-devicons'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'luochen1990/rainbow'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
-Plug 'NLKNguyen/papercolor-theme'
+
+" Themes
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'joshdick/onedark.vim'
 
 " Elixir
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'elixir-editors/vim-elixir'
 
 " Ruby
@@ -115,7 +118,7 @@ set novisualbell
 set t_vb=
 set tm=500
 if has("gui_macvim")            " Properly disable sound on errors on MacVim
-    autocmd GUIEnter * set vb t_vb=
+	autocmd GUIEnter * set vb t_vb=
 endif
 set cursorline                  " enable highlighting of the current line
 set laststatus=2                " Always show the status line
@@ -125,8 +128,9 @@ set laststatus=2                " Always show the status line
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
 set guifont=hack\ nerd\ font:h16
-set background=light
-colorscheme PaperColor
+set background=dark
+let g:one_allow_italics = 1 " I love italic for comments
+colorscheme onedark
 
 " set visual color section 
 " hi Visual guifg=Black guibg=LightBlue gui=none
@@ -187,8 +191,9 @@ nmap <silent> <leader>ep :e ~/.zpreztorc<CR>
 nmap <silent> <leader>cv :!rm -f ~/.vim/view/*=<CR>
 
 " notes and todo
-nmap <silent> <leader>gt :e ~/Dropbox/notes/todo.md<CR>
-nmap <silent> <leader>gn :NERDTree ~/Dropbox/notes<CR>
+nnoremap <silent> <leader>gt :e ~/Dropbox/notes/todo.md<CR>
+nnoremap <silent> <leader>gn :NERDTree ~/Dropbox/notes<CR>
+nnoremap <leader>ww :e ~/Dropbox/notes/index.md<CR>
 
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
@@ -244,6 +249,17 @@ noremap <C-p> <ESC>:Buffers<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vim MarkDown
+set conceallevel=2
+let g:vim_markdown_folding_style_pythonic=1
+let g:vim_markdown_conceal_code_blocks=0
+let g:vim_markdown_follow_anchor=1
+let g:vim_markdown_toc_autofit=1
+let g:vim_markdown_frontmatter=1
+let g:vim_markdown_toml_frontmatter=1
+let g:vim_markdown_json_frontmatter = 1
+let g:vim_markdown_strikethrough = 1
+
 " Polyglot
 let g:polyglot_disabled = ['markdown']
 
@@ -307,7 +323,7 @@ nmap <F8> :TagbarToggle<CR>
 
 " Lightline settings
 let g:lightline = {
-    \ 'colorscheme': 'PaperColor',
+    \ 'colorscheme': 'onedark',
     \ 'active': {
     \ 'right': [
     \   [ 'mode', 'paste' ],
@@ -334,7 +350,7 @@ command! FormatJson execute "%!python -m json.tool"
 au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
-" VimWiki
-let g:vimwiki_folding = 'expr'
-let g:vimwiki_list = [{'path': '~/Dropbox/notes/', 'syntax': 'markdown', 'ext': '.md'}]
-autocmd FileType vimwiki set ft=markdown
+function! CreateNewDiaryFile()
+  let date=strftime("%y-%m-%d")
+  exe "e! " . fnameescape("~/Dropbox/notes/diary/". date . ".md")
+endfunction
