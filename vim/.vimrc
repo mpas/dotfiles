@@ -10,7 +10,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'junegunn/fzf.vim'
 Plug '/usr/local/opt/fzf'
-Plug 'mtth/scratch.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/goyo.vim'
 Plug 'pbrisbin/vim-mkdir'
@@ -28,6 +27,8 @@ Plug 'w0rp/ale'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'ervandew/supertab'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'metakirby5/codi.vim'
+Plug 'Konfekt/vim-scratchpad'
 
 " Terraform
 Plug 'hashivim/vim-terraform'
@@ -52,9 +53,11 @@ Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 
 " Themes
+Plug 'vim-scripts/CycleColor'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'joshdick/onedark.vim'
-
+Plug 'reedes/vim-colors-pencil'
+Plug 'NLKNguyen/papercolor-theme'
 " Elixir
 Plug 'elixir-editors/vim-elixir'
 
@@ -128,9 +131,18 @@ set laststatus=2                " Always show the status line
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
 set guifont=hack\ nerd\ font:h16
-set background=dark
+set background=light
 let g:one_allow_italics = 1 " I love italic for comments
 colorscheme onedark
+
+set background=dark
+colorscheme PaperColor
+
+" let g:pencil_higher_contrast_ui = 0 " 0=low (def), 1=high
+" let g:pencil_spell_undercurl = 1    " 0=underline, 1=undercurl (def)
+" let g:pencil_neutral_code_bg = 0   " 0=gray (def), 1=normal
+" set background=light
+" colorscheme pencil
 
 " set visual color section 
 " hi Visual guifg=Black guibg=LightBlue gui=none
@@ -249,6 +261,9 @@ noremap <C-p> <ESC>:Buffers<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:scratchpad_path = '/Users/phnl310301178/Dropbox/notes/.scratchpads'
+let g:scratchpad_ftype = 'text'
+
 " Vim MarkDown
 set conceallevel=2
 let g:vim_markdown_folding_style_pythonic=1
@@ -280,6 +295,9 @@ function! NERDTreeRefresh()
 endfunction
 
 autocmd BufEnter * call NERDTreeRefresh()
+
+" Vim Table Format
+noremap <leader>tf :TableFormat<CR>         " Execute TableFormat
 
 " Vim Table Mode
 let g:table_mode_corner="|"
