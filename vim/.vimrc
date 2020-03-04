@@ -58,6 +58,7 @@ Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'joshdick/onedark.vim'
 Plug 'reedes/vim-colors-pencil'
 Plug 'NLKNguyen/papercolor-theme'
+
 " Elixir
 Plug 'elixir-editors/vim-elixir'
 
@@ -125,6 +126,7 @@ if has("gui_macvim")            " Properly disable sound on errors on MacVim
 endif
 set cursorline                  " enable highlighting of the current line
 set laststatus=2                " Always show the status line
+set spell spelllang=en_us
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -262,7 +264,7 @@ noremap <C-p> <ESC>:Buffers<CR>
 " => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:scratchpad_path = '/Users/phnl310301178/Dropbox/notes/.scratchpads'
-let g:scratchpad_ftype = 'text'
+let g:scratchpad_ftype = 'md'
 
 " Vim MarkDown
 set conceallevel=2
