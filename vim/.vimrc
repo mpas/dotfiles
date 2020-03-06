@@ -315,6 +315,9 @@ let g:webdevicons_enable = 1
 let g:goyo_width=160
 nmap <leader>gy :Goyo<CR>                   " Enable/Disable Goyo mode
 
+" Ag - Silver Searcher
+nnoremap \ :Ag<SPACE>
+
 " Git Gutter
 set updatetime=300
 
