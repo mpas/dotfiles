@@ -29,6 +29,7 @@ Plug 'ervandew/supertab'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'metakirby5/codi.vim'
 Plug 'Konfekt/vim-scratchpad'
+Plug 'craigemery/vim-autotag'
 
 " Terraform
 Plug 'hashivim/vim-terraform'
@@ -67,6 +68,9 @@ Plug 'vim-ruby/vim-ruby'
 
 " Toml
 Plug 'cespare/vim-toml'
+
+" Python:
+Plug 'davidhalter/jedi-vim'
 
 call plug#end()
 
@@ -247,6 +251,7 @@ nnoremap <Tab> :bnext<CR>       " Use <TAB> to change to next buffer
 nnoremap <S-Tab> :bprevious<CR> " Use <TAB> to change to previous buffer
 nnoremap <C-X> :bdelete<CR>     " Use <Ctrl-X> to delete the current buffer
 noremap <C-p> <ESC>:Buffers<CR> " Use CTRL-p to switch buffers
+nnoremap <leader>. :CtrlPTag<cr>
 
 " Close all the buffers
 map <leader>ba :bufdo bd<CR>
@@ -377,3 +382,4 @@ function! CreateNewDiaryFile()
   let date=strftime("%y-%m-%d")
   exe "e! " . fnameescape("~/Dropbox/notes/diary/". date . ".md")
 endfunction
+
