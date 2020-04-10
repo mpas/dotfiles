@@ -125,10 +125,11 @@ set ignorecase                  " Ignore case when searching
 set novisualbell
 set t_vb=
 set tm=500
-if has("gui_macvim")            " Properly disable sound on errors on MacVim
-	autocmd GUIEnter * set vb t_vb=
+if has("gui_macvim")
+  autocmd GUIEnter * set vb t_vb=   " Properly disable sound on errors on MacVim
+  set guioptions=                   " Remove scrollbars in MacVim
 endif
-set cursorline                  " enable highlighting of the current line
+set cursorline                  " Enable highlighting of the current line
 set laststatus=2                " Always show the status line
 set spell spelllang=en_us
 
@@ -136,7 +137,7 @@ set spell spelllang=en_us
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
-set guifont=hack\ nerd\ font:h16
+set guifont=Fira\ Code:h16
 set background=light
 let g:one_allow_italics = 1 " I love italic for comments
 colorscheme onedark
@@ -211,6 +212,7 @@ nmap <silent> <leader>cv :!rm -f ~/.vim/view/*=<CR>
 " notes and todo
 nnoremap <silent> <leader>gt :e ~/Dropbox/notes/todo.md<CR>
 nnoremap <silent> <leader>gn :NERDTree ~/Dropbox/notes<CR>
+nnoremap <silent> <leader>cn :cd ~/Dropbox/notes<CR>
 nnoremap <leader>ww :e ~/Dropbox/notes/index.md<CR>
 
 " Visual mode pressing * or # searches for the current selection

@@ -27,6 +27,7 @@ alias dc="docker-compose $1"
 alias drit="docker run -it --rm ${1} /bin/bash"
 alias dr="docker run ${1}"
 alias dp="docker system prune"
+alias dpa="docker sytem prune -a"
 
 # Git
 alias gf="git fetch"
@@ -64,6 +65,8 @@ alias netCons='lsof -i'                             # netCons:      Show all ope
 alias flushDNS='dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
 alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
 alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
+
+alias resetAudio='sudo killall coreaudiod'
 
 # Brew update
 alias brew-update='brew update && brew upgrade && brew cask upgrade && brew cleanup'

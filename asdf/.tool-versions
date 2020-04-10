@@ -8,4 +8,4 @@ crystal 0.32.1
 micronaut 1.2.10
 erlang 22.2.4
 elixir 1.10.0
-python 3.8.1 miniconda3-4.3.30
+python 3.8.2

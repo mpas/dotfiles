@@ -36,8 +36,12 @@ export PATH="~/miniconda3/bin:$PATH"
 
 # asdf
 [ -f $(brew --prefix asdf)/asdf.sh ] && source $(brew --prefix asdf)/asdf.sh
+
 # Set JAVA_HOME for asdf java plugin
 . ~/.asdf/plugins/java/set-java-home.sh
+
+# Configure prompt
+. ~/prompt/.spaceship
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/$USER/.sdkman"
