@@ -27,7 +27,7 @@ alias dc="docker-compose $1"
 alias drit="docker run -it --rm ${1} /bin/bash"
 alias dr="docker run ${1}"
 alias dp="docker system prune"
-alias dpa="docker sytem prune -a"
+alias dpa="docker system prune -a"
 
 # Git
 alias gf="git fetch"

@@ -2,3 +2,6 @@
 .DS_Store
 *.lock.*
 ranger/.config/coc/**
+node_modules
+ranger/.config/configstore
+ranger/.config/yarn
