@@ -22,6 +22,8 @@ asdf plugin-add terraform-validator https://github.com/looztra/asdf-terraform-va
 asdf plugin-add yarn
 asdf plugin-add crystal https://github.com/asdf-community/asdf-crystal.git
 asdf plugin-add micronaut https://github.com/weibemoura/asdf-micronaut.git
+asdf plugin-add golang https://github.com/kennyp/asdf-golang.git
+asdf plugin-add clojure https://github.com/halcyon/asdf-clojure.git
 
 # Install asdf versions
 asdf install
