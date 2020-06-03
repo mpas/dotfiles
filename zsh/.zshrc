@@ -38,7 +38,7 @@ export PATH="~/miniconda3/bin:$PATH"
 [ -f $(brew --prefix asdf)/asdf.sh ] && source $(brew --prefix asdf)/asdf.sh
 
 # Set JAVA_HOME for asdf java plugin
-. ~/.asdf/plugins/java/set-java-home.sh
+. ~/.asdf/plugins/java/set-java-home.zsh
 
 # Configure prompt
 . ~/prompt/.spaceship
