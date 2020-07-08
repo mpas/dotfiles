@@ -43,6 +43,9 @@ export PATH="~/miniconda3/bin:$PATH"
 # Configure prompt
 . ~/prompt/.spaceship
 
+# Go 
+export GOPATH=~/Development/go
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/$USER/.sdkman"
 [[ -s "/Users/$USER/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/$USER/.sdkman/bin/sdkman-init.sh"
