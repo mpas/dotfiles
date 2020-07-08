@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ejectBlacklist</key>
+	<array>
+		<string>com.apple.TimeMachine*</string>
+		<string>Macintosh HD</string>
+		<string>Macintosh HD - Data</string>
+		<string>MobileBackups</string>
+	</array>
 	<key>ejectallKeywordEnabled</key>
 	<true/>
 </dict>

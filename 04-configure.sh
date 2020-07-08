@@ -18,6 +18,7 @@ asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
 asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 asdf plugin-add terraform https://github.com/Banno/asdf-hashicorp.git
+asdf plugin-add vault https://github.com/Banno/asdf-hashicorp.git
 asdf plugin-add terraform-validator https://github.com/looztra/asdf-terraform-validator
 asdf plugin-add yarn
 asdf plugin-add crystal https://github.com/asdf-community/asdf-crystal.git

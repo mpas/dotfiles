@@ -47,6 +47,9 @@ alias git-cfg-google='git-cfg "marco.pasopas@gmail.com" "Marco Pas"'
 # Groovy
 alias gconsole="groovyConsole"
 
+# Go
+alias go-reshim='asdf reshim golang && export GOV=$(asdf current golang | sed  '\''s/ *(set by .*)//g'\'') && export GOROOT="$ASDFINSTALLS/golang/$GOV/go/"'
+
 # Terraform
 alias tf="terraform"
 alias tfg="terraform get --update"
