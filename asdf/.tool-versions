@@ -1,0 +1,14 @@
+java adopt-openjdk-13.0.2+8
+maven 3.6.3
+gradle 6.1
+nodejs 13.6.0
+terraform 0.12.19
+terraform-validator 3.1.1
+crystal 0.32.1
+micronaut 1.2.10
+erlang 22.2.4
+elixir 1.10.0
+python 3.8.2
+yarn 1.22.4
+golang 1.14.4
+clojure 1.10.1
