@@ -25,11 +25,13 @@ for f in $DOT/zsh/functions/*; do source $f; done
 
 # Override and/or add custom aliasses/functions
 # for f in ~/dotfiles-local/*; do source $f; done
-
 export PATH="/usr/local/sbin:$PATH"
 
+# Add emacs to path
+export PATH="$HOME/.emacs.d/bin/:$PATH" 
+
 # miniconda - for Python development
-export PATH="~/miniconda3/bin:$PATH"
+# export PATH="~/miniconda3/bin:$PATH"
 
 # fzf - fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

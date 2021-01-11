@@ -56,6 +56,10 @@ alias tfg="terraform get --update"
 alias tfp="terraform plan"
 alias tfa="terraform apply"
 
+# Aws Vault
+alias av="aws-vault"
+alias avl="aws-vault login ${1}"
+
 # ECR Login
 alias ecr='eval "$(aws ecr get-login --no-include-email --region ${1})"'
 
@@ -72,13 +76,9 @@ alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listenin
 alias resetAudio='sudo killall coreaudiod'
 
 # Brew update
-alias brew-update='brew update && brew upgrade && brew cask upgrade && brew cleanup'
+alias brew-update='brew update && brew upgrade && brew upgrade --cask && brew cleanup'
 alias brew-backup='cd ~/.dotfiles/app-preferences/brew && rm -f Brewfile && brew bundle dump && cd -'
-alias brew-backup-restore='cd ~/.dotfiles/app-preferences/brew/ && brew bundle && cd -'
 
 # Enable direnv into bash/zsh
 eval "$(direnv hook bash)"
 eval "$(direnv hook zsh)"
-
-alias t='code ~/Dropbox/notes/todo.md'
-alias n='code ~/Dropbox/notes/'

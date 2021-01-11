@@ -1462,7 +1462,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>458 408 620 392 0 0 1536 937 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>710 338 810 550 0 0 1920 1057 </string>
+	<string>461 300 1250 548 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>2 178 1340 639 0 0 1344 817 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2263,14 +2263,14 @@
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{0, 0}, {1344, 840}}</string>
+		<string>{{0, 0}, {1536, 960}}</string>
 		<key>topLeft</key>
-		<string>{269, 621}</string>
+		<string>{278, 760}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>D529267D-91F5-47C1-8454-8449206A0177</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>41</integer>
+	<integer>52</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -3041,7 +3041,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-07-05T09:39:03Z</date>
+	<date>2020-09-02T09:09:09Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
@@ -3055,7 +3055,7 @@
 	<key>SoundForEsc</key>
 	<false/>
 	<key>TabStyleWithAutomaticOption</key>
-	<integer>2</integer>
+	<integer>6</integer>
 	<key>TabViewType</key>
 	<integer>0</integer>
 	<key>UseBorder</key>

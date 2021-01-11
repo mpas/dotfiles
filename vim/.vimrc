@@ -294,8 +294,8 @@ map <leader>r :NERDTreeFind<CR>     " Change working directory in NerdTree
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeDirArrows=1
 let NERDTreeShowBookmarks=1
-let g:NERDTreeUpdateOnCursorHold=0
-let g:NERDTreeUpdateOnWrite=0
+let g:NERDTreeGitStatusUpdateOnCursorHold=0
+let g:NERDTreeGitStatusUpdateOnWrite=0
 
 function! NERDTreeRefresh()
   if &filetype == "nerdtree"
