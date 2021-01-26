@@ -76,10 +76,13 @@ alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listenin
 alias resetAudio='sudo killall coreaudiod'
 
 # Brew update
-alias brew-update='brew update && brew upgrade && brew cask upgrade && brew cleanup'
+alias brew-update='brew update && brew upgrade && brew upgrade --cask && brew cleanup'
 alias brew-backup='cd ~/.dotfiles/app-preferences/brew && rm -f Brewfile && brew bundle dump && cd -'
 alias brew-backup-restore='cd ~/.dotfiles/app-preferences/brew/ && brew bundle && cd -'
 
 # Enable direnv into bash/zsh
 eval "$(direnv hook bash)"
 eval "$(direnv hook zsh)"
+
+alias n='emacs ~/Dropbox/notes/org/ &'
+alias e='emacs . &'

@@ -30,9 +30,6 @@ export PATH="/usr/local/sbin:$PATH"
 # Add emacs to path
 export PATH="$HOME/.emacs.d/bin/:$PATH" 
 
-# miniconda - for Python development
-# export PATH="~/miniconda3/bin:$PATH"
-
 # fzf - fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -54,14 +51,14 @@ export SDKMAN_DIR="/Users/$USER/.sdkman"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/phnl310301178/.asdf/installs/python/miniconda3-4.3.30/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/phnl310301178/.asdf/installs/python/miniconda3-4.7.12/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/phnl310301178/.asdf/installs/python/miniconda3-4.3.30/etc/profile.d/conda.sh" ]; then
-        . "/Users/phnl310301178/.asdf/installs/python/miniconda3-4.3.30/etc/profile.d/conda.sh"
+    if [ -f "/Users/phnl310301178/.asdf/installs/python/miniconda3-4.7.12/etc/profile.d/conda.sh" ]; then
+        . "/Users/phnl310301178/.asdf/installs/python/miniconda3-4.7.12/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/phnl310301178/.asdf/installs/python/miniconda3-4.3.30/bin:$PATH"
+        export PATH="/Users/phnl310301178/.asdf/installs/python/miniconda3-4.7.12/bin:$PATH"
     fi
 fi
 unset __conda_setup
