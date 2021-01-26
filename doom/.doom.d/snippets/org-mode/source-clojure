@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: source block - clojure
+# key: scl
+# --
+#+begin_src clojure
+$0
+#+end_src

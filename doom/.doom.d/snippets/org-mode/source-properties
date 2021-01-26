@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: properties
+# key: spro
+# --
+:PROPERTIES:
+$0
+:END:    
+
