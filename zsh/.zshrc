@@ -23,10 +23,6 @@ for f in $DOT/zsh/configs/*; do source $f; done
 # Functions
 for f in $DOT/zsh/functions/*; do source $f; done
 
-# Override and/or add custom aliasses/functions
-# for f in ~/dotfiles-local/*; do source $f; done
-export PATH="/usr/local/sbin:$PATH"
-
 # Add emacs to path
 export PATH="$HOME/.emacs.d/bin/:$PATH" 
 
@@ -35,6 +31,10 @@ export PATH="$HOME/.emacs.d/bin/:$PATH"
 
 # asdf
 [ -f $(brew --prefix asdf)/asdf.sh ] && source $(brew --prefix asdf)/asdf.sh
+
+# Override and/or add custom aliasses/functions
+# for f in ~/dotfiles-local/*; do source $f; done
+export PATH="/usr/bin:/usr/local/sbin:$PATH"
 
 # Set JAVA_HOME for asdf java plugin
 . ~/.asdf/plugins/java/set-java-home.zsh

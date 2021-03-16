@@ -2,12 +2,13 @@
 ;;; $DOOMDIR/packages.el
 (package! org-fancy-priorities)
 (package! move-text)
-(package! origami)
 (package! lorem-ipsum)
 (package! auto-dim-other-buffers)
-;; (package! web-mode)
-
-
+(package! clojure-snippets)
+(package! command-log-mode)
+(package! org-download)
+(package! zoom-window)
+(package! orgtbl-aggregate)
 ;; To install a package with Doom you must declare them here and run 'doom sync'
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.

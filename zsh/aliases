@@ -75,10 +75,16 @@ alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listenin
 
 alias resetAudio='sudo killall coreaudiod'
 
+# CarbonBlack
+alias unload-carbonblack='sudo launchctl unload /Library/LaunchDaemons/com.carbonblack.daemon.plist'
+
 # Brew update
 alias brew-update='brew update && brew upgrade && brew upgrade --cask && brew cleanup'
 alias brew-backup='cd ~/.dotfiles/app-preferences/brew && rm -f Brewfile && brew bundle dump && cd -'
 alias brew-backup-restore='cd ~/.dotfiles/app-preferences/brew/ && brew bundle && cd -'
+
+# System update
+alias system-update='brew-update && prezto-update && doom upgrade'
 
 # Enable direnv into bash/zsh
 eval "$(direnv hook bash)"

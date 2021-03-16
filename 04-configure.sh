@@ -30,3 +30,6 @@ asdf plugin-add lein https://github.com/miorimmax/asdf-lein.git
 # Install asdf versions
 asdf install
 cd -
+
+# Create logical link for espanso
+ln -s "$HOME/.dotfiles/espanso" "$HOME/Library/Preferences/espanso"

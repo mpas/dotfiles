@@ -32,22 +32,23 @@ zstyle ':prezto:load' pmodule-allow-overrides 'yes'
 zstyle ':prezto:load' pmodule \
   'environment' \
   'terminal' \
-  'editor' \
   'history' \
   'directory' \
-  'spectrum' \
-  'utility' \
   'completion' \
-  'docker' \
-  'osx' \
-  'git' \
-  'python' \
   'fasd' \
   'syntax-highlighting' \
   'history-substring-search' \
-  'ssh' \
   'contrib-prompt' \
   'prompt'
+
+  # 'editor' \
+  # 'spectrum' \
+  # 'utility' \
+  # 'docker' \
+  # 'osx' \
+  # 'git' \
+  # 'python' \
+  # 'ssh' \
 
 #
 # Autosuggestions
