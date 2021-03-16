@@ -35,7 +35,7 @@
 			<key>enabled</key>
 			<true/>
 			<key>keyword</key>
-			<string>ghn</string>
+			<string>github</string>
 			<key>text</key>
 			<string>GitHub - Notifications</string>
 			<key>url</key>
@@ -48,7 +48,7 @@
 			<key>enabled</key>
 			<true/>
 			<key>keyword</key>
-			<string>gh</string>
+			<string>github</string>
 			<key>text</key>
 			<string>Search GitHub</string>
 			<key>url</key>
