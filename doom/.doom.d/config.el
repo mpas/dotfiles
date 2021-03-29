@@ -78,6 +78,9 @@
       :desc "Cycle through windows"
       :ng "C-w C-w" #'evil-window-next)
 
+(add-hook 'org-mode-hook (lambda ()
+                           (define-key org-mode-map (kbd "C-c g") 'org-mac-grab-link)))
+
 (defun insert-date (arg)
   (interactive "P")
   (insert (if arg
@@ -87,6 +90,78 @@
 (defun insert-timestamp ()
   (interactive)
   (insert (format-time-string "%Y-%m-%dT%H:%M:%S")))
+
+(defun jx/insert-custom-clock-entry ()
+  (interactive)
+  (insert "CLOCK: ")
+  (org-time-stamp-inactive)
+  (insert "--")
+  ;; Inserts the current time by default.
+  (let ((current-prefix-arg '(4))) (call-interactively 'org-time-stamp-inactive))
+  (org-ctrl-c-ctrl-c))
+
+                                        ; Shortcut
+(define-key evil-normal-state-map (kbd "C-'") 'jx/insert-custom-clock-entry)
+(define-key evil-insert-state-map (kbd "C-'") 'jx/insert-custom-clock-entry)
+
+(setq my/insert-clipboard-image-use-headername t)
+
+(setq my/insert-clipboard-image-use-buffername t)
+
+;; Overview
+;; --------
+;; Inserts an image from the clipboard by prompting the user for a filename.
+;; Default extension for the pasted filename is .png
+
+;; A ./images directory will be created relative to the current Org-mode document to store the images.
+
+;; The default name format of the pasted image is:
+;; filename: <yyyymmdd>_<hhmmss>_-_<image-filename>.png
+
+;; Important
+;; --------
+;; This function depends on 'pngpaste' to paste the clipboard image
+;; -> $ brew install pngpaste
+
+;; Basic Customization
+;; -------------------
+;; Include the current Org-mode header as part of the image name.
+;; (setq my/insert-clipboard-image-use-headername t)
+;; filename: <yyyymmdd>_<hhmmss>_-_<headername>_-_<image-filename>.png
+
+;; Include the buffername as part of the image name.
+;; (setq my/insert-clipboard-image-use-buffername t)
+;; filename: <yyyymmdd>_<hhmmss>_-_<buffername>_-_<image-filename>.png
+
+;; Full name format
+;; filename: <yyyymmdd>_<hhmmss>_-_<buffername>_-_<headername>_-_<image-filename>.png
+(defun my/insert-clipboard-image (filename)
+  "Inserts an image from the clipboard"
+  (interactive "sFilename to paste: ")
+  (let ((file
+         (concat
+          (file-name-directory buffer-file-name)
+          "images/"
+          (format-time-string "%Y%m%d_%H%M%S_-_")
+          (if (bound-and-true-p my/insert-clipboard-image-use-buffername)
+              (concat (s-replace "-" "_"
+                                 (downcase (file-name-sans-extension (buffer-name)))) "_-_")
+            "")
+          (if (bound-and-true-p my/insert-clipboard-image-use-headername)
+              (concat (s-replace " " "_" (downcase (nth 4 (org-heading-components)))) "_-_")
+            "")
+          filename ".png")))
+
+    ;; create images directory
+    (unless (file-exists-p (file-name-directory file))
+      (make-directory (file-name-directory file)))
+
+    ;; paste file from clipboard
+    (shell-command (concat "pngpaste " file))
+    (insert (concat "[[./images/" (file-name-nondirectory file) "]]"))))
+
+(map! :desc "Insert clipboard image"
+      :n "C-M-y" 'my/insert-clipboard-image)
 
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
@@ -152,6 +227,61 @@
         ("Updated" 10 t nill updated nil)))
 )
 
+(defun acg/parse-git-remote-url (url)
+  "If necessary, convert an SSH to HTTPS git remote location."
+  (if (string-match "^http" url)
+      url
+    (replace-regexp-in-string "\\(.*\\)@\\(.*\\):\\(.*\\)\\(\\.git?\\)"
+                              "https://\\2/\\3"
+                              url)))
+
+(defun acg/magit-open-remote-repo ()
+  "Opens a remote repo URL. Prompts the user to choose a remote."
+  (interactive)
+  (let* ((remote-name (magit-read-remote "Choose remote repository"))
+         (url (magit-get "remote" remote-name "url")))
+    (browse-url (acg/parse-git-remote-url url))
+    (message "Opening repo %s" url)))
+
+(defun acg/project-get-root-relative-path (&optional path)
+  "Returns PATH relative to a project root."
+  (let* ((path (expand-file-name (or path default-directory)))
+         (root-path (expand-file-name
+                     (cdr (project--find-in-directory path))))
+         (root-length (length root-path))
+         (rel-path (substring path root-length)))
+    rel-path))
+
+(defun acg/magit-open-remote-dwim (&optional dir)
+  "Opens a remote repo URL in the exact DIR location. Prompts the user to choose a remote."
+  (interactive)
+  (let* ((file (buffer-file-name))
+         (dir (expand-file-name (or dir default-directory)))
+         (remote-name (magit-read-remote "Choose remote repository" nil t))
+         (url (acg/parse-git-remote-url
+               (magit-get "remote" remote-name "url")))
+         ;; Identify remote hosting type (e.g., GitHub, GitLab, etc.)
+         (remote-hosting-type
+          (cond
+           ((string-match-p (regexp-quote "github") url) "GitHub")
+           ((string-match-p (regexp-quote "gitlab") url) "GitLab")
+           (t (completing-read "Choose remote hosting type:"
+                               '("GitHub" "GitLab"))))))
+    ;; Adapt to GitLab's URL standard
+    (when (string= remote-hosting-type "GitLab")
+      (setq url (concat url "/-")))
+    ;; Adapt to differences in file and directory URL paths
+    (if file
+        (setq url (concat url "/blob/" (magit-get-current-branch)
+                          "/" (acg/project-get-root-relative-path file)))
+      (setq url (concat url "/tree/" (magit-get-current-branch)
+                        "/" (acg/project-get-root-relative-path dir))))
+    ;; Perform actions
+    (browse-url url)
+    (message "Opening %s" url)))
+
+(setq ob-mermaid-cli-path "/usr/local/bin/mmdc")
+
 (setq org-directory my/org-base-dir)
 
 (setq org-hide-emphasis-markers t)
@@ -160,12 +290,26 @@
 
 (setq org-log-done 'time)
 
-(setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "In Progress(p)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c)")))
+(setq org-todo-keywords
+      '((sequence "TODO" "DOING" "BLOCKED" "|" "DONE" "ARCHIVED")))
 
 (setq org-refile-targets '((concat my/org-base-dir "inbox.org" :maxlevel . 2)))
 
 (after! org
   (setq org-tags-match-list-sublevels 'indented))
+
+(after! org
+  (setq org-tags-column -120))
+
+(after! org
+  (setq org-agenda-prefix-format
+        '((agenda . " %i %-12:c%?-12t% s")
+          (todo   . " ")
+          (tags   . " %i %-12:c")
+          (search . " %i %-12:c"))))
+
+(after! org
+  (setq org-image-actual-width (/ (display-pixel-width) 2)))
 
 (defun clockable-files ()
   "Returns org files that contain clockable items"
@@ -185,16 +329,12 @@
             (format "%s:%s" hours minutes))))
     time-string))
 
+(setq org-agenda-hide-tags-regexp ".")
+
 (after! org
-  (setq org-agenda-files (directory-files-recursively my/org-base-dir "\.org$")))
-
-(defun org-agenda-inactive ()
-  (interactive)
-  (let ((org-agenda-include-inactive-timestamps t))
-    (org-agenda)))
-
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c b") 'org-agenda-inactive)
+  (setq org-agenda-files (list
+                          (concat my/org-base-dir "inbox.org")
+                          (concat my/org-base-dir "agenda.org"))))
 
 (after! org
   (setq calendar-week-start-day 1)
@@ -227,13 +367,18 @@
   ;; clean the intial existing template list
   (setq org-capture-templates '())
 
-  ;; add todo capture template
+
+  ;; add inbox capture template
   (add-to-list 'org-capture-templates
-               '("t"
-                 "Todo [inbox]"
-                 entry
-                 (file+headline "inbox.org" "Inbox")
-                 "* TODO %i%?"))
+               `("i" "Inbox" entry (file "inbox.org")
+                 ,(concat "* TODO %?\n"
+                          "/Entered on/ %U")))
+
+  ;; add meeting capture template
+  (add-to-list 'org-capture-templates
+               `("m" "Meeting" entry (file+headline "agenda.org" "Planned")
+                 ,(concat "* %? :meeting:\n"
+                          "<%<%Y-%m-%d %a %H:00>>")))
 
   ;; add hugo capture template
   (add-to-list 'org-capture-templates
@@ -260,6 +405,19 @@
 
 (setq org-journal-file-format "%Y-%m-%d.org")
 
+(setq org-journal-enable-agenda-integration t)
+
+(setq org-journal-tag-persistent-alist '(
+                                         ("@work" . ?w)
+                                         ("@private" . ?p)
+                                         ("fontys" . ?f)
+                                         ("ctoprogram" . ?c)
+                                         ("integrationlab" . ?i)
+                                         ("swat" . ?s)
+                                         ("interruption" . ?!)
+                                         ("various" . ?v)
+                                         ))
+
 (setq org-roam-directory (concat my/org-base-dir "roam"))
 
 (setq +org-roam-open-buffer-on-find-file nil)
@@ -268,7 +426,7 @@
 (custom-set-variables
  '(zoom-window-mode-line-color "purple"))
 (map! :desc "Zoom/Unzoom the current window"
-      :n "C-w C-z" 'zoom-window-zoom)
+      :n "C-w z" 'zoom-window-zoom)
 
 (after! smartparens
   (add-hook! (clojure-mode emacs-lisp-mode lisp-mode cider-repl-mode) :append #'smartparens-strict-mode))

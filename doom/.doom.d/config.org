@@ -5,7 +5,7 @@
 #+PROPERTY: header-args:emacs-lisp :tangle config.el
 #+STARTUP: fold
 
-* Table of Contents :TOC_3:noexport:
+* Table of Contents                                                                                             :TOC_3:noexport:
 - [[#references][References]]
   - [[#config-file-headers][Config file headers]]
   - [[#customized-variables][Customized variables]]
@@ -21,9 +21,12 @@
     - [[#remove-entire-line-when-at-the-beginning-c-k][Remove entire line when at the beginning =C-k=]]
     - [[#closes-the-current-buffer-c][Closes the current buffer =C=]]
     - [[#cycle-through-the-open-windows-c-w-c-w][Cycle through the open windows =C-w C-w=]]
+    - [[#grab-open-link-from-application-c-c-g][Grab open link from application =C-c g=]]
   - [[#custom-functions][Custom functions]]
     - [[#insert-date][Insert date]]
     - [[#insert-a-timestamp][Insert a timestamp]]
+    - [[#insert-custom-clock-entry-c-][Insert custom clock entry =C-'=]]
+    - [[#insert-clipboard-image-c-m-y][Insert clipboard image =C-M-y=]]
 - [[#visual-settings][Visual settings]]
   - [[#maximize-emacs-frame-on-startup][Maximize Emacs frame on startup]]
   - [[#theme][Theme]]
@@ -45,6 +48,8 @@
   - [[#dired][Dired]]
     - [[#enable-dual-pane][Enable dual pane]]
   - [[#forge][Forge]]
+  - [[#magit][Magit]]
+  - [[#ob-mermaid][Ob-mermaid]]
   - [[#org-mode][Org mode]]
     - [[#set-the-org-base-directory][Set the org base directory]]
     - [[#org-general-settings][Org general settings]]
@@ -206,6 +211,15 @@ Close the current buffer mapped to 'c' in normal mode.
       :ng "C-w C-w" #'evil-window-next)
 #+end_src
 
+*** Grab open link from application =C-c g=
+
+Shortcut to grab a link from an open Mac application.
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook (lambda ()
+                           (define-key org-mode-map (kbd "C-c g") 'org-mac-grab-link)))
+#+end_src
+
 ** Custom functions
 
 *** Insert date
@@ -224,6 +238,102 @@ Close the current buffer mapped to 'c' in normal mode.
 (defun insert-timestamp ()
   (interactive)
   (insert (format-time-string "%Y-%m-%dT%H:%M:%S")))
+#+end_src
+
+*** Insert custom clock entry =C-'=
+
+#+begin_src emacs-lisp
+(defun jx/insert-custom-clock-entry ()
+  (interactive)
+  (insert "CLOCK: ")
+  (org-time-stamp-inactive)
+  (insert "--")
+  ;; Inserts the current time by default.
+  (let ((current-prefix-arg '(4))) (call-interactively 'org-time-stamp-inactive))
+  (org-ctrl-c-ctrl-c))
+
+                                        ; Shortcut
+(define-key evil-normal-state-map (kbd "C-'") 'jx/insert-custom-clock-entry)
+(define-key evil-insert-state-map (kbd "C-'") 'jx/insert-custom-clock-entry)
+#+end_src
+
+*** Insert clipboard image =C-M-y=
+
+Use the current headername as part of the image filename
+#+begin_src emacs-lisp
+(setq my/insert-clipboard-image-use-headername t)
+#+end_src
+
+Use the current buffername as part of the screenshot filename
+#+begin_src emacs-lisp
+(setq my/insert-clipboard-image-use-buffername t)
+#+end_src
+
+Function that allows a screenshot to be pasted in a Org-mode file. The relative link will be pasted into the document and a relative =./images= will be created to store the images.
+
+#+begin_src emacs-lisp
+;; Overview
+;; --------
+;; Inserts an image from the clipboard by prompting the user for a filename.
+;; Default extension for the pasted filename is .png
+
+;; A ./images directory will be created relative to the current Org-mode document to store the images.
+
+;; The default name format of the pasted image is:
+;; filename: <yyyymmdd>_<hhmmss>_-_<image-filename>.png
+
+;; Important
+;; --------
+;; This function depends on 'pngpaste' to paste the clipboard image
+;; -> $ brew install pngpaste
+
+;; Basic Customization
+;; -------------------
+;; Include the current Org-mode header as part of the image name.
+;; (setq my/insert-clipboard-image-use-headername t)
+;; filename: <yyyymmdd>_<hhmmss>_-_<headername>_-_<image-filename>.png
+
+;; Include the buffername as part of the image name.
+;; (setq my/insert-clipboard-image-use-buffername t)
+;; filename: <yyyymmdd>_<hhmmss>_-_<buffername>_-_<image-filename>.png
+
+;; Full name format
+;; filename: <yyyymmdd>_<hhmmss>_-_<buffername>_-_<headername>_-_<image-filename>.png
+(defun my/insert-clipboard-image (filename)
+  "Inserts an image from the clipboard"
+  (interactive "sFilename to paste: ")
+  (let ((file
+         (concat
+          (file-name-directory buffer-file-name)
+          "images/"
+          (format-time-string "%Y%m%d_%H%M%S_-_")
+          (if (bound-and-true-p my/insert-clipboard-image-use-buffername)
+              (concat (s-replace "-" "_"
+                                 (downcase (file-name-sans-extension (buffer-name)))) "_-_")
+            "")
+          (if (bound-and-true-p my/insert-clipboard-image-use-headername)
+              (concat (s-replace " " "_" (downcase (nth 4 (org-heading-components)))) "_-_")
+            "")
+          filename ".png")))
+
+    ;; create images directory
+    (unless (file-exists-p (file-name-directory file))
+      (make-directory (file-name-directory file)))
+
+    ;; paste file from clipboard
+    (shell-command (concat "pngpaste " file))
+    (insert (concat "[[./images/" (file-name-nondirectory file) "]]"))))
+#+end_src
+
+#+RESULTS:
+: my/insert-clipboard-image
+
+Bind insert clipboard image to Ctrl-Option-y
+
+#+begin_src emacs-lisp
+(map! :desc "Insert clipboard image"
+      :n "C-M-y" 'my/insert-clipboard-image)
+
 #+end_src
 
 * Visual settings
@@ -373,6 +483,74 @@ Go to dired, split your window, split-window-vertically & go to another dired di
 )
 #+end_src
 
+** Magit
+
+Functions to open links to the files in a Git Repo. This is shameless taken from [[https://gist.github.com/dotemacs/9a0433341e75e01461c9][GitHub Gist]] and [[https://github.com/arthurcgusmao/acg-emacs/commit/2257058e424b82e1d670cadf2e870f0a6a37d669][ACG Emacs]]
+
+#+begin_src emacs-lisp
+(defun acg/parse-git-remote-url (url)
+  "If necessary, convert an SSH to HTTPS git remote location."
+  (if (string-match "^http" url)
+      url
+    (replace-regexp-in-string "\\(.*\\)@\\(.*\\):\\(.*\\)\\(\\.git?\\)"
+                              "https://\\2/\\3"
+                              url)))
+
+(defun acg/magit-open-remote-repo ()
+  "Opens a remote repo URL. Prompts the user to choose a remote."
+  (interactive)
+  (let* ((remote-name (magit-read-remote "Choose remote repository"))
+         (url (magit-get "remote" remote-name "url")))
+    (browse-url (acg/parse-git-remote-url url))
+    (message "Opening repo %s" url)))
+
+(defun acg/project-get-root-relative-path (&optional path)
+  "Returns PATH relative to a project root."
+  (let* ((path (expand-file-name (or path default-directory)))
+         (root-path (expand-file-name
+                     (cdr (project--find-in-directory path))))
+         (root-length (length root-path))
+         (rel-path (substring path root-length)))
+    rel-path))
+
+(defun acg/magit-open-remote-dwim (&optional dir)
+  "Opens a remote repo URL in the exact DIR location. Prompts the user to choose a remote."
+  (interactive)
+  (let* ((file (buffer-file-name))
+         (dir (expand-file-name (or dir default-directory)))
+         (remote-name (magit-read-remote "Choose remote repository" nil t))
+         (url (acg/parse-git-remote-url
+               (magit-get "remote" remote-name "url")))
+         ;; Identify remote hosting type (e.g., GitHub, GitLab, etc.)
+         (remote-hosting-type
+          (cond
+           ((string-match-p (regexp-quote "github") url) "GitHub")
+           ((string-match-p (regexp-quote "gitlab") url) "GitLab")
+           (t (completing-read "Choose remote hosting type:"
+                               '("GitHub" "GitLab"))))))
+    ;; Adapt to GitLab's URL standard
+    (when (string= remote-hosting-type "GitLab")
+      (setq url (concat url "/-")))
+    ;; Adapt to differences in file and directory URL paths
+    (if file
+        (setq url (concat url "/blob/" (magit-get-current-branch)
+                          "/" (acg/project-get-root-relative-path file)))
+      (setq url (concat url "/tree/" (magit-get-current-branch)
+                        "/" (acg/project-get-root-relative-path dir))))
+    ;; Perform actions
+    (browse-url url)
+    (message "Opening %s" url)))
+#+end_src
+
+** Ob-mermaid
+
+[[https://mermaid-js.github.io/][Mermaid]] lets you create diagrams using text and code. [[https://github.com/arnm/ob-mermaid][Ob-mermaid]] enables the use of this inside Org-mode.
+
+Set the path to the Mermaid CLI, this has been installed using =brew install mermaid-cli== but the executable is named mmdc.
+#+begin_src emacs-lisp
+(setq ob-mermaid-cli-path "/usr/local/bin/mmdc")
+#+end_src
+
 ** Org mode
 
 *** Set the org base directory
@@ -406,10 +584,11 @@ Use Org Log =done= to auto insert a 'CLOSED' property when changing state below 
 (setq org-log-done 'time)
 #+end_src
 
-Set the default todo keywords
+Set default todo/tasks states
 
 #+begin_src emacs-lisp
-  (setq org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "In Progress(p)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELED(c)")))
+  (setq org-todo-keywords
+        '((sequence "TODO" "DOING" "BLOCKED" "|" "DONE" "ARCHIVED")))
 #+end_src
 
 Set the refile targets
@@ -425,6 +604,31 @@ With (setq org-tags-match-list-sublevels 'indented), a number of dots equal to t
   (setq org-tags-match-list-sublevels 'indented))
 #+end_src
 
+Set the location of the tags, use =SPC-u C-c C-c= to re-align of needed.
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-tags-column -120))
+#+end_src
+
+Remove category display for todo items
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-agenda-prefix-format
+        '((agenda . " %i %-12:c%?-12t% s")
+          (todo   . " ")
+          (tags   . " %i %-12:c")
+          (search . " %i %-12:c"))))
+#+end_src
+
+Set the size of images shown in org mode
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-image-actual-width (/ (display-pixel-width) 2)))
+#+end_src
+
 *** Org custom functions
 
 **** Return a list of files that have clockable items
@@ -434,9 +638,6 @@ With (setq org-tags-match-list-sublevels 'indented), a number of dots equal to t
   "Returns org files that contain clockable items"
   (directory-files-recursively (concat my/org-base-dir "journal/") ".org"))
 #+end_src
-
-#+RESULTS:
-: clockable-files
 
 **** Function to change the format of a duration to HH:MM
 
@@ -467,17 +668,20 @@ Also check the correct setting for [[org-duration-format][org-duration-format]]
 
 *** Org agenda
 
+Hide tags in the org-agenda todo list
+
+#+begin_src emacs-lisp
+  (setq org-agenda-hide-tags-regexp ".")
+
+#+end_src
+
+Set the files that are used to fill org agenda
+
 #+begin_src emacs-lisp
 (after! org
-  (setq org-agenda-files (directory-files-recursively my/org-base-dir "\.org$")))
-
-(defun org-agenda-inactive ()
-  (interactive)
-  (let ((org-agenda-include-inactive-timestamps t))
-    (org-agenda)))
-
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c b") 'org-agenda-inactive)
+  (setq org-agenda-files (list
+                          (concat my/org-base-dir "inbox.org")
+                          (concat my/org-base-dir "agenda.org"))))
 #+end_src
 
 *** Org calendar
@@ -524,13 +728,18 @@ Set the to be be used capture templates!
   ;; clean the intial existing template list
   (setq org-capture-templates '())
 
-  ;; add todo capture template
+
+  ;; add inbox capture template
   (add-to-list 'org-capture-templates
-               '("t"
-                 "Todo [inbox]"
-                 entry
-                 (file+headline "inbox.org" "Inbox")
-                 "* TODO %i%?"))
+               `("i" "Inbox" entry (file "inbox.org")
+                 ,(concat "* TODO %?\n"
+                          "/Entered on/ %U")))
+
+  ;; add meeting capture template
+  (add-to-list 'org-capture-templates
+               `("m" "Meeting" entry (file+headline "agenda.org" "Planned")
+                 ,(concat "* %? :meeting:\n"
+                          "<%<%Y-%m-%d %a %H:00>>")))
 
   ;; add hugo capture template
   (add-to-list 'org-capture-templates
@@ -589,6 +798,27 @@ Set a good format for the journal file e.g. year-month-day with a .org extension
 (setq org-journal-file-format "%Y-%m-%d.org")
 #+end_src
 
+Enable integration with org-agenda so we can view the entries.
+
+#+begin_src emacs-lisp
+(setq org-journal-enable-agenda-integration t)
+#+end_src
+
+# Set default tags to be used for journal entries
+
+#+begin_src emacs-lisp
+(setq org-journal-tag-persistent-alist '(
+                                         ("@work" . ?w)
+                                         ("@private" . ?p)
+                                         ("fontys" . ?f)
+                                         ("ctoprogram" . ?c)
+                                         ("integrationlab" . ?i)
+                                         ("swat" . ?s)
+                                         ("interruption" . ?!)
+                                         ("various" . ?v)
+                                         ))
+#+end_src
+
 *** Org roam
 
 Set the default path to Org-roam files.
@@ -603,6 +833,7 @@ If non-nil, open the org-roam buffer when opening an org roam file. I set it to 
 (setq +org-roam-open-buffer-on-find-file nil)
 #+end_src
 
+
 ** Zoom window
 
 Make it possible to zoom in/out the current window.
@@ -612,7 +843,7 @@ Make it possible to zoom in/out the current window.
 (custom-set-variables
  '(zoom-window-mode-line-color "purple"))
 (map! :desc "Zoom/Unzoom the current window"
-      :n "C-w C-z" 'zoom-window-zoom)
+      :n "C-w z" 'zoom-window-zoom)
 #+end_src
 
 ** Smartparens
