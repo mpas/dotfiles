@@ -216,16 +216,14 @@
 
 (setq dired-dwim-target t)
 
-(with-eval-after-load 'forge
-  (setq forge-topic-list-columns
-      '(("#" 5 t (:right-align t) number nil)
-        ("Title" 60 t nil title  nil)
-        ("State" 6 t nil state nil)
-        ("Marks" 8 t nil marks nil)
-        ("Labels" 8 t nil labels nil)
-        ("Assignees" 10 t nil assignees nil)
-        ("Updated" 10 t nill updated nil)))
-)
+;; (with-eval-after-load 'forge
+;; Configure number of topics show, open and closed
+;; use negative number to toggle the view of closed topics
+;; using `forge-toggle-closed-visibility'
+(setq  forge-topic-list-limit '(100 . -10))
+
+;; set closed to 0 to never show closed issues
+;; (setq  forge-topic-list-limit '(100 . 0))
 
 (defun acg/parse-git-remote-url (url)
   "If necessary, convert an SSH to HTTPS git remote location."
