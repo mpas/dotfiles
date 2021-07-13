@@ -91,4 +91,5 @@ eval "$(direnv hook bash)"
 eval "$(direnv hook zsh)"
 
 alias n='emacs ~/Dropbox/notes/org/ &'
-alias e='emacs . &'
+unalias e
+function e() { open -a Emacs "$@"; }

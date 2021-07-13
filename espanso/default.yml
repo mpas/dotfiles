@@ -35,6 +35,13 @@ matches:
         type: date
         params:
           format: "%m/%d/%Y"
+  - trigger: ":tstamp"
+    replace: "{{mytstamp}}"
+    vars:
+      - name: mytstamp
+        type: date
+        params:
+          format: "%Y-%m-%d - %H:%M"
 
   # Shell commands
   - trigger: ":shell"

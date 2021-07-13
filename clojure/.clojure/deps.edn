@@ -1,0 +1,17 @@
+{
+ :paths ["src"]
+ :deps
+ {
+    org.clojure/clojure {:mvn/version "1.10.1"}
+ }
+ :aliases
+ {
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Creating projects from templates
+
+  ;; clj-new - https://github.com/seancorfield/clj-new
+  :new {:extra-deps {seancorfield/clj-new {:mvn/version "1.1.234"}}
+        :exec-fn clj-new/create
+        :exec-args {:template "app"}}}
+}

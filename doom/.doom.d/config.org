@@ -27,6 +27,9 @@
     - [[#insert-a-timestamp][Insert a timestamp]]
     - [[#insert-custom-clock-entry-c-][Insert custom clock entry =C-'=]]
     - [[#insert-clipboard-image-c-m-y][Insert clipboard image =C-M-y=]]
+    - [[#remove-all-results-from-an-org-document-s-][Remove all results from an org document =s-]=]]
+  - [[#custom-keybindings][Custom keybindings]]
+    - [[#open-files-from-the-bookmarks-list][Open files from the bookmarks list]]
 - [[#visual-settings][Visual settings]]
   - [[#maximize-emacs-frame-on-startup][Maximize Emacs frame on startup]]
   - [[#theme][Theme]]
@@ -220,6 +223,7 @@ Shortcut to grab a link from an open Mac application.
                            (define-key org-mode-map (kbd "C-c g") 'org-mac-grab-link)))
 #+end_src
 
+
 ** Custom functions
 
 *** Insert date
@@ -325,15 +329,39 @@ Function that allows a screenshot to be pasted in a Org-mode file. The relative 
     (insert (concat "[[./images/" (file-name-nondirectory file) "]]"))))
 #+end_src
 
-#+RESULTS:
-: my/insert-clipboard-image
-
 Bind insert clipboard image to Ctrl-Option-y
 
 #+begin_src emacs-lisp
 (map! :desc "Insert clipboard image"
       :n "C-M-y" 'my/insert-clipboard-image)
+#+end_src
 
+*** Remove all results from an org document =s-]=
+#+begin_src emacs-lisp
+(defconst help/org-special-pre "^\s*#[+]")
+(defun help/org-2every-src-block (fn)
+  "Visit every Source-Block and evaluate `FN'."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (let ((case-fold-search t))
+      (while (re-search-forward (concat help/org-special-pre "BEGIN_SRC") nil t)
+        (let ((element (org-element-at-point)))
+          (when (eq (org-element-type element) 'src-block)
+            (funcall fn element)))))
+    (save-buffer)))
+
+(after! org
+   (define-key org-mode-map (kbd "s-]") (lambda () (interactive)
+                                       (help/org-2every-src-block
+                                        'org-babel-remove-result))))
+#+end_src
+
+** Custom keybindings
+*** Open files from the bookmarks list
+#+begin_src emacs-lisp
+(map! :desc "Open bookmarks list"
+      :n "C-c b" 'list-bookmarks)
 #+end_src
 
 * Visual settings
@@ -359,7 +387,7 @@ Sets the default theme
 doom-font is the default font for emacs to use
 
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 16))
+;; (setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 16))
 #+end_src
 
 *** Variable pitch
@@ -367,7 +395,7 @@ doom-font is the default font for emacs to use
 doom-variable-pitch-font is a proportional font used for reading emails, doc etc.
 
 #+begin_src emacs-lisp
-(setq doom-variable-pitch-font (font-spec :family "Ubuntu" :size 14))
+;; (setq doom-variable-pitch-font (font-spec :family "Ubuntu" :size 14))
 #+end_src
 
 *** Big font
@@ -375,7 +403,7 @@ doom-variable-pitch-font is a proportional font used for reading emails, doc etc
 doom-big-font is the default font to use for doom-big-font-mode
 
 #+begin_src emacs-lisp
-(setq doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 30))
+;; (setq doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 30))
 #+end_src
 
 *** Enable bold/italic fonts
@@ -584,14 +612,15 @@ Use Org Log =done= to auto insert a 'CLOSED' property when changing state below 
 Set default todo/tasks states
 
 #+begin_src emacs-lisp
+(after! org
   (setq org-todo-keywords
-        '((sequence "TODO" "DOING" "BLOCKED" "|" "DONE" "ARCHIVED")))
+      '((sequence "TODO" "DOING" "BLOCKED" "|" "DONE" "ARCHIVED"))))
 #+end_src
 
 Set the refile targets
 
 #+begin_src emacs-lisp
-  (setq org-refile-targets '((concat my/org-base-dir "inbox.org" :maxlevel . 2)))
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 9)))
 #+end_src
 
 With (setq org-tags-match-list-sublevels 'indented), a number of dots equal to the level will be prepended to each agenda line to indicate its level.
@@ -669,16 +698,24 @@ Hide tags in the org-agenda todo list
 
 #+begin_src emacs-lisp
   (setq org-agenda-hide-tags-regexp ".")
-
 #+end_src
 
 Set the files that are used to fill org agenda
 
 #+begin_src emacs-lisp
 (after! org
-  (setq org-agenda-files (list
-                          (concat my/org-base-dir "inbox.org")
-                          (concat my/org-base-dir "agenda.org"))))
+  (setq org-agenda-files
+        (append (list (concat my/org-base-dir "inbox.org")
+                      (concat my/org-base-dir "agenda.org"))
+                (directory-files-recursively (concat my/org-base-dir "journal/")  "\\.org$"))))
+#+end_src
+
+Set the time span for the agenda overview
+
+#+begin_src emacs-lisp
+;; (setq org-agenda-start-day -2)
+;; (setq org-agenda-span 3)
+;; (setq org-agenda-start-day "+3d")
 #+end_src
 
 *** Org calendar
@@ -728,8 +765,8 @@ Set the to be be used capture templates!
 
   ;; add inbox capture template
   (add-to-list 'org-capture-templates
-               `("i" "Inbox" entry (file "inbox.org")
-                 ,(concat "* TODO %?\n"
+               `("i" "Inbox" entry (file+headline "inbox.org" "Inbox")
+                 ,(concat "** TODO %?\n"
                           "/Entered on/ %U")))
 
   ;; add meeting capture template
@@ -746,14 +783,46 @@ Set the to be be used capture templates!
                  ;; It is assumed that below file is present in `org-directory'
                  ;; and that it has a "Blog Ideas" heading. It can even be a
                  ;; symlink pointing to the actual location of all-posts.org!
-                 (file+olp "~/Dropbox/notes/org/blog.org" "Posts")
+                 (file+olp "~/Dropbox/notes/org/blog/blog.org" "Posts")
                  (function org-hugo-new-subtree-post-capture-template) :prepend t)))
 #+end_src
+
+#+RESULTS:
+| h | Hugo post | entry | (file+olp ~/Dropbox/notes/org/blog/blog.org Posts) | #'org-hugo-new-subtree-post-capture-template | :prepend | t |
+| m | Meeting   | entry | (file+headline agenda.org Planned)                 | * %? :meeting:                               |          |   |
 
 *** Org babel
 
 #+begin_src emacs-lisp
 (setq org-babel-clojure-backend 'cider)
+#+end_src
+
+#+begin_src emacs-lisp
+(after! 'org
+            (org-babel-do-load-languages 'org-babel-load-languages
+                                         (append org-babel-load-languages
+                                                 ;; '((julia . t))
+                                                 '((gnuplot . t))
+                                                 ))
+            )
+;; (!after org
+;;         (org-babel-do-load-languages
+;;          'org-babel-load-languages
+;;          '(
+;;            (python     . t)
+;;            (ruby       . t)
+;;            (calc       . t)
+;;            (ditaa      . t)
+;;            (dot        . t)
+;;            (emacs-lisp . t)
+;;            (gnuplot    . t)
+;;            (latex      . t)
+;;            (plantuml   . t)
+;;            (python     . t)
+;;            (ruby       . t)
+;;            (shell      . t)
+;;            (sqlite     . t)
+;;            (sql        . t))))
 #+end_src
 
 *** Org bullets
@@ -829,7 +898,6 @@ If non-nil, open the org-roam buffer when opening an org roam file. I set it to 
 #+begin_src emacs-lisp
 (setq +org-roam-open-buffer-on-find-file nil)
 #+end_src
-
 
 ** Zoom window
 

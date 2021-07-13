@@ -45,6 +45,9 @@ export PATH="/usr/bin:/usr/local/sbin:$PATH"
 # Go 
 export GOPATH=~/Development/go
 
+# fix paths for brew installed packages
+export PATH="/usr/local/bin:$PATH"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/$USER/.sdkman"
 [[ -s "/Users/$USER/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/$USER/.sdkman/bin/sdkman-init.sh"

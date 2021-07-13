@@ -2,6 +2,6 @@
 .DS_Store
 *.lock.*
 node_modules
-clojure
 .clj-kondo
 .lsp
+.cpcache
