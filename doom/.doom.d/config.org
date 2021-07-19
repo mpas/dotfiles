@@ -325,7 +325,8 @@ Function that allows a screenshot to be pasted in a Org-mode file. The relative 
       (make-directory (file-name-directory file)))
 
     ;; paste file from clipboard
-    (shell-command (concat "pngpaste " file))
+    (print file)
+    (shell-command (concat "pngpaste " "\"" file "\""))
     (insert (concat "[[./images/" (file-name-nondirectory file) "]]"))))
 #+end_src
 
@@ -389,6 +390,8 @@ doom-font is the default font for emacs to use
 #+begin_src emacs-lisp
 ;; (setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 16))
 #+end_src
+
+#+RESULTS:
 
 *** Variable pitch
 
@@ -648,12 +651,15 @@ Remove category display for todo items
           (search . " %i %-12:c"))))
 #+end_src
 
-Set the size of images shown in org mode
+Set the size of images shown in org mode.
 
 #+begin_src emacs-lisp
 (after! org
-  (setq org-image-actual-width (/ (display-pixel-width) 2)))
+  (setq org-image-actual-width (/ (display-pixel-width) 3)))
 #+end_src
+
+#+RESULTS:
+: 512
 
 *** Org custom functions
 
@@ -990,3 +996,11 @@ Make the Cider popup window appear in the right hand side.
 #+end_src
 
 ** Clojure
+
+#+begin_src emacs-lisp
+(after! company
+  (setq company-idle-delay 0.5
+        company-minimum-prefix-length 2)
+  (setq company-show-numbers t)
+  (add-hook 'evil-normal-state-entry-hook #'company-abort))
+#+end_src
