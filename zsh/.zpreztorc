@@ -16,7 +16,7 @@
 zstyle ':prezto:*:*' color 'yes'
 
 # Add additional directories to load prezto modules from
-zstyle ':prezto:load' pmodule-dirs $HOME/.zprezto/contrib
+# zstyle ':prezto:load' pmodule-dirs $HOME/.zprezto/contrib
 
 # Allow module overrides when pmodule-dirs causes module name collisions
 zstyle ':prezto:load' pmodule-allow-overrides 'yes'
@@ -34,21 +34,14 @@ zstyle ':prezto:load' pmodule \
   'terminal' \
   'history' \
   'directory' \
+  'utility' \
+  'git' \
   'completion' \
   'fasd' \
   'syntax-highlighting' \
   'history-substring-search' \
-  'contrib-prompt' \
+  'autosuggestions' \
   'prompt'
-
-  # 'editor' \
-  # 'spectrum' \
-  # 'utility' \
-  # 'docker' \
-  # 'osx' \
-  # 'git' \
-  # 'python' \
-  # 'ssh' \
 
 #
 # Autosuggestions
@@ -61,7 +54,7 @@ zstyle ':prezto:load' pmodule \
 # Completions
 #
 
-# Set the entries to ignore in static */etc/hosts* for host completion.
+# Set the entries to ignore in static '/etc/hosts' for host completion.
 # zstyle ':prezto:module:completion:*:hosts' etc-host-ignores \
 #   '0.0.0.0' '127.0.0.1'
 
@@ -76,7 +69,7 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 
 # Allow the zsh prompt context to be shown.
-# zstyle ':prezto:module:editor' ps-context 'yes'
+#zstyle ':prezto:module:editor' ps-context 'yes'
 
 #
 # Git
@@ -126,7 +119,7 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'spaceship'
+# zstyle ':prezto:module:prompt' theme 'spaceship'
 
 # Set the working directory prompt display length.
 # By default, it is set to 'short'. Set it to 'long' (without '~' expansion)
@@ -184,7 +177,7 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'line' \
   'cursor' \
   'root'
-#
+
 # Set syntax highlighting styles.
 zstyle ':prezto:module:syntax-highlighting' styles \
   'builtin' 'fg=green' \

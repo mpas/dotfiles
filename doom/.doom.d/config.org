@@ -6,30 +6,32 @@
 #+STARTUP: fold
 
 * Table of Contents                                                                                             :TOC_3:noexport:
-- [[#references][References]]
-  - [[#config-file-headers][Config file headers]]
-  - [[#customized-variables][Customized variables]]
-- [[#global-constants][Global constants]]
+- [[#config-file-header][Config file header]]
+- [[#basic-settings][Basic settings]]
   - [[#directories][Directories]]
-- [[#personal-information][Personal Information]]
-  - [[#set-full-name][Set full name]]
-  - [[#set-email-address][Set email address]]
+  - [[#personal-information][Personal Information]]
 - [[#general-configuration][General configuration]]
   - [[#set-the-authentication-source-to-use][Set the authentication source to use]]
   - [[#disable-exit-confirmation][Disable exit confirmation]]
-  - [[#keybindings][Keybindings]]
-    - [[#remove-entire-line-when-at-the-beginning-c-k][Remove entire line when at the beginning =C-k=]]
-    - [[#closes-the-current-buffer-c][Closes the current buffer =C=]]
-    - [[#cycle-through-the-open-windows-c-w-c-w][Cycle through the open windows =C-w C-w=]]
-    - [[#grab-open-link-from-application-c-c-g][Grab open link from application =C-c g=]]
-  - [[#custom-functions][Custom functions]]
-    - [[#insert-date][Insert date]]
-    - [[#insert-a-timestamp][Insert a timestamp]]
-    - [[#insert-custom-clock-entry-c-][Insert custom clock entry =C-'=]]
-    - [[#insert-clipboard-image-c-m-y][Insert clipboard image =C-M-y=]]
-    - [[#remove-all-results-from-an-org-document-s-][Remove all results from an org document =s-]=]]
-  - [[#custom-keybindings][Custom keybindings]]
-    - [[#open-files-from-the-bookmarks-list][Open files from the bookmarks list]]
+  - [[#enable-line-numbers][Enable line numbers]]
+  - [[#prompt-for-buffer-after-a-split][Prompt for buffer after a split]]
+  - [[#set-to-open-the-correct-application-to-open-a-file-link][Set to open the correct application to open a file link]]
+- [[#custom-functions][Custom functions]]
+  - [[#insert-date][Insert date]]
+  - [[#insert-a-timestamp][Insert a timestamp]]
+  - [[#find-files-that-contain-a-specific-text-recursive][Find files that contain a specific text (recursive)]]
+  - [[#convert-a-region-from-markdown-to-org][Convert a region from markdown to org]]
+- [[#keybindings][Keybindings]]
+  - [[#remove-entire-line-when-at-the-beginning-c-k][Remove entire line when at the beginning =C-k=]]
+  - [[#cycle-through-the-open-windows-c-w-c-w][Cycle through the open windows =C-w C-w=]]
+  - [[#grab-open-link-from-application-c-c-g][Grab open link from application =C-c g=]]
+  - [[#toggle-truncate-lines-spc-t-t][Toggle Truncate lines =SPC t t=]]
+  - [[#open-files-from-the-bookmarks-list-c-c-b][Open files from the bookmarks list =C-c b=]]
+  - [[#openfocus-on-iterm-spc-f-i][Open/focus on iTerm =SPC f i=]]
+  - [[#toggle-pretty-markup-c-c-e][Toggle pretty markup =C-c e=]]
+  - [[#remove-all-results-from-an-org-document-s-][Remove all results from an org document =s-]=]]
+  - [[#delete-current-buffer-and-file-c-c-d][Delete current buffer and file =C-c D=]]
+  - [[#insert-clipboard-image-c-m-y][Insert clipboard image =C-M-y=]]
 - [[#visual-settings][Visual settings]]
   - [[#maximize-emacs-frame-on-startup][Maximize Emacs frame on startup]]
   - [[#theme][Theme]]
@@ -38,15 +40,14 @@
     - [[#variable-pitch][Variable pitch]]
     - [[#big-font][Big font]]
     - [[#enable-bolditalic-fonts][Enable bold/italic fonts]]
-  - [[#set-custom-faces][Set custom faces]]
-  - [[#line-settings][Line settings]]
-    - [[#enable-line-numbers][Enable line numbers]]
-    - [[#toggle-truncate-lines][Toggle Truncate lines]]
-  - [[#mode-line-settings][Mode Line settings]]
-    - [[#enable-the-display-of-time-and-date-in-the-mode-line][Enable the display of time and date in the mode line]]
+    - [[#set-custom-faces][Set custom faces]]
+  - [[#modeline][Modeline]]
     - [[#limit-mode-line-vcs-length][Limit mode line vcs length]]
+    - [[#enable-the-display-of-time-and-date-in-the-mode-line][Enable the display of time and date in the mode line]]
 - [[#package-configuration][Package configuration]]
   - [[#auto-dim-other-buffers][Auto dim other buffers]]
+  - [[#centaur-tab][Centaur tab]]
+  - [[#company-mode][Company mode]]
   - [[#deft][Deft]]
   - [[#dired][Dired]]
     - [[#enable-dual-pane][Enable dual pane]]
@@ -54,103 +55,34 @@
   - [[#magit][Magit]]
   - [[#ob-mermaid][Ob-mermaid]]
   - [[#org-mode][Org mode]]
-    - [[#set-the-org-base-directory][Set the org base directory]]
-    - [[#org-general-settings][Org general settings]]
-    - [[#org-custom-functions][Org custom functions]]
-    - [[#org-agenda][Org agenda]]
-    - [[#org-calendar][Org calendar]]
-    - [[#org-capture-templates][Org capture templates]]
-    - [[#org-babel][Org babel]]
-    - [[#org-bullets][Org bullets]]
-    - [[#org-journal][Org journal]]
-    - [[#org-roam][Org roam]]
+  - [[#org-agenda][Org agenda]]
+  - [[#org-calendar][Org calendar]]
+  - [[#org-capture-templates][Org capture templates]]
+  - [[#org-babel][Org babel]]
+  - [[#org-roam][Org roam]]
+  - [[#org-tree-slide][Org tree slide]]
   - [[#zoom-window][Zoom window]]
   - [[#smartparens][Smartparens]]
-- [[#general-programming][General Programming]]
+- [[#programming][Programming]]
   - [[#css][CSS]]
   - [[#json][JSON]]
     - [[#c-c-c-f-json-beautify][=C-c C-f= Json beautify]]
   - [[#markdown][Markdown]]
-- [[#programming][Programming]]
-  - [[#cider][Cider]]
-  - [[#clojure][Clojure]]
+  - [[#clojure--cider][Clojure / Cider]]
 
-* References
-** Config file headers
+* Config file header
+
 #+html: <details><summary>config.el</summary>
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; DO NOT EDIT THIS FILE DIRECTLY
-;; This is a file generated from a literate programing source file located at
-;; https://gitlab.com/zzamboni/dot-doom/-/blob/master/doom.org
-;; You should make any changes there and regenerate it from Emacs org-mode
-;; using org-babel-tangle (C-c C-v t)
-
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
-;; (setq user-full-name "John Doe"
-;;      user-mail-address "john@doe.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-one)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-;; (setq org-directory "~/org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-;; (setq display-line-numbers-type t)
-
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
 #+end_src
 #+html: </details>
 
-** Customized variables
-
-Doom [[https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#configure][does not recommend the Emacs =customize= mechanism]]:
-
-#+begin_quote
-/Note: do not use M-x customize or the customize API in general. Doom is designed to be configured programmatically from your config.el, which can conflict with Customize’s way of modifying variables./
-#+end_quote
-
-All necessary settings are therefore set by hand as part of this configuration file. The only exceptions are "safe variable" and "safe theme" settings, which are automatically saved by Emacs in =custom.el=, but this is OK as they don't conflict with anything else from the config.
-
-* Global constants
+* Basic settings
 ** Directories
 
 Base directories that are used for org/roam/deft
@@ -158,20 +90,20 @@ Base directories that are used for org/roam/deft
 #+begin_src emacs-lisp
 (setq my/home-dir "~")
 (setq my/org-base-dir (concat my/home-dir "/Dropbox/notes/org/"))
+(setq my/org-roam-dir (concat my/org-base-dir "roam"))
+
+;; set the default directories for org/roam
+(setq org-directory my/org-base-dir)
+(setq org-roam-directory my/org-roam-dir)
+(setq deft-directory my/org-base-dir)
 #+end_src
 
-* Personal Information
+** Personal Information
 
 Let's set some variables with basic user information.
 
-** Set full name
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Marco Pas")
-#+END_SRC
-
-** Set email address
-
-#+BEGIN_SRC emacs-lisp
 (setq user-mail-address "marco.pasopas@gmail.com")
 #+END_SRC
 
@@ -188,25 +120,83 @@ Let's set some variables with basic user information.
 (setq confirm-kill-emacs nil)
 #+end_src
 
-** Keybindings
-*** Remove entire line when at the beginning =C-k=
+** Enable line numbers
+
+#+begin_src emacs-lisp
+(setq display-line-numbers-type t)
+#+end_src
+
+** Prompt for buffer after a split
+
+#+begin_src emacs-lisp
+(defadvice! prompt-for-buffer (&rest _)
+  :after '(evil-window-split evil-window-vsplit)
+  (consult-buffer))
+#+end_src
+
+** Set to open the correct application to open a file link
+
+#+begin_src emacs-lisp
+(setq org-file-apps
+      '(("\\.docx\\'" . default)
+        ("\\.x?html?\\'" . default)
+        (auto-mode . emacs)))
+#+end_src
+
+* Custom functions
+** Insert date
+
+#+begin_src emacs-lisp
+(defun my/insert-date (arg)
+  (interactive "P")
+  (insert (if arg
+              (format-time-string "%d.%m.%Y")
+            (format-time-string "%Y-%m-%d"))))
+#+end_src
+
+** Insert a timestamp
+
+#+begin_src emacs-lisp
+(defun my/insert-timestamp ()
+  (interactive)
+  (insert (format-time-string "%Y-%m-%dT%H:%M:%S")))
+#+end_src
+
+** Find files that contain a specific text (recursive)
+
+I use this function in org-agenda that fills the variable with files that have a required text in it.
+
+#+begin_src emacs-lisp
+(defun my/find-files-that-contain (include-dir text &optional with-extension exclude-dir)
+  (let ((shell-command
+         (concat
+          "grep --recursive --files-with-matches "
+          (when with-extension (concat "--include=\"" with-extension "\" "))
+          (when exclude-dir (concat "--exclude-dir=\"" exclude-dir "\" "))
+          "\"" (shell-quote-argument text) "\" "
+          include-dir)))
+    (split-string (shell-command-to-string shell-command))))
+#+end_src
+
+** Convert a region from markdown to org
+
+#+begin_src emacs-lisp
+(defun my/md-to-org-region (start end)
+  "Convert region from markdown to org"
+  (interactive "r")
+  (shell-command-on-region start end "pandoc -f markdown -t org" t t))
+#+end_src
+
+* Keybindings
+** Remove entire line when at the beginning =C-k=
+
 When at the beginning of the line, make =Ctrl-K= remove the whole line, instead of just emptying it.
 
 #+begin_src emacs-lisp
 (setq kill-whole-line t)
 #+end_src
 
-*** Closes the current buffer =C=
-
-Close the current buffer mapped to 'c' in normal mode.
-
-#+begin_src emacs-lisp
-(map! :map evil-normal-state-map
-      :desc "Close the current buffer"
-      :ng "c" #'kill-this-buffer)
-#+end_src
-
-*** Cycle through the open windows =C-w C-w=
+** Cycle through the open windows =C-w C-w=
 
 #+begin_src emacs-lisp
 (map! :map evil-normal-state-map
@@ -214,7 +204,7 @@ Close the current buffer mapped to 'c' in normal mode.
       :ng "C-w C-w" #'evil-window-next)
 #+end_src
 
-*** Grab open link from application =C-c g=
+** Grab open link from application =C-c g=
 
 Shortcut to grab a link from an open Mac application.
 
@@ -223,45 +213,85 @@ Shortcut to grab a link from an open Mac application.
                            (define-key org-mode-map (kbd "C-c g") 'org-mac-grab-link)))
 #+end_src
 
-
-** Custom functions
-
-*** Insert date
+** Toggle Truncate lines =SPC t t=
 
 #+begin_src emacs-lisp
-(defun insert-date (arg)
-  (interactive "P")
-  (insert (if arg
-              (format-time-string "%d.%m.%Y")
-            (format-time-string "%Y-%m-%d"))))
+(map! :leader
+      :desc "Toggle truncate lines"
+      "t t" #'toggle-truncate-lines)
 #+end_src
 
-*** Insert a timestamp
+** Open files from the bookmarks list =C-c b=
 
 #+begin_src emacs-lisp
-(defun insert-timestamp ()
+(map! :desc "Open bookmarks list"
+      :n "C-c b" 'list-bookmarks)
+#+end_src
+
+** Open/focus on iTerm =SPC f i=
+
+#+begin_src emacs-lisp
+(defun my/iterm-focus ()
   (interactive)
-  (insert (format-time-string "%Y-%m-%dT%H:%M:%S")))
+  (do-applescript
+   " do shell script \"open -a iTerm\"\n"))
+
+(map! :leader
+      :desc "Open/focus iTerm"
+      :"f i" #'my/iterm-focus)
 #+end_src
 
-*** Insert custom clock entry =C-'=
+** Toggle pretty markup =C-c e=
 
 #+begin_src emacs-lisp
-(defun jx/insert-custom-clock-entry ()
-  (interactive)
-  (insert "CLOCK: ")
-  (org-time-stamp-inactive)
-  (insert "--")
-  ;; Inserts the current time by default.
-  (let ((current-prefix-arg '(4))) (call-interactively 'org-time-stamp-inactive))
-  (org-ctrl-c-ctrl-c))
-
-                                        ; Shortcut
-(define-key evil-normal-state-map (kbd "C-'") 'jx/insert-custom-clock-entry)
-(define-key evil-insert-state-map (kbd "C-'") 'jx/insert-custom-clock-entry)
+(after! org
+  ;; (define-key org-mode-map (kbd "C-c e") '+org-pretty-mode))
+  (define-key org-mode-map (kbd "C-c e") 'font-lock-mode))
 #+end_src
 
-*** Insert clipboard image =C-M-y=
+** Remove all results from an org document =s-]=
+
+#+begin_src emacs-lisp
+(defconst my/org-special-pre "^\s*#[+]")
+
+(defun my/org-2every-src-block (fn)
+  "Visit every Source-Block and evaluate `FN'."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (let ((case-fold-search t))
+      (while (re-search-forward (concat my/org-special-pre "BEGIN_SRC") nil t)
+        (let ((element (org-element-at-point)))
+          (when (eq (org-element-type element) 'src-block)
+            (funcall fn element)))))
+    (save-buffer)))
+
+(after! org
+   (define-key org-mode-map (kbd "s-]") (lambda () (interactive)
+                                       (my/org-2every-src-block
+                                        'org-babel-remove-result))))
+#+end_src
+
+** Delete current buffer and file =C-c D=
+
+#+begin_src emacs-lisp
+(defun er-delete-file-and-buffer ()
+  "Kill the current buffer and deletes the file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (when filename
+      (if (vc-backend filename)
+          (vc-delete-file filename)
+        (progn
+          (delete-file filename)
+          (message "Deleted file %s" filename)
+          (kill-buffer))))))
+
+
+(global-set-key (kbd "C-c D")  #'er-delete-file-and-buffer)
+#+end_src
+
+** Insert clipboard image =C-M-y=
 
 Use the current headername as part of the image filename
 #+begin_src emacs-lisp
@@ -337,34 +367,6 @@ Bind insert clipboard image to Ctrl-Option-y
       :n "C-M-y" 'my/insert-clipboard-image)
 #+end_src
 
-*** Remove all results from an org document =s-]=
-#+begin_src emacs-lisp
-(defconst help/org-special-pre "^\s*#[+]")
-(defun help/org-2every-src-block (fn)
-  "Visit every Source-Block and evaluate `FN'."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (let ((case-fold-search t))
-      (while (re-search-forward (concat help/org-special-pre "BEGIN_SRC") nil t)
-        (let ((element (org-element-at-point)))
-          (when (eq (org-element-type element) 'src-block)
-            (funcall fn element)))))
-    (save-buffer)))
-
-(after! org
-   (define-key org-mode-map (kbd "s-]") (lambda () (interactive)
-                                       (help/org-2every-src-block
-                                        'org-babel-remove-result))))
-#+end_src
-
-** Custom keybindings
-*** Open files from the bookmarks list
-#+begin_src emacs-lisp
-(map! :desc "Open bookmarks list"
-      :n "C-c b" 'list-bookmarks)
-#+end_src
-
 * Visual settings
 ** Maximize Emacs frame on startup
 
@@ -374,31 +376,27 @@ Bind insert clipboard image to Ctrl-Option-y
 
 ** Theme
 
-Sets the default theme
+Sets the default theme ; currently doom-snazzy
 
-#+begin_src emacs-lisp
-(setq doom-theme 'doom-vibrant)
-(setq doom-vibrant-brighter-comments t  ;; "If non-nil, more vivid colors will be used to style the mode-line."
-      doom-vibrant-brighter-modeline t  ;; "If non-nil, comments will be highlighted in more vivid colors."
-      doom-vibrant-comment-bg t)        ;; "If non-nil, comments will have a subtle, darker background. Enhancing their legibility."
+#+BEGIN_SRC emacs-lisp
+(setq doom-theme 'doom-snazzy)
 #+end_src
+
 ** Fonts and Icons
 *** Default font
 
 doom-font is the default font for emacs to use
 
 #+begin_src emacs-lisp
-;; (setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 16))
+(setq doom-font (font-spec :family "JetBrains Mono" :weight 'light :size 16))
 #+end_src
-
-#+RESULTS:
 
 *** Variable pitch
 
 doom-variable-pitch-font is a proportional font used for reading emails, doc etc.
 
 #+begin_src emacs-lisp
-;; (setq doom-variable-pitch-font (font-spec :family "Ubuntu" :size 14))
+(setq doom-variable-pitch-font (font-spec :family "JetBrains Mono" :weight 'light :size 16))
 #+end_src
 
 *** Big font
@@ -406,7 +404,7 @@ doom-variable-pitch-font is a proportional font used for reading emails, doc etc
 doom-big-font is the default font to use for doom-big-font-mode
 
 #+begin_src emacs-lisp
-;; (setq doom-big-font (font-spec :family "FiraCode Nerd Font Mono" :size 30))
+(setq doom-big-font (font-spec :family "JetBrains Mono" :size 30))
 #+end_src
 
 *** Enable bold/italic fonts
@@ -417,7 +415,7 @@ doom-big-font is the default font to use for doom-big-font-mode
         doom-themes-enable-italic t))
 #+end_src
 
-** Set custom faces
+*** Set custom faces
 
 #+begin_src emacs-lisp
 (custom-set-faces!
@@ -425,33 +423,7 @@ doom-big-font is the default font to use for doom-big-font-mode
   '(font-lock-keyword-face :slant italic))
 #+end_src
 
-** Line settings
-I have toggled display-line-numbers-type so I have line numbers displayed.  Doom Emacs uses 'SPC t' for "toggle" commands, so I choose 'SPC t t' for toggle-truncate-lines.
-
-*** Enable line numbers
-
-#+begin_src emacs-lisp
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-#+end_src
-
-*** Toggle Truncate lines
-
-#+begin_src emacs-lisp
-(map! :leader
-      :desc "Toggle truncate lines"
-      "t t" #'toggle-truncate-lines)
-#+end_src
-
-** Mode Line settings
-*** Enable the display of time and date in the mode line
-
-#+begin_src emacs-lisp
-(display-time-mode 1)
-(setq display-time-day-and-date t)
-#+end_src
-
+** Modeline
 *** Limit mode line vcs length
 
 #+begin_src emacs-lisp
@@ -462,10 +434,18 @@ I have toggled display-line-numbers-type so I have line numbers displayed.  Doom
 (after! doom-modeline
   (setq doom-modeline-bar-width 3))
 #+end_src
+
+*** Enable the display of time and date in the mode line
+
+#+begin_src emacs-lisp
+(display-time-mode 1)
+(setq display-time-day-and-date t)
+#+end_src
+
 * Package configuration
 ** Auto dim other buffers
 
-The auto-dim-other-buffers-mode is a global minor mode which makes windows without focus less prominent. With many windows in a frame, the idea is that this mode helps recognise which is the selected window by providing a non-intrusive but still noticeable visual indicator.
+The auto-dim-other-buffers-mode is a global minor mode which makes windows without focus less prominent. With many windows in a frame, the idea is that this mode helps recognize which is the selected window by providing a non-intrusive but still noticeable visual indicator.
 
 #+begin_src emacs-lisp
 (add-hook 'after-init-hook (lambda ()
@@ -473,11 +453,46 @@ The auto-dim-other-buffers-mode is a global minor mode which makes windows witho
     (auto-dim-other-buffers-mode t))))
 #+end_src
 
+** Centaur tab
+
+#+begin_src emacs-lisp
+(define-key evil-normal-state-map (kbd "g t") 'centaur-tabs-forward)
+(define-key evil-normal-state-map (kbd "g T") 'centaur-tabs-backward)
+(define-key evil-normal-state-map (kbd "C-<prior>") 'centaur-tabs-backward)
+(define-key evil-normal-state-map (kbd "C-<next>") 'centaur-tabs-forward)
+(define-key evil-normal-state-map (kbd "C-c t s") 'centaur-tabs-counsel-switch-group)
+(define-key evil-normal-state-map (kbd "C-c t p") 'centaur-tabs-group-by-projectile-project)
+(define-key evil-normal-state-map (kbd "C-c t g") 'centaur-tabs-group-buffer-groups)
+#+end_src
+
+** Company mode
+
+#+begin_src emacs-lisp
+;; (set-company-backend! 'org-mode '(:separate company-yasnippet company-dabbrev))
+
+;; (setq +company-backend-alist (assq-delete-all 'text-mode +company-backend-alist))
+;; (add-to-list '+company-backend-alist '(text-mode (:separate company-dabbrev company-yasnippet)))
+
+(after! company
+  (set-company-backend! 'org-mode '(:separate company-yasnippet company-dabbrev)))
+
+(after! company
+  (setq company-idle-delay 0.5 ;; How long to wait before popping up
+        company-minimum-prefix-length 1 ;; Show the menu after one key press
+        company-tooltip-limit 15 ;; Limit on how many options to display
+        company-selection-wrap-around t ;; after end of list warap around to start
+        company-tooltip-align-annotations t ;; Align annotations to the right
+        company-require-match nil           ;; Allow free typing
+        company-selection-wrap-around t ;; Wrap around to beginning when you hit bottom of suggestions
+        company-dabbrev-ignore-case t ;; Don't ignore case when completing
+        company-dabbrev-downcase nil ;; Don't automatically downcase completions
+        ))
+#+end_src
+
 ** Deft
 
 #+begin_src emacs-lisp
-(setq deft-directory my/org-base-dir
-      deft-default-extension "org"
+(setq deft-default-extension "org"
       deft-extensions '("txt" "md" "org")
       deft-recursive t
       deft-use-filename-as-title t
@@ -574,36 +589,18 @@ Functions to open links to the files in a Git Repo. This is shameless taken from
 
 [[https://mermaid-js.github.io/][Mermaid]] lets you create diagrams using text and code. [[https://github.com/arnm/ob-mermaid][Ob-mermaid]] enables the use of this inside Org-mode.
 
-Set the path to the Mermaid CLI, this has been installed using =brew install mermaid-cli== but the executable is named mmdc.
+Set the path to the Mermaid CLI, this has been installed using =brew install mermaid-cli= but the executable is named mmdc.
+
 #+begin_src emacs-lisp
 (setq ob-mermaid-cli-path "/usr/local/bin/mmdc")
 #+end_src
 
 ** Org mode
 
-*** Set the org base directory
-
-Set base directory where org mode can find the org files
-
-If you use `org' and don't want your org files in the default location below,
-change `org-directory'. It must be set before org loads!
-
-#+begin_src emacs-lisp
-(setq org-directory my/org-base-dir)
-#+end_src
-
-*** Org general settings
-
 Hide the markers (*,_, ...) when making text bold/italic etc
 
 #+begin_src emacs-lisp
 (setq org-hide-emphasis-markers t)
-#+end_src
-
-<<org-duration-format>>Set the output of the duration format to =hours:min= so we can sum these later on in org tables. The default format when passing 24 hours is 1d .. As we need to sum the duration we need the actual hours.
-
-#+begin_src emacs-lisp
-(setq org-duration-format 'h:mm)
 #+end_src
 
 Use Org Log =done= to auto insert a 'CLOSED' property when changing state below the heading. This is used for =ox-hugo= that ox-hugo auto-sets the date field in the front-matter to the time stamp in that CLOSED property. For more information see [[https://ox-hugo.scripter.co/doc/org-capture-setup/][Org Hugo capture setup]].
@@ -617,13 +614,14 @@ Set default todo/tasks states
 #+begin_src emacs-lisp
 (after! org
   (setq org-todo-keywords
-      '((sequence "TODO" "DOING" "BLOCKED" "|" "DONE" "ARCHIVED"))))
+      '((sequence "TODO" "DOING" "WAITING" "BLOCKED" "|" "DONE" "ARCHIVED"))))
 #+end_src
 
 Set the refile targets
 
 #+begin_src emacs-lisp
-  (setq org-refile-targets '((org-agenda-files :maxlevel . 9)))
+(after! org
+ (setq org-refile-targets `((org-agenda-files :maxlevel . 1) (,(concat my/org-base-dir "inbox-archive.org") :maxlevel . 1))))
 #+end_src
 
 With (setq org-tags-match-list-sublevels 'indented), a number of dots equal to the level will be prepended to each agenda line to indicate its level.
@@ -655,76 +653,35 @@ Set the size of images shown in org mode.
 
 #+begin_src emacs-lisp
 (after! org
-  (setq org-image-actual-width (/ (display-pixel-width) 3)))
+  (setq org-image-actual-width (list (/ (display-pixel-width) 3) )))
 #+end_src
 
-#+RESULTS:
-: 512
-
-*** Org custom functions
-
-**** Return a list of files that have clockable items
+Make sure we have nice bullets for org headings.
 
 #+begin_src emacs-lisp
-(defun clockable-files ()
-  "Returns org files that contain clockable items"
-  (directory-files-recursively (concat my/org-base-dir "journal/") ".org"))
+(setq org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "✿"))
 #+end_src
 
-**** Function to change the format of a duration to HH:MM
-
-This function can be applied to a table. Using a =#+TBLFMT:=. I am using this function to enable [[https://github.com/tbanel/orgaggregate][Org Aggregate]] time duration sums. The expected format for the time durations is =HH:MM=.
-
-Also check the correct setting for [[org-duration-format][org-duration-format]]
-
-#+BEGIN_EXAMPLE
-;; Convert the time strings in column $3 and place them in column $5, also set the header of column $5
-#+TBLFM: $5='(convert-org-clocktable-time-to-hhmm $3)::@1$5='(format "%s" "T")
-#+END_EXAMPLE
-
-#+begin_src emacs-lisp
-(defun convert-org-clocktable-time-to-hhmm (time-string)
-  "Converts a time string to HH:MM"
-  (if (> (length time-string) 0)
-      (progn
-        (let* ((s (s-replace "*" "" time-string))
-               (splits (split-string s ":"))
-               (hours (car splits))
-               (minutes (car (last splits)))
-               )
-          (if (= (length hours) 1)
-              (format "0%s:%s" hours minutes)
-            (format "%s:%s" hours minutes))))
-    time-string))
-#+end_src
-
-*** Org agenda
-
-Hide tags in the org-agenda todo list
-
-#+begin_src emacs-lisp
-  (setq org-agenda-hide-tags-regexp ".")
-#+end_src
-
-Set the files that are used to fill org agenda
+** Org agenda
 
 #+begin_src emacs-lisp
 (after! org
+  ;; Prevent agenda commands to honor startup options when visiting an agenda file for the first time
+  ;; this speeds up processing otherwise org wil first process the startup options like fold etc
+  (setq org-agenda-inhibit-startup t)
+
+  ;; Dp not hide tags in the org-agenda todo list
+  ;; if hiding is required use "."
+  (setq org-agenda-hide-tags-regexp nil)
+
+  ;; set the location of the org agenda files to be used for building the agenda view
   (setq org-agenda-files
         (append (list (concat my/org-base-dir "inbox.org")
                       (concat my/org-base-dir "agenda.org"))
-                (directory-files-recursively (concat my/org-base-dir "journal/")  "\\.org$"))))
+                (my/find-files-that-contain (concat my/org-base-dir "roam/") "TODO|DOING|WAITING|BLOCKED|DONE|ARCHIVED" "*.org" "templates"))))
 #+end_src
 
-Set the time span for the agenda overview
-
-#+begin_src emacs-lisp
-;; (setq org-agenda-start-day -2)
-;; (setq org-agenda-span 3)
-;; (setq org-agenda-start-day "+3d")
-#+end_src
-
-*** Org calendar
+** Org calendar
 
 #+begin_src emacs-lisp
 (after! org
@@ -741,7 +698,7 @@ Set the time span for the agenda overview
                     'font-lock-face 'font-lock-keyword-face)))
 #+end_src
 
-*** Org capture templates
+** Org capture templates
 
 Function that returns a Hugo post capture template.
 
@@ -768,7 +725,6 @@ Set the to be be used capture templates!
   ;; clean the intial existing template list
   (setq org-capture-templates '())
 
-
   ;; add inbox capture template
   (add-to-list 'org-capture-templates
                `("i" "Inbox" entry (file+headline "inbox.org" "Inbox")
@@ -793,11 +749,7 @@ Set the to be be used capture templates!
                  (function org-hugo-new-subtree-post-capture-template) :prepend t)))
 #+end_src
 
-#+RESULTS:
-| h | Hugo post | entry | (file+olp ~/Dropbox/notes/org/blog/blog.org Posts) | #'org-hugo-new-subtree-post-capture-template | :prepend | t |
-| m | Meeting   | entry | (file+headline agenda.org Planned)                 | * %? :meeting:                               |          |   |
-
-*** Org babel
+** Org babel
 
 #+begin_src emacs-lisp
 (setq org-babel-clojure-backend 'cider)
@@ -831,78 +783,73 @@ Set the to be be used capture templates!
 ;;            (sql        . t))))
 #+end_src
 
-*** Org bullets
-
-Make sure we have nice bullets for org headings.
-#+begin_src emacs-lisp
-(setq org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "✿"))
-#+end_src
-
-*** Org journal
-
-Set the location of the journal files.
-
-#+begin_src emacs-lisp
-(setq org-journal-dir (concat my/org-base-dir "journal"))
-#+end_src
-
-A better title for a journal entry, instead of using a top header with the date, we use the TITLE meta field.
-
-#+begin_src emacs-lisp
-(setq org-journal-date-prefix "#+TITLE: ")
-#+end_src
-
-Normally the hours level is a second level heading, change that to first level.
-
-#+begin_src emacs-lisp
-(setq org-journal-time-prefix "* ")
-#+end_src
-
-Use a better date format: day, year-month-day.
-
-#+begin_src emacs-lisp
-(setq org-journal-date-format "%a, %Y-%m-%d")
-#+end_src
-
-Set a good format for the journal file e.g. year-month-day with a .org extensions.
-
-#+begin_src emacs-lisp
-(setq org-journal-file-format "%Y-%m-%d.org")
-#+end_src
-
-Enable integration with org-agenda so we can view the entries.
-
-#+begin_src emacs-lisp
-(setq org-journal-enable-agenda-integration t)
-#+end_src
-
-# Set default tags to be used for journal entries
-
-#+begin_src emacs-lisp
-(setq org-journal-tag-persistent-alist '(
-                                         ("@work" . ?w)
-                                         ("@private" . ?p)
-                                         ("fontys" . ?f)
-                                         ("ctoprogram" . ?c)
-                                         ("integrationlab" . ?i)
-                                         ("swat" . ?s)
-                                         ("interruption" . ?!)
-                                         ("various" . ?v)
-                                         ))
-#+end_src
-
-*** Org roam
-
-Set the default path to Org-roam files.
-
-#+begin_src emacs-lisp
-(setq org-roam-directory (concat my/org-base-dir "roam"))
-#+end_src
+** Org roam
 
 If non-nil, open the org-roam buffer when opening an org roam file. I set it to nil so the roam buffer will not show every time i open a org file.
 
 #+begin_src emacs-lisp
 (setq +org-roam-open-buffer-on-find-file nil)
+#+end_src
+
+Setting =org-roam-completion-everywhere= enables auto-complete when using =[[]]=. Typing inside the =[[]]= enables autocomplete. Also typing and invoking =completion-at-point= can be used.
+
+#+begin_src emacs-lisp
+(setq org-roam-completion-everywhere t)
+#+end_src
+
+Set Org Roam capture templates
+
+#+begin_src emacs-lisp
+(setq org-roam-capture-templates
+      `(("d" "default" plain
+         (file ,(concat org-roam-directory "/templates/default.org"))
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+CREATED_ON: %U\n\n")
+         :unnarrowed t)
+        ("m" "meeting notes" plain
+         (file ,(concat org-roam-directory "/templates/meeting-notes.org"))
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+CREATED_ON: %U\n\n")
+         :unnarrowed t)
+        ("r" "resourcing request" plain
+         (file ,(concat org-roam-directory "/templates/resourcing-request.org"))
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+CREATED_ON: %U\n\n")
+         :unnarrowed t)
+        ))
+(setq org-roam-dailies-capture-templates
+      '(("d" "default" entry "* %<%H:%M> %?"
+         :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+#+end_src
+
+** Org tree slide
+
+#+begin_src emacs-lisp
+(after! org-tree-slide (setq org-tree-slide-never-touch-face t)
+  (remove-hook 'org-tree-slide-play-hook #'+org-present-hide-blocks-h)
+  (advice-remove 'org-tree-slide--display-tree-with-narrow
+                 #'+org-present--hide-first-heading-maybe-a))
+#+end_src
+
+#+begin_src emacs-lisp
+(defvar my/hide-org-meta-line-p nil)
+
+(defun my/hide-org-meta-line ()
+    (interactive)
+    (setq my/hide-org-meta-line-p t)
+    (set-face-attribute 'org-meta-line nil
+                        :foreground (face-attribute 'default :background)))
+
+  (defun my/show-org-meta-line ()
+    (interactive)
+    (setq my/hide-org-meta-line-p nil)
+    (set-face-attribute 'org-meta-line nil :foreground nil))
+
+  (defun my-toggle-org-meta-line ()
+    (interactive)
+    (if my/hide-org-meta-line-p
+        (my/show-org-meta-line)
+      (my/hide-org-meta-line)))
+
+  (add-hook 'org-tree-slide-play-hook #'my/hide-org-meta-line)
+  (add-hook 'org-tree-slide-stop-hook #'my/show-org-meta-line)
 #+end_src
 
 ** Zoom window
@@ -916,6 +863,8 @@ Make it possible to zoom in/out the current window.
 (map! :desc "Zoom/Unzoom the current window"
       :n "C-w z" 'zoom-window-zoom)
 #+end_src
+
+tstie
 
 ** Smartparens
 
@@ -940,15 +889,18 @@ Smartparens is a minor mode for dealing with pairs in Emacs.
  :nvie "C-}" #'sp-backward-barf-sexp)
 #+end_src
 
-* General Programming
+* Programming
 ** CSS
+
 Set default indentation for css to 2 spaces
 
 #+begin_src emacs-lisp
 (after! css-mode
   (setq css-indent-offset 2))
 #+end_src
+
 ** JSON
+
 Lets format JSON with a specific width
 
 #+begin_src emacs-lisp
@@ -963,6 +915,7 @@ Lets format JSON with a specific width
 #+end_src
 
 ** Markdown
+
 #+begin_src emacs-lisp
 (map! :localleader
       :map markdown-mode-map
@@ -986,8 +939,8 @@ Lets format JSON with a specific width
         :desc "Six"   "6" 'markdown-insert-header-atx-6))
 #+end_src
 
-* Programming
-** Cider
+** Clojure / Cider
+
 Make the Cider popup window appear in the right hand side.
 
 #+begin_src emacs-lisp
@@ -995,12 +948,5 @@ Make the Cider popup window appear in the right hand side.
   (set-popup-rule! "^\\*cider-repl" :side 'right :size 0.3 :quit nil :ttl 0))
 #+end_src
 
-** Clojure
 
-#+begin_src emacs-lisp
-(after! company
-  (setq company-idle-delay 0.5
-        company-minimum-prefix-length 2)
-  (setq company-show-numbers t)
-  (add-hook 'evil-normal-state-entry-hook #'company-abort))
-#+end_src
+

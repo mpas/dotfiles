@@ -27,6 +27,14 @@ matches:
   - trigger: "ppas"
     replace: "marco.pas@philips.com"
 
+  - trigger: ":1on1"
+    replace: "Please find attached our 1-on-1 meeting notes for date: {{mydate}}"
+    vars:
+    - name: mydate
+      type: date
+      params:
+        format: "%Y-%m-%d %a"
+
   # Dates
   - trigger: ":date"
     replace: "{{mydate}}"
@@ -34,7 +42,7 @@ matches:
       - name: mydate
         type: date
         params:
-          format: "%m/%d/%Y"
+          format: "%a %d-%b-%Y"
   - trigger: ":tstamp"
     replace: "{{mytstamp}}"
     vars:

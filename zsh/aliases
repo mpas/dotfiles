@@ -9,6 +9,7 @@ alias v="$VISUAL"
 alias eb='e ~/.zshrc'
 alias rb='source ~/.zshrc'
 alias f='open -a Finder ./'
+alias t="open -a typora"
 alias c='clear'
 
 # Ssh
@@ -57,8 +58,7 @@ alias tfp="terraform plan"
 alias tfa="terraform apply"
 
 # Aws Vault
-alias av="aws-vault"
-alias avl="aws-vault login ${1}"
+alias avsh="aws-vault exec ${1} --server"
 
 # ECR Login
 alias ecr='eval "$(aws ecr get-login --no-include-email --region ${1})"'
@@ -79,17 +79,20 @@ alias resetAudio='sudo killall coreaudiod'
 alias unload-carbonblack='sudo launchctl unload /Library/LaunchDaemons/com.carbonblack.daemon.plist'
 
 # Brew update
+alias brew='PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin brew'
 alias brew-update='brew update && brew upgrade && brew upgrade --cask && brew cleanup'
 alias brew-backup='cd ~/.dotfiles/app-preferences/brew && rm -f Brewfile && brew bundle dump && cd -'
 alias brew-backup-restore='cd ~/.dotfiles/app-preferences/brew/ && brew bundle && cd -'
 
 # System update
-alias system-update='brew-update && prezto-update && doom upgrade'
+alias system-update='brew-update && prezto-update && doom upgrade && tldr --update'
 
 # Enable direnv into bash/zsh
 eval "$(direnv hook bash)"
 eval "$(direnv hook zsh)"
 
 alias n='emacs ~/Dropbox/notes/org/ &'
-unalias e
-function e() { open -a Emacs "$@"; }
+
+# Minikube
+alias mks="eval $(minikube docker-env)"
+alias mkip='echo "`minikube ip` docker.local" | sudo tee -a /etc/hosts > /dev/null'
