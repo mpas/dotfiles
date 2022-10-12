@@ -9,19 +9,20 @@ alias v="$VISUAL"
 alias eb='e ~/.zshrc'
 alias rb='source ~/.zshrc'
 alias f='open -a Finder ./'
-alias t="open -a typora"
 alias c='clear'
 
+# vi/vim/nvim
+# alias vi=$(which nvim)
+# alias vim=$vi
+# alias nvim=$vi
+
 # Ssh
-alias compile-ssh-config="echo -n > ~/.ssh/config && cat ~/.ssh/ssh-configs/*.config > ~/.ssh/config"
-alias ssh="compile-ssh-config && ssh"
+# alias compile-ssh-config="echo -n > ~/.ssh/config && cat ~/.ssh/ssh-configs/*.config > ~/.ssh/config"
+# alias ssh="compile-ssh-config && ssh"
 alias copy_ssh="pbcopy < ~/.ssh/id_rsa.pub"
 
 # Meld
 alias meld="/Applications/Meld.app/Contents/MacOS/Meld"
-
-# Sourcetree
-alias stree="open -a SourceTree"
 
 # Docker
 alias dc="docker-compose $1"
@@ -45,9 +46,6 @@ alias gpo="git remote prune origin"
 alias git-cfg-philips='git-cfg "marco.pas@philips.com" "Marco Pas"'
 alias git-cfg-google='git-cfg "marco.pasopas@gmail.com" "Marco Pas"'
 
-# Groovy
-alias gconsole="groovyConsole"
-
 # Go
 alias go-reshim='asdf reshim golang && export GOV=$(asdf current golang | sed  '\''s/ *(set by .*)//g'\'') && export GOROOT="$ASDFINSTALLS/golang/$GOV/go/"'
 
@@ -59,6 +57,17 @@ alias tfa="terraform apply"
 
 # Aws Vault
 alias avsh="aws-vault exec ${1} --server"
+
+# Multipass
+alias mp="multipass"
+alias mpla="multipass launch"
+alias mpli="multipass list"
+alias mpsh="multipass shell"
+alias mpsto="multipass stop"
+alias mpsta="multipass start"
+alias mpde="multipass delete"
+alias mppu="multipass purge"
+alias mppu="multipass purge"
 
 # ECR Login
 alias ecr='eval "$(aws ecr get-login --no-include-email --region ${1})"'
@@ -93,6 +102,5 @@ eval "$(direnv hook zsh)"
 
 alias n='emacs ~/Dropbox/notes/org/ &'
 
-# Minikube
-alias mks="eval $(minikube docker-env)"
-alias mkip='echo "`minikube ip` docker.local" | sudo tee -a /etc/hosts > /dev/null'
+# Poetry
+alias p="poetry"

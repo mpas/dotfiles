@@ -1,22 +1,150 @@
+# Start configuration added by Zim install {{{
 #
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
+# User configuration sourced by interactive shells
 #
 
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+# -----------------
+# Zsh configuration
+# -----------------
+
+#
+# History
+#
+
+# Remove older command from the history if a duplicate is to be added.
+setopt HIST_IGNORE_ALL_DUPS
+
+#
+# Input/output
+#
+
+# Set editor default keymap to emacs (`-e`) or vi (`-v`)
+bindkey -v
+
+# Prompt for spelling correction of commands.
+setopt CORRECT
+
+# Customize spelling correction prompt.
+#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+
+# Remove path separator from WORDCHARS.
+WORDCHARS=${WORDCHARS//[\/]}
+
+# -----------------
+# Zim configuration
+# -----------------
+
+# Use degit instead of git as the default tool to install and update modules.
+zstyle ':zim:zmodule' use 'degit'
+
+# --------------------
+# Module configuration
+# --------------------
+
+#
+# git
+#
+
+# Set a custom prefix for the generated aliases. The default prefix is 'G'.
+zstyle ':zim:git' aliases-prefix 'g'
+
+#
+# input
+#
+
+# Append `../` to your input for each `.` you type after an initial `..`
+#zstyle ':zim:input' double-dot-expand yes
+
+#
+# termtitle
+#
+
+# Set a custom terminal title format using prompt expansion escape sequences.
+# See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
+# If none is provided, the default '%n@%m: %~' is used.
+#zstyle ':zim:termtitle' format '%1~'
+
+#
+# zsh-autosuggestions
+#
+
+# Disable automatic widget re-binding on each precmd. This can be set when
+# zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+
+# Customize the style that the suggestions are shown with.
+# See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
+
+#
+# zsh-syntax-highlighting
+#
+
+# Set what highlighters will be used.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+# Customize the main highlighter styles.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
+#typeset -A ZSH_HIGHLIGHT_STYLES
+#ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
+
+# ------------------
+# Initialize modules
+# ------------------
+
+ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  if (( ${+commands[curl]} )); then
+    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  else
+    mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  fi
 fi
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init -q
+fi
+# Initialize modules.
+source ${ZIM_HOME}/init.zsh
 
-# Customize to your needs...
+# ------------------------------
+# Post-init module configuration
+# ------------------------------
+
+#
+# zsh-history-substring-search
+#
+
+zmodload -F zsh/terminfo +p:terminfo
+# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
+for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
+for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
+for key ('k') bindkey -M vicmd ${key} history-substring-search-up
+for key ('j') bindkey -M vicmd ${key} history-substring-search-down
+unset key
+# }}} End configuration added by Zim install
+
+################################################################################
+# Start of my config
+################################################################################
 export LC_ALL=en_US.UTF-8
+
+################################################################################
+# Pure prompt
+# https://github.com/sindresorhus/pure
+################################################################################
+# Use pure prompt
+autoload -U promptinit; promptinit
+prompt pure
 
 ################################################################################
 # Editor settings
 ################################################################################
-export EDITOR=emacsclient
+export EDITOR=nvim
 export VISUAL=$EDITOR
 
 ################################################################################
@@ -53,21 +181,16 @@ source $DOT/zsh/aliases
 # Source custom functions
 for f in $DOT/zsh/functions/*; do source $f; done
 
-################################################################################
-# Asdf
-################################################################################
-[ -f $(brew --prefix asdf)/asdf.sh ] && source $(brew --prefix asdf)/asdf.sh
-
 # Set JAVA_HOME for asdf java plugin
 source ~/.asdf/plugins/java/set-java-home.zsh
 
 ################################################################################
-# Fuzzy finder
+# Multipass
 ################################################################################
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+PATH="$PATH:/Users/phnl310301178/Library/Application Support/multipass/bin"
 
 ################################################################################
-# Hostory
+# History
 ################################################################################
 setopt append_history
 setopt extended_history       # write the history file in the ':start:elapsed;command' format
@@ -82,93 +205,22 @@ setopt HIST_IGNORE_SPACE      # space in front of command will not append to his
 HISTSIZE=4096
 SAVEHIST=4096
 
-################################################################################
-# Zplug
-################################################################################
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
-zplug "spaceship-prompt/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
-zplug "blimmer/zsh-aws-vault"
-
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-
-# Then, source plugins and add commands to $PATH
-zplug load
-
-################################################################################
-# Prompt settings
-################################################################################
-# ORDER
-SPACESHIP_PROMPT_ORDER=(
-  dir
-  git
-  venv
-  line_sep
-  char
-  aws
-  terraform
-)
-
-SPACESHIP_RPROMPT_ORDER=(
-  time
-)
-
-SPACESHIP_TIME_SHOW="true"
-
-# DIR
-SPACESHIP_DIR_PREFIX='' # disable directory prefix, cause it's not the first section
-SPACESHIP_DIR_TRUNC='1' # show only last directory
-
-# GIT
-# Disable git symbol
-SPACESHIP_GIT_SYMBOL="" # disable git prefix
-SPACESHIP_GIT_BRANCH_PREFIX="" # disable branch prefix too
-#
-# Wrap git in `git:(...)`
-SPACESHIP_GIT_PREFIX='git:('
-SPACESHIP_GIT_SUFFIX=") "
-SPACESHIP_GIT_BRANCH_SUFFIX="" # remove space after branch name
-
-# Unwrap git status from `[...]`
-SPACESHIP_GIT_STATUS_PREFIX=""
-SPACESHIP_GIT_STATUS_SUFFIX=""
-
-# VENV
-SPACESHIP_VENV_PREFIX="venv("
-SPACESHIP_VENV_SUFFIX=") "
-
-# Terraform
-SPACESHIP_TERRAFORM_SYMBOL=""
-SPACESHIP_TERRAFORM_PREFIX="tfw ("
-SPACESHIP_TERRAFORM_SUFFIX=") "
-
-################################################################################
-# Conda
-################################################################################
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/$USER/.asdf/installs/python/miniconda3-4.7.12/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/usr/local/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/$USER/.asdf/installs/python/miniconda3-4.7.12/etc/profile.d/conda.sh" ]; then
-        . "/Users/$USER/.asdf/installs/python/miniconda3-4.7.12/etc/profile.d/conda.sh"
+    if [ -f "/usr/local/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+        . "/usr/local/Caskroom/miniforge/base/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/$USER/.asdf/installs/python/miniconda3-4.7.12/bin:$PATH"
+        export PATH="/usr/local/Caskroom/miniforge/base/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-################################################################################
-# Sdkman
-################################################################################
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/$USER/.sdkman"
-[[ -s "/Users/$USER/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/$USER/.sdkman/bin/sdkman-init.sh"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/phnl310301178/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
