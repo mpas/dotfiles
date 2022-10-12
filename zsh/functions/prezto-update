@@ -1,6 +1,0 @@
-prezto-update() {
-  cd $ZPREZTODIR
-  git pull
-  git submodule update --init --recursive
-  cd -
-}
