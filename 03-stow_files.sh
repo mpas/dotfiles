@@ -2,10 +2,5 @@
 
 echo "Installing dotfiles..."
 cd ~/.dotfiles
-stow asdf
-stow prezto
-stow tig
-stow ranger
-stow tmux
-stow vim
-stow conda
+stow app-config
+stow lazygit -t ~/Library/Application\ Support/lazygit
