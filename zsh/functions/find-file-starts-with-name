@@ -1,3 +1,0 @@
-ffs () { 
-    /usr/bin/find . -name "$@"'*' ; 
-}
