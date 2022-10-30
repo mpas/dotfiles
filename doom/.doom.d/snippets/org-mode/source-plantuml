@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: source block - plantuml
-# key: spl
-# --
-#+begin_src plantuml
-$0
-#+end_src

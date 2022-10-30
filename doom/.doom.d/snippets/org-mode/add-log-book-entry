@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: add log-book entry 
-# key: 
-# --
-:LOGBOOK:
-$0
-:END:

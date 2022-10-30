@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: source block - emacs-lisp
-# key: sel
-# --
-#+begin_src emacs-lisp
-$0
-#+end_src
