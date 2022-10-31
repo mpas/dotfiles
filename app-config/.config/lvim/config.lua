@@ -287,10 +287,6 @@ lvim.plugins = {
         -- end
     },
 
-    -- Automatic table creator & formatter
-    -- { "dhruvasagar/vim-table-mode" },
-
-
     -- Allows toggling bookmarks per line
     { "MattesGroeger/vim-bookmarks" },
 
@@ -300,6 +296,19 @@ lvim.plugins = {
     -- Add virtual text support to nvim-dap
     { "theHamsta/nvim-dap-virtual-text",
         config = function() require("nvim-dap-virtual-text").setup({}) end
+    },
+
+    -- Clipboard manager for neovim
+    { "AckslD/nvim-neoclip.lua",
+        requires = {
+            { 'kkharji/sqlite.lua', module = 'sqlite' },
+            -- you'll need at least one of these
+            { 'nvim-telescope/telescope.nvim' },
+            -- {'ibhagwan/fzf-lua'},
+        },
+        config = function()
+            require('neoclip').setup()
+        end,
     },
 
     --------------------------------------------------------------------------------
@@ -339,12 +348,17 @@ lvim.plugins = {
         end,
     },
 
+    -- Automatic table creator & formatter
+    { "dhruvasagar/vim-table-mode" },
+
     --------------------------------------------------------------------------------
     -- Lsp enhancements
     --------------------------------------------------------------------------------
     -- Tree like view for symbols
     { "simrat39/symbols-outline.nvim",
-        config = function() require('symbols-outline').setup() end
+        config = function()
+            require('symbols-outline').setup()
+        end
     },
 
     -- Diagnostics, references, telescope results, quickfix and location lists
@@ -549,6 +563,7 @@ lvim.builtin.telescope.on_config_done = function(telescope)
     pcall(telescope.load_extension, "file_browser")
     pcall(telescope.load_extension, "vim_bookmarks")
     pcall(telescope.load_extension, "project")
+    pcall(telescope.load_extension, "neoclip")
 end
 
 --------------------------------------------------------------------------------
@@ -696,7 +711,7 @@ lvim.builtin.which_key.mappings = {
         h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
         H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
         M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-        R = { "<cmd>Telescope registers<cr>", "Registers" },
+        R = { "<cmd>Telescope neoclip<cr>", "Registers" },
         t = { "<cmd>Telescope live_grep<cr>", "Text" },
         k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
         C = { "<cmd>Telescope commands<cr>", "Commands" },
