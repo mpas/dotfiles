@@ -9,10 +9,14 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 
 -- keymapping
+lvim.keys.insert_mode[";;"] = "<Esc>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<F2>"] = "<cmd>Lspsaga rename<cr>"
+lvim.keys.normal_mode["<TAB>"] = "<cmd>BufferLineCycleNext<cr>"
+lvim.keys.normal_mode["S-<TAB>"] = "<cmd>BufferLineCyclePrevious<cr>"
+
 -- lvim.keys.normal_mode["<f5>"] = ":lua require('dap').continue()<CR>"
 
 -- lvim.keys.visual_mode["<C-r>"] = ":lua require('spectre').open_visual({select_word=true})<cr>"
