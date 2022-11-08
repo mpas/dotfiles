@@ -9,19 +9,88 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 
 -- keymapping
+--------------------------------------------------------------------------------
+-- General
+--------------------------------------------------------------------------------
 lvim.keys.insert_mode[";;"] = "<Esc>"
+lvim.keys.normal_mode["<C-s>"] = ":w<cr>" -- save
+lvim.keys.normal_mode["<F2>"] = "<cmd>Lspsaga rename<cr>"
+
+-- Navigation
+-- lvim.keys.insert_mode["<A-Up>"] = "<C-\\><C-N><C-w>k"
+-- lvim.keys.insert_mode["<A-Down>"] = "<C-\\><C-N><C-w>j"
+-- lvim.keys.insert_mode["<A-Left>"] = "<C-\\><C-N><C-w>h"
+-- lvim.keys.insert_mode["<A-Right>"] = "<C-\\><C-N><C-w>l"
+
+-- Better window movement
+lvim.keys.normal_mode["<C-h>"] = "<C-w>h"
+lvim.keys.normal_mode["<C-j>"] = "<C-w>j"
+lvim.keys.normal_mode["<C-k>"] = "<C-w>k"
+lvim.keys.normal_mode["<C-l>"] = "<C-w>l"
+
+
+-- Move current line / block with Alt-j/k a la vscode.
+lvim.keys.insert_mode["<a-j>"] = "<esc>:m .+1<cR>==gi"
+lvim.keys.insert_mode["<a-k>"] = "<esc>:m .-2<cR>==gi"
+lvim.keys.normal_mode["<a-j>"] = ":m .+1<cr>=="
+lvim.keys.normal_mode["<a-k>"] = ":m .-2<cr>=="
+lvim.keys.visual_block_mode["<A-j>"] = ":m '>+1<CR>gv-gv"
+lvim.keys.visual_block_mode["<A-k>"] = ":m '<-2<CR>gv-gv"
+
+-- QuickFix
+lvim.keys.normal_mode["]q"] = ":cnext<CR>"
+lvim.keys.normal_mode["[q"] = ":cprev<CR>"
+lvim.keys.normal_mode["<C-q>"] = ":call QuickFixToggle()<CR>"
+
+-- Better indenting
+lvim.keys.visual_mode["<"] = "<gv"
+lvim.keys.visual_mode[">"] = ">gv"
+
+-- navigate tab completion with <c-j> and <c-k>
+-- lvim.keys.command_mode["<C-j>"] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } }
+-- lvim.keys.command_mode["<C-k>"] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } }
+
+--------------------------------------------------------------------------------
+-- BufferLine
+--------------------------------------------------------------------------------
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-lvim.keys.normal_mode["<F2>"] = "<cmd>Lspsaga rename<cr>"
 lvim.keys.normal_mode["<TAB>"] = "<cmd>BufferLineCycleNext<cr>"
-lvim.keys.normal_mode["S-<TAB>"] = "<cmd>BufferLineCyclePrevious<cr>"
+lvim.keys.normal_mode["<S-TAB>"] = "<cmd>BufferLineCyclePrev<cr>"
+
+--------------------------------------------------------------------------------
+-- SnipRun
+--------------------------------------------------------------------------------
+lvim.keys.visual_mode["<LEADER>r"] = ":SnipRun<cr>"
+lvim.keys.normal_mode["<LEADER>r"] = "<cmd>SnipRun<cr>"
+
+--------------------------------------------------------------------------------
+-- Venn
+--------------------------------------------------------------------------------
+function _G.Toggle_venn()
+    local venn_enabled = vim.inspect(vim.b.venn_enabled)
+    if venn_enabled == "nil" then
+        vim.b.venn_enabled = true
+        vim.cmd [[setlocal ve=all]]
+        -- draw a line on HJKL keystokes
+        vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", { noremap = true })
+        vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", { noremap = true })
+        vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", { noremap = true })
+        vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", { noremap = true })
+        -- draw a box by pressing "f" with visual selection
+        vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", { noremap = true })
+    else
+        vim.cmd [[setlocal ve=]]
+        vim.cmd [[mapclear <buffer>]]
+        vim.b.venn_enabled = nil
+    end
+end
+
+-- toggle keymappings for venn using <leader>v
+vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true })
 
 -- lvim.keys.normal_mode["<f5>"] = ":lua require('dap').continue()<CR>"
-
--- lvim.keys.visual_mode["<C-r>"] = ":lua require('spectre').open_visual({select_word=true})<cr>"
 -- -- lvim.keys.normal_mode["<f8>"] = ":lua require('dapui').toggle()<CR>"
--- -- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
@@ -47,7 +116,7 @@ lvim.keys.normal_mode["S-<TAB>"] = "<cmd>BufferLineCyclePrevious<cr>"
 -- }
 
 -- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 -- lvim.builtin.which_key.mappings["t"] = {
 --   name = "+Trouble",
 --   r = { "<cmd>Trouble lsp_references<cr>", "References" },
@@ -66,6 +135,7 @@ lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 lvim.builtin.dap.active = true
+lvim.reload_config_on_save = false
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -189,13 +259,42 @@ lvim.builtin.project.patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Make
 --   patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".project.nvim" },
 -- })
 
+
 -- Additional Plugins
 lvim.plugins = {
+    { "Olical/conjure" },
+
+    { "michaelb/sniprun",
+        run = "bash ./install.sh",
+        config = function()
+            require("sniprun").setup({
+                display = {
+                    "Terminal",
+                    "VirtualText"
+                },
+                -- display_options = {
+                --     terminal_width = 45,
+                -- },
+                selected_interpreters = {
+                    "Python3_fifo"
+                },
+                repl_enable = {
+                    "Python3_original",
+                    "Python3_fifo",
+                },
+            })
+        end,
+    },
+
     --------------------------------------------------------------------------------
     -- Navigation
     --------------------------------------------------------------------------------
     -- General-purpose motion plugin
-    { "ggandor/leap.nvim", config = function() require('leap').add_default_mappings() end },
+    { "ggandor/leap.nvim",
+        config = function()
+            require('leap').add_default_mappings()
+        end,
+    },
 
     -- Jump to the line
     { "nacro90/numb.nvim",
@@ -277,8 +376,7 @@ lvim.plugins = {
         cmd = "Codi",
     },
 
-
-    -- open url with gx
+    -- Open url with gx
     { "felipec/vim-sanegx",
         event = "BufRead",
     },
@@ -293,6 +391,9 @@ lvim.plugins = {
 
     -- Allows toggling bookmarks per line
     { "MattesGroeger/vim-bookmarks" },
+
+    -- Draw ascii diagrams
+    { "jbyuki/venn.nvim" },
 
     --------------------------------------------------------------------------------
     -- Debugging
@@ -312,43 +413,6 @@ lvim.plugins = {
         },
         config = function()
             require('neoclip').setup()
-        end,
-    },
-
-    --------------------------------------------------------------------------------
-    -- Org mode
-    --------------------------------------------------------------------------------
-    { "nvim-orgmode/orgmode",
-        config = function()
-            require("orgmode").setup_ts_grammar()
-            require("orgmode").setup({
-                org_agenda_files = { "~/Dropbox/notes/*.org" },
-                org_default_notes_file = "~/Dropbox/notes/inbox.org",
-                org_todo_keywords = { "TODO(t)", "DOING", "WAITING", "|", "DONE", "CANCELLED" },
-                org_archive_location = { "~/Dropbox/notes/inbox_archive.org" },
-                org_blank_before_new_entry = { heading = false },
-                org_capture_templates = {
-                    t = {
-                        description = "TODO",
-                        template = "** TODO %?\n %u",
-                        target = "~/Dropbox/notes/inbox.org",
-                        headline = "Inbox",
-                    },
-                    e = 'Event',
-                    er = {
-                        description = 'recurring',
-                        template = '** %?\n %T',
-                        target = '~/Dropbox/notes/calendar.org',
-                        headline = 'Recurring'
-                    },
-                    eo = {
-                        description = 'one-time',
-                        template = '** %?\n %T',
-                        target = '~/Dropbox/notes/calendar.org',
-                        headline = 'One-time'
-                    }
-                },
-            })
         end,
     },
 
@@ -506,18 +570,18 @@ lvim.plugins = {
     -- Markdown
     --------------------------------------------------------------------------------
     -- Fluent navigation of documents and notebooks (AKA "wikis") written in markdown
-    { "jakewvincent/mkdnflow.nvim",
-        config = function()
-            require('mkdnflow').setup({
-                mappings = {
-                    MkdnEnter = { { 'i', 'n', 'v' }, '<CR>' },
-                },
-                links = {
-                    conceal = true,
-                },
-            })
-        end
-    },
+    -- { "jakewvincent/mkdnflow.nvim",
+    --     config = function()
+    --         require('mkdnflow').setup({
+    --             mappings = {
+    --                 MkdnEnter = { { 'i', 'n', 'v' }, '<CR>' },
+    --             },
+    --             links = {
+    --                 conceal = true,
+    --             },
+    --         })
+    --     end
+    -- },
 
     --- Preview markdown on your modern browser with synchronised scrolling and flexible configuration
     { "iamcco/markdown-preview.nvim",
@@ -573,7 +637,7 @@ end
 --------------------------------------------------------------------------------
 -- Keymappings
 --------------------------------------------------------------------------------
-local t = require('telescope.builtin')
+-- local t = require('telescope.builtin')
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
@@ -680,12 +744,6 @@ lvim.builtin.which_key.mappings = {
         qsv = { ":'<,'>ZkMatch<cr>", "Visual selection" },
     },
 
-    -- org mode
-    o = {
-        name = "+org",
-        i = { ":e ~/Dropbox/notes/inbox.org<cr>", "open inbox" },
-    },
-
     -- packer
     p = {
         name = "+packer",
@@ -695,6 +753,7 @@ lvim.builtin.which_key.mappings = {
         s = { "<cmd>PackerSync<CR>", "Sync" },
         u = { "<cmd>PackerUpdate<CR>", "Update" },
     },
+
 
     -- quit
     q = {
@@ -745,6 +804,7 @@ lvim.builtin.which_key.mappings = {
             w = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
         },
         z = { "<cmd>ZenMode<cr>", "Zen Mode" },
+        v = { ":lua Toggle_venn()<CR>", "Venn" },
     },
 }
 
