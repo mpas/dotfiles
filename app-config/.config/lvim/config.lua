@@ -8,6 +8,11 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 
+-- unmap a default keymapping
+-- vim.keymap.del("n", "<C-Up>")
+-- override a default keymapping
+-- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
+
 -- keymapping
 --------------------------------------------------------------------------------
 -- General
@@ -86,16 +91,15 @@ function _G.Toggle_venn()
     end
 end
 
--- toggle keymappings for venn using <leader>v
-vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true })
+-- -- toggle keymappings for venn using <leader>v
+-- vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true })
+
+
+
 
 -- lvim.keys.normal_mode["<f5>"] = ":lua require('dap').continue()<CR>"
 -- -- lvim.keys.normal_mode["<f8>"] = ":lua require('dapui').toggle()<CR>"
 
--- unmap a default keymapping
--- vim.keymap.del("n", "<C-Up>")
--- override a default keymapping
--- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
@@ -115,27 +119,20 @@ vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = 
 --   },
 -- }
 
--- Use which-key to add extra bindings with the leader-key prefix
-lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<cr>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
--- }
-
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
+lvim.reload_config_on_save = false
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.terminal.active = true
+lvim.builtin.dap.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
-lvim.builtin.dap.active = true
-lvim.reload_config_on_save = false
+lvim.builtin.project.patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".project.nvim" }
+lvim.builtin.terminal.active = true
+lvim.builtin.treesitter.ignore_install = { "haskell" }
+lvim.builtin.treesitter.highlight.enabled = true
+lvim.builtin.treesitter.rainbow.enable = true
+
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -163,13 +160,6 @@ lvim.builtin.treesitter.ensure_installed = {
     "toml",
     "query"
 }
-
--- Treesitter config settings
-lvim.builtin.treesitter.ignore_install = { "haskell" }
-lvim.builtin.treesitter.highlight.enabled = true
-lvim.builtin.treesitter.rainbow.enable = true
-
--- generic LSP settings
 
 -- -- make sure server will always be installed even if the server is in skipped_servers list
 -- lvim.lsp.installer.setup.ensure_installed = {
@@ -250,14 +240,6 @@ pcall(
         require("dap-python").setup()
     end
 )
-
-lvim.builtin.project.patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".project.nvim" }
-
--- require("project_nvim").setup({
---   -- All the patterns used to detect root dir, when **"pattern"** is in
---   -- detection_methods
---   patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", ".project.nvim" },
--- })
 
 
 -- Additional Plugins
@@ -363,13 +345,6 @@ lvim.plugins = {
             require("colorizer").setup()
         end
     },
-    -- Highlight and search for todo comments
-    -- { "folke/todo-comments.nvim",
-    --   event = "BufRead",
-    --   config = function()
-    --     require("todo-comments").setup()
-    --   end,
-    -- },
 
     -- Interactive scratchpad for hackers
     { "metakirby5/codi.vim",
@@ -395,6 +370,9 @@ lvim.plugins = {
     -- Draw ascii diagrams
     { "jbyuki/venn.nvim" },
 
+    -- Paste image from clipboard
+    { "ekickx/clipboard-image.nvim" },
+
     --------------------------------------------------------------------------------
     -- Debugging
     --------------------------------------------------------------------------------
@@ -402,6 +380,7 @@ lvim.plugins = {
     { "theHamsta/nvim-dap-virtual-text",
         config = function() require("nvim-dap-virtual-text").setup({}) end
     },
+
 
     -- Clipboard manager for neovim
     { "AckslD/nvim-neoclip.lua",
@@ -667,22 +646,26 @@ lvim.builtin.which_key.mappings = {
         name = "+find",
         b = { "<cmd>Telescope file_browser<cr>", "File Browser" },
         B = { "<cmd>Telescope vim_bookmarks<cr>", "Find Bookmark" },
-        f = { "<cmd>Telescope find_files<cr>", "Find File" },
-        r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-        h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-        w = { "<cmd>Telescope grep_string()<CR>", "word" },
-        s = { "<cmd>Telescope lsp_document_symbols()<CR>", "document symbols" },
-        S = { "<cmd>Telescope lsp_workspace_symbols()<CR>", "workspace symbols" },
-        q = { "<cmd>Telescope quickfix()<CR>", "in quickfix list" },
-        t = { "<cmd>Telescope live_grep<cr>", "Text" },
-        k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
         C = { "<cmd>Telescope commands<cr>", "Commands" },
         c = { "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
             "Colorscheme with Preview", },
-        x = { "<cmd>lua require('spectre').open_visual()()<cr>", "Replace" },
+        f = { "<cmd>Telescope find_files<cr>", "Find File" },
+        h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
+        H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
+        k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
+        M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
         n = { "<cmd>nvimtreefindfile<cr>", "find current file in tree" },
         p = { "<cmd>Telescope projects<cr>", "Find Project" },
+        R = { "<cmd>Telescope neoclip<cr>", "Registers" },
+        q = { "<cmd>Telescope quickfix()<CR>", "in quickfix list" },
+        r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+        s = { "<cmd>Telescope lsp_document_symbols()<CR>", "document symbols" },
+        S = { "<cmd>Telescope lsp_workspace_symbols()<CR>", "workspace symbols" },
+        t = { "<cmd>Telescope live_grep<cr>", "Text" },
+        w = { "<cmd>Telescope grep_string()<CR>", "word" },
+        x = { "<cmd>lua require('spectre').open_visual()<cr>", "Replace" }
     },
+
 
     -- git
     g = {
@@ -767,24 +750,6 @@ lvim.builtin.which_key.mappings = {
         q = { "<cmd>cclose<CR>", "quickfix list" },
     },
 
-    -- search
-    s = {
-        name = "+search",
-        c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-        h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-        H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
-        M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-        R = { "<cmd>Telescope neoclip<cr>", "Registers" },
-        t = { "<cmd>Telescope live_grep<cr>", "Text" },
-        k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-        C = { "<cmd>Telescope commands<cr>", "Commands" },
-        p = {
-            "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
-            "Colorscheme with Preview",
-        },
-        r = { "<cmd>lua require('spectre').open_visual()<cr>", "Replace" }
-    },
-
     -- toggles
     t = {
         name = "+toggle",
@@ -799,9 +764,14 @@ lvim.builtin.which_key.mappings = {
             t = { "<cmd>TableModeToggle<cr>", "Table Mode" },
         },
         t = {
-            name = "Trouble",
+            name = "+trouble",
             t = { "<cmd>TroubleToggle<cr>", "Trouble Toggle" },
-            w = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
+            d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+            w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
+            r = { "<cmd>Trouble lsp_references<cr>", "References" },
+            f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+            q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+            l = { "<cmd>Trouble loclist<cr>", "LocationList" },
         },
         z = { "<cmd>ZenMode<cr>", "Zen Mode" },
         v = { ":lua Toggle_venn()<CR>", "Venn" },
