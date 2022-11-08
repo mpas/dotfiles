@@ -107,3 +107,6 @@ alias n='emacs ~/Dropbox/notes/org/ &'
 
 # Poetry
 alias p="poetry"
+
+alias assume="source assume"
+
