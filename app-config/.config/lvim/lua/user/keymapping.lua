@@ -6,11 +6,20 @@
 lvim.builtin.dap.on_config_done = function()
     lvim.builtin.which_key.mappings['d'] = {
         name = "+debug",
-        s = { ":lua require'dap'.continue()<cr>", "Start" },
-        o = { ":lua require'dap'.step_over()", "Step over" },
-        i = { ":lua require'dap'.step_into()", "Step into" },
-        r = { ":lua require'dap'.repl.open()", "Repl" },
-        b = { ":lua require'dap'.toggle_breakpoint()<cr>", "Breakpoint" },
+        t = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+        b = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
+        c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
+        C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run To Cursor" },
+        d = { "<cmd>lua require'dap'.disconnect()<cr>", "Disconnect" },
+        g = { "<cmd>lua require'dap'.session()<cr>", "Get Session" },
+        i = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
+        o = { "<cmd>lua require'dap'.step_over()<cr>", "Step Over" },
+        u = { "<cmd>lua require'dap'.step_out()<cr>", "Step Out" },
+        p = { "<cmd>lua require'dap'.pause()<cr>", "Pause" },
+        r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
+        s = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
+        q = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
+        U = { "<cmd>lua require'dapui'.toggle()<cr>", "Toggle UI" },
     }
 end
 
@@ -62,6 +71,13 @@ lvim.lsp.buffer_mappings.normal_mode["K"] = { "<cmd>Lspsaga hover_doc<cr>", "Doc
 
 lvim.keys.normal_mode["<F2>"] = ":lua require'dap'.continue()<cr>"
 lvim.keys.normal_mode["<F9>"] = ":lua require'dap'.toggle_breakpoint()<cr>"
+
+
+local function open_inbox(inbox_name)
+    require("zk.commands").get("ZkNew")({ title = inbox_name, dir = "" })
+    vim.wait(100)
+    vim.fn.feedkeys("G$a")
+end
 
 -- remove all keybindings from whichkey and add our own
 lvim.builtin.which_key.mappings = {
@@ -202,7 +218,12 @@ lvim.builtin.which_key.mappings = {
     -- notes
     n = {
         name = "+notes",
-        t = { "<cmd>ZkNew { title = 'inbox', dir = '' }<cr>", "Add todo" },
+        t = { function()
+            require("zk.commands").get("ZkNew")({ title = "inbox", dir = "" })
+            vim.wait(100)
+            vim.fn.feedkeys("G$a")
+        end, "Inbox"
+        },
         n = { "<cmd>ZkNew { title = vim.fn.input('Title: '), dir = vim.fn.input('Dir: ') }<cr>", "New" },
         v = { "With visual selection" },
         vc = { ":'<,'>ZkNewFromContentSelection { title = vim.fn.input('Title: '), dir = vim.fn.input('Dir: ') }<cr>",
@@ -275,4 +296,25 @@ lvim.builtin.which_key.mappings = {
         z = { "<cmd>ZenMode<cr>", "Zen Mode" },
         v = { ":lua Toggle_venn()<CR>", "Venn" },
     },
+
+    x = {
+        name = "test",
+        t = { function()
+            require("zk.commands").get("ZkNew")({ title = "inbox", dir = "" })
+            vim.wait(100)
+            vim.fn.feedkeys("G$a")
+        end, "Inbox"
+        },
+        -- t = { "<cmd>ZkNew { title = 'inbox', dir = '' }<cr><cmd><S-g><cr>", "Add todo" },
+    }
 }
+
+
+-- lvim.builtin.which_key.mappings.t = { function()
+--     pcall(function()
+--         local buf = vim.api.nvim_get_current_buf()
+--         local file = vim.api.nvim_buf_get_name(buf)
+--         local folder = string.gsub(file, "/[^/]+$", "")
+--         vim.cmd("ToggleTerm dir=" .. folder)
+--     end)
+-- end, "open terminal next to the file" }
