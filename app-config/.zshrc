@@ -174,6 +174,8 @@ export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:$PATH"
 
 export ZK_NOTEBOOK_DIR="$HOME/Dropbox/notes/"
 
+# Add graph-easy to path
+# export PATH="$HOME/.cpan/build/Graph-Easy-0.76-0/bin:$PATH"
 ################################################################################
 # Dotfiles
 ################################################################################
@@ -185,6 +187,9 @@ for f in $HOME/shell-functions/*; do source $f; done
 
 # Set JAVA_HOME for asdf java plugin
 source ~/.asdf/plugins/java/set-java-home.zsh
+
+# source carge
+. "$HOME/.cargo/env"
 
 ################################################################################
 # Multipass
