@@ -1,11 +1,18 @@
-vim.opt.conceallevel = 1
+vim.opt.conceallevel = 2
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
+vim.opt.spelllang = "en_us,nl"
+vim.opt.spell = true
+vim.opt.wrap = true
+vim.opt.linebreak = true
+
+lvim.builtin.cmp.cmdline.enable = true
 
 lvim.reload_config_on_save = false
 lvim.format_on_save.enabled = true
 lvim.log.level = "warn"
+-- lvim.colorscheme = "nightfox"
 lvim.colorscheme = "lunar"
 -- lvim.colorscheme = "onedarker"
 lvim.builtin.alpha.active = true

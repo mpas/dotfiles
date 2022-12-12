@@ -1,4 +1,3 @@
--- Draw ascii diagrams
 function _G.Toggle_venn()
     local venn_enabled = vim.inspect(vim.b.venn_enabled)
     if venn_enabled == "nil" then
@@ -17,5 +16,3 @@ function _G.Toggle_venn()
         vim.b.venn_enabled = nil
     end
 end
-
-return { "jbyuki/venn.nvim" }

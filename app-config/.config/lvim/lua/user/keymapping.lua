@@ -73,17 +73,21 @@ lvim.keys.normal_mode["<F2>"] = ":lua require'dap'.continue()<cr>"
 lvim.keys.normal_mode["<F9>"] = ":lua require'dap'.toggle_breakpoint()<cr>"
 
 
-local function open_inbox(inbox_name)
-    require("zk.commands").get("ZkNew")({ title = inbox_name, dir = "" })
+local function open_existing_note_with_title(note_title)
+    require("zk.commands").get("ZkNew")({ title = note_title, dir = "" })
     vim.wait(100)
     vim.fn.feedkeys("G$a")
 end
 
 -- remove all keybindings from whichkey and add our own
 lvim.builtin.which_key.mappings = {
+    [";"] = { "<cmd>Alpha<CR>", "Dashboard" },
+    ["w"] = { "<cmd>w!<CR>", "Save" },
+    ["q"] = { "<cmd>lua require('lvim.utils.functions').smart_quit()<CR>", "Quit" },
+    ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle current line" },
     ["c"] = { "<cmd>BufferKill<cr>", "Close Buffer" },
-    ["e"] = { "<cmd>lua require'core.nvimtree'.toggle_tree()<cr>", "Explorer" },
     ["h"] = { '<cmd>let @/=""<cr>', "No Highlight" },
+    ["e"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" },
 
     -- buffers
     b = {
@@ -99,6 +103,11 @@ lvim.builtin.which_key.mappings = {
         L = { "<cmd>BufferLineSortByExtension<cr>", "Sort by language" },
     },
 
+    -- c = {
+    --     name = "Code",
+    --     g = { "<cmd>Neogen func<Cr>", "Func Doc" },
+    --     G = { "<cmd>Neogen class<Cr>", "Class Doc" },
+    -- },
     -- debug (needs to be in a function see https://github.com/LunarVim/LunarVim/issues/3456)
     -- d = { },
 
@@ -219,11 +228,8 @@ lvim.builtin.which_key.mappings = {
     n = {
         name = "+notes",
         t = { function()
-            require("zk.commands").get("ZkNew")({ title = "inbox", dir = "" })
-            vim.wait(100)
-            vim.fn.feedkeys("G$a")
-        end, "Inbox"
-        },
+            open_existing_note_with_title("inbox")
+        end, "Inbox" },
         n = { "<cmd>ZkNew { title = vim.fn.input('Title: '), dir = vim.fn.input('Dir: ') }<cr>", "New" },
         v = { "With visual selection" },
         vc = { ":'<,'>ZkNewFromContentSelection { title = vim.fn.input('Title: '), dir = vim.fn.input('Dir: ') }<cr>",
@@ -295,6 +301,8 @@ lvim.builtin.which_key.mappings = {
         },
         z = { "<cmd>ZenMode<cr>", "Zen Mode" },
         v = { ":lua Toggle_venn()<CR>", "Venn" },
+        w = { "<cmd>set wrap!<cr>", "Line wrap" },
+        s = { "<cmd>set spell!<cr>", "Spelling" },
     },
 
     x = {
