@@ -1,9 +1,9 @@
 java adoptopenjdk-16.0.2+7
 maven 3.8.4
 gradle 7.4
-nodejs 17.5.0
+nodejs 19.2.0
 terraform 1.1.6
-yarn 1.22.17
+yarn 1.22.19
 clojure 1.10.3.1075
 lein 2.9.8
 python 3.10.2
