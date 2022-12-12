@@ -2,13 +2,16 @@ lvim.plugins = {
     --------------------------------------------------------------------------------
     -- General
     --------------------------------------------------------------------------------
+    --
+    { "stevearc/dressing.nvim" },
+
     -- Pick icons
     { "ziontee113/icon-picker.nvim",
         config = function()
             require("icon-picker").setup({
                 disable_legacy_commands = true
             })
-        end,
+        end
     },
     -- Color highlighter
     { "norcalli/nvim-colorizer.lua",
