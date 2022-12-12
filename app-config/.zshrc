@@ -138,8 +138,13 @@ export LC_ALL=en_US.UTF-8
 # https://github.com/sindresorhus/pure
 ################################################################################
 # Use pure prompt
-autoload -U promptinit; promptinit
-prompt pure
+# autoload -U promptinit; promptinit
+# prompt pure
+
+eval "$(starship init zsh)"
+
+# source /path/to/kube-ps1.sh
+# PROMPT='$(kube-ps1)'$PROMPT
 
 ################################################################################
 # Editor settings
@@ -169,6 +174,8 @@ export PATH="$HOME/.emacs.d/bin/:$PATH"
 # Add LunarVim to path
 export PATH="$HOME/.local/bin:$PATH"
 
+export PATH="$PATH:/usr/local/bin/"
+
 # fix paths for brew installed packages
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:$PATH"
 
@@ -197,6 +204,11 @@ source ~/.asdf/plugins/java/set-java-home.zsh
 PATH="$PATH:/Users/phnl310301178/Library/Application Support/multipass/bin"
 
 ################################################################################
+# Kubectl Krew
+################################################################################
+PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+################################################################################
 # History
 ################################################################################
 setopt append_history
@@ -212,6 +224,8 @@ setopt HIST_IGNORE_SPACE      # space in front of command will not append to his
 HISTSIZE=4096
 SAVEHIST=4096
 
+# Auto start tmux when launching a new terminal
+[ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit;}
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
