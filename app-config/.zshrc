@@ -151,6 +151,7 @@ eval "$(starship init zsh)"
 ################################################################################
 export EDITOR=nvim
 export VISUAL=$EDITOR
+export TERM=screen-256color
 
 ################################################################################
 # Handy keybindings

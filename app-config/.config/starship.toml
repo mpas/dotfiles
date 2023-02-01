@@ -7,6 +7,7 @@ $hostname\
 $directory\
 $kubernetes\
 $conda\
+$python\
 $git_branch\
 $git_commit\
 $git_state\
@@ -23,7 +24,7 @@ add_newline = true
 [kubernetes]
 disabled = false
 detect_files = ['k8s']
-format = 'on [☸️  $context]($style) '
+format = 'on [☸️  $context \($namespace\)]($style) '
 
 [conda]
 format = "[$symbol$environment]($style) "
@@ -35,6 +36,10 @@ style = "blue"
 success_symbol = "[❯](purple)"
 error_symbol = "[❯](red)"
 vimcmd_symbol = "[❮](green)"
+
+[python]
+pyenv_version_name = true
+python_binary = ['./venv/bin/python', 'python', 'python3', 'python2']
 
 [cmd_duration]
 format = "[$duration]($style) "
