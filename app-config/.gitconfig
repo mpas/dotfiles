@@ -55,3 +55,8 @@
 [user]
 	email = marco.pasopas@gmail.com
 	name = Marco Pas
+	signingkey = C886FFD68F9AF3F4
+[commit]
+	gpgSign = true
+[tag]
+	gpgSign = true
