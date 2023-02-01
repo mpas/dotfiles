@@ -6,14 +6,26 @@ vim.opt.spelllang = "en_us,nl"
 vim.opt.spell = true
 vim.opt.wrap = true
 vim.opt.linebreak = true
-
+vim.opt.relativenumber = true
 lvim.builtin.cmp.cmdline.enable = true
+
+-- vim.opt.foldmethod = "expr" -- folding set to "expr" for treesitter based folding
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
+
+vim.o.foldcolumn = '1' -- '0' is not bad
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
+-- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
 lvim.reload_config_on_save = false
 lvim.format_on_save.enabled = true
 lvim.log.level = "warn"
 -- lvim.colorscheme = "nightfox"
-lvim.colorscheme = "lunar"
+lvim.colorscheme = "nightfly"
 -- lvim.colorscheme = "onedarker"
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
@@ -51,6 +63,9 @@ lvim.builtin.treesitter.ensure_installed = {
 }
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enable = true
+lvim.builtin.cmp.completion.keyword_length = 2
+lvim.builtin.telescope.defaults.layout_config.width = 0.95
+lvim.builtin.telescope.defaults.layout_config.preview_cutoff = 75
 
 require("nvim-treesitter.configs").setup({
     highlight = {
@@ -64,3 +79,8 @@ lvim.builtin.telescope.on_config_done = function(telescope)
     pcall(telescope.load_extension, "project")
     pcall(telescope.load_extension, "neoclip")
 end
+
+vim.g.table_mode_corner = '|'
+
+lvim.format_on_save.timeout = 5000
+lvim.builtin.which_key.setup.plugins.presets.z = true

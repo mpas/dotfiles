@@ -13,12 +13,14 @@ lvim.plugins = {
             })
         end
     },
-    -- Color highlighter
+
+    -- Color highlightener
     { "norcalli/nvim-colorizer.lua",
         config = function()
             require("colorizer").setup()
         end,
     },
+
     -- Distraction-free coding for Neovim
     { "folke/zen-mode.nvim",
         config = function()
@@ -29,6 +31,7 @@ lvim.plugins = {
             })
         end,
     },
+
     -- Draw ascii diagrams
     { "jbyuki/venn.nvim" },
 
@@ -64,6 +67,7 @@ lvim.plugins = {
     { "sainnhe/sonokai" },
     { "Yagua/nebulous.nvim" },
 
+    -- An asynchronous linter plugin for Neovim
     { "mfussenegger/nvim-lint",
         config = function()
             require('lint').linters_by_ft = {
@@ -71,6 +75,8 @@ lvim.plugins = {
             }
         end,
     },
+
+    { "dhruvasagar/vim-zoom" },
 
     --------------------------------------------------------------------------------
     -- Editor
@@ -87,6 +93,21 @@ lvim.plugins = {
         -- setup = function()
         --  vim.o.timeoutlen = 500
         -- end
+    },
+
+    -- Undotree visualizes the undo history
+    { "mbbill/undotree" },
+
+    -- Make Neovim's fold look modern and keep high performance
+    { "kevinhwang91/nvim-ufo",
+        requires = "kevinhwang91/promise-async",
+        config = function()
+            require('ufo').setup({
+                provider_selector = function(bufnr, filetype, buftype)
+                    return { 'treesitter', 'indent' }
+                end
+            })
+        end
     },
 
     --------------------------------------------------------------------------------
@@ -127,28 +148,35 @@ lvim.plugins = {
     -- Interactive environment for evaluating code within your running program
     { "Olical/conjure" },
 
-    -- Code runner plugin
-    { "michaelb/sniprun",
-        run = "bash ./install.sh",
-        config = function()
-            require("sniprun").setup({
-                display = {
-                    "Terminal",
-                    "VirtualText"
-                },
-                -- display_options = {
-                --     terminal_width = 45,
-                -- },
-                selected_interpreters = {
-                    "Python3_fifo"
-                },
-                repl_enable = {
-                    "Python3_original",
-                    "Python3_fifo",
-                },
-            })
-        end
+    { "dccsillag/magma-nvim",
+        run = ":UpdateRemotePlugins",
+        -- config = function()
+        --     require('magma-nvim')
+        -- end
     },
+
+    -- Code runner plugin
+    -- { "michaelb/sniprun",
+    --     run = "bash ./install.sh",
+    --     config = function()
+    --         require("sniprun").setup({
+    --             display = {
+    --                 "Terminal",
+    --                 "VirtualText"
+    --             },
+    --             -- display_options = {
+    --             --     terminal_width = 45,
+    --             -- },
+    --             selected_interpreters = {
+    --                 "Python3_fifo"
+    --             },
+    --             repl_enable = {
+    --                 "Python3_original",
+    --                 "Python3_fifo",
+    --             },
+    --         })
+    --     end
+    -- },
 
     --------------------------------------------------------------------------------
     -- Navigation
@@ -172,6 +200,33 @@ lvim.plugins = {
         end,
     },
 
+    -- Better quickfix window
+    { "kevinhwang91/nvim-bqf",
+        event = { "BufRead", "BufNew" },
+        config = function()
+            require("bqf").setup({
+                auto_enable = true,
+                preview = {
+                    win_height = 12,
+                    win_vheight = 12,
+                    delay_syntax = 80,
+                    border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
+                },
+                func_map = {
+                    vsplit = "",
+                    ptogglemode = "z,",
+                    stoggleup = "",
+                },
+                filter = {
+                    fzf = {
+                        action_for = { ["ctrl-s"] = "split" },
+                        extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+                    },
+                },
+            })
+        end,
+    },
+
     -- General-purpose motion plugin
     { "ggandor/leap.nvim",
         config = function()
@@ -184,9 +239,69 @@ lvim.plugins = {
         event = "BufRead",
     },
 
+    -- Getting you where you want with the fewest keystrokes
+    { "ThePrimeagen/harpoon",
+        config = function()
+            require("harpoon").setup {
+                global_settings = {
+                    save_on_toggle = true,
+                    enter_on_sendcmd = true,
+                },
+            }
+            require("telescope").load_extension("harpoon")
+        end,
+    },
+
     --------------------------------------------------------------------------------
     -- Development and debugging
     --------------------------------------------------------------------------------
+    { "ThePrimeagen/refactoring.nvim",
+        config = function()
+            require('refactoring').setup({})
+        end,
+        requires = {
+            { "nvim-lua/plenary.nvim" },
+            { "nvim-treesitter/nvim-treesitter" }
+        }
+    },
+
+    { "jbyuki/one-small-step-for-vimkind" },
+
+    { "simrat39/symbols-outline.nvim",
+        config = function()
+            require("symbols-outline").setup({
+                symbols = {
+                    File = { hl = "@text.uri" },
+                    Module = { hl = "@namespace" },
+                    Namespace = { hl = "@namespace" },
+                    Package = { hl = "@namespace" },
+                    Class = { hl = "@type" },
+                    Method = { hl = "@method" },
+                    Property = { hl = "@method" },
+                    Field = { hl = "@field" },
+                    Constructor = { hl = "@constructor" },
+                    Enum = { hl = "@type" },
+                    Interface = { hl = "@type" },
+                    Function = { hl = "@function" },
+                    Variable = { hl = "@constant" },
+                    Constant = { hl = "@constant" },
+                    String = { hl = "@string" },
+                    Number = { hl = "@number" },
+                    Boolean = { hl = "@boolean" },
+                    Array = { hl = "@constant" },
+                    Object = { hl = "@type" },
+                    Key = { hl = "@type" },
+                    Null = { hl = "@type" },
+                    EnumMember = { hl = "@field" },
+                    Struct = { hl = "@type" },
+                    Event = { hl = "@type" },
+                    Operator = { hl = "@operator" },
+                    TypeParameter = { hl = "@parameter" },
+                },
+            })
+        end,
+    },
+
     -- Add virtual text support to nvim-dap
     { "theHamsta/nvim-dap-virtual-text",
         config = function()
@@ -198,15 +313,15 @@ lvim.plugins = {
     { "mfussenegger/nvim-dap-python" },
 
     -- Tiny plugin to quickly switch python virtual environments from within neovim without restarting.
-    { "AckslD/swenv.nvim",
-        config = function()
-            require('swenv').setup({
-                -- Path passed to `get_venvs`.
-                venvs_path = vim.fn.expand('/usr/local/Caskroom/mambaforge/base/envs'),
+    -- { "AckslD/swenv.nvim",
+    --     config = function()
+    --         require('swenv').setup({
+    --             -- Path passed to `get_venvs`.
+    --             venvs_path = vim.fn.expand('/usr/local/Caskroom/mambaforge/base/envs'),
 
-            })
-        end,
-    },
+    --         })
+    --     end,
+    -- },
 
     -- Generate docstrings automatically.
     { "danymat/neogen",
@@ -251,11 +366,7 @@ lvim.plugins = {
     { "glepnir/lspsaga.nvim",
         branch = "main",
         config = function()
-            require("lspsaga").init_lsp_saga({
-                show_outline = {
-                    jump_key = '<cr>',
-                }
-            })
+            require('lspsaga').setup({})
         end,
     },
 
@@ -333,22 +444,27 @@ lvim.plugins = {
     --------------------------------------------------------------------------------
     -- Markdown
     --------------------------------------------------------------------------------
+    --- An awesome automatic table creator & formatter
+    { "dhruvasagar/vim-table-mode" },
+
     -- Fluent navigation of documents and notebooks (AKA "wikis") written in markdown
-    { "jakewvincent/mkdnflow.nvim",
-        config = function()
-            require('mkdnflow').setup({
-                mappings = {
-                    MkdnEnter = { { 'i', 'n', 'v' }, '<CR>' },
-                    MkdnNextLink = { 'n', '<TAB-l>' },
-                    MkdnPrevLink = { 'n', '<TAB-h' },
-                },
-                links = {
-                    conceal = true,
-                },
-                silent = true,
-            })
-        end
-    },
+    -- { "jakewvincent/mkdnflow.nvim",
+    --     config = function()
+    --         require('mkdnflow').setup({
+    --             mappings = {
+    --             --     MkdnEnter = { { 'i', 'n', 'v' }, '<CR>' },
+    --             --     MkdnNextLink = { 'n', '<TAB-l>' },
+    --             --     MkdnPrevLink = { 'n', '<TAB-h' },
+    --               MkdnTab = true,
+    --               MkdnSTab= true,
+    --             },
+    --             -- links = {
+    --             --     conceal = true,
+    --             -- },
+    --             -- silent = true,
+    --         })
+    --     end
+    -- },
 
     --- Preview markdown on your modern browser with synchronised scrolling and flexible configuration
     { "iamcco/markdown-preview.nvim",
