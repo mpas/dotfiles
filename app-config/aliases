@@ -101,7 +101,7 @@ alias brew-backup='cd ~/.dotfiles/app-preferences/brew && rm -f Brewfile && brew
 alias brew-backup-restore='cd ~/.dotfiles/app-preferences/brew/ && brew bundle && cd -'
 
 # System update
-alias system-update='brew-update && tldr --update && kubectl krew upgrade && lvim +LvimUpdate +q'
+alias system-update='brew-update && tldr --update && kubectl krew upgrade && lvim +LvimUpdate +q && asdf plugin update --all'
 
 # Enable direnv into bash/zsh
 eval "$(direnv hook bash)"

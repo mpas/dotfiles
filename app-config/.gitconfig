@@ -55,8 +55,10 @@
 [user]
 	email = marco.pasopas@gmail.com
 	name = Marco Pas
-	signingkey = C886FFD68F9AF3F4
+	signingkey = 6FF4DE4E9B8431D6072ED6CDC886FFD68F9AF3F4
 [commit]
-	gpgSign = true
+	gpgsign = true
 [tag]
 	gpgSign = true
+[gpg]
+	program = /usr/local/bin/gpg

@@ -35,6 +35,7 @@ lvim.builtin.project.patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Make
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
+lvim.builtin.nvimtree.setup.view.width = 40
 lvim.builtin.treesitter.rainbow.enable = true
 lvim.builtin.treesitter.ensure_installed = {
     "bash",

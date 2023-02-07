@@ -134,17 +134,10 @@ unset key
 export LC_ALL=en_US.UTF-8
 
 ################################################################################
-# Pure prompt
-# https://github.com/sindresorhus/pure
+# Starship prompt
+# https://starship.rs/
 ################################################################################
-# Use pure prompt
-# autoload -U promptinit; promptinit
-# prompt pure
-
 eval "$(starship init zsh)"
-
-# source /path/to/kube-ps1.sh
-# PROMPT='$(kube-ps1)'$PROMPT
 
 ################################################################################
 # Editor settings
@@ -169,21 +162,15 @@ bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
 ################################################################################
 # Path
 ################################################################################
-# Add emacs to path
-export PATH="$HOME/.emacs.d/bin/:$PATH"
-
 # Add LunarVim to path
 export PATH="$HOME/.local/bin:$PATH"
 
-export PATH="$PATH:/usr/local/bin/"
-
-# fix paths for brew installed packages
+# Fix paths for brew installed packages
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:$PATH"
 
+# Set path for zk notebook discovery
 export ZK_NOTEBOOK_DIR="$HOME/Dropbox/notes/"
 
-# Add graph-easy to path
-# export PATH="$HOME/.cpan/build/Graph-Easy-0.76-0/bin:$PATH"
 ################################################################################
 # Dotfiles
 ################################################################################
