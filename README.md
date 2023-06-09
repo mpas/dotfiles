@@ -10,7 +10,7 @@ Dotfiles managed with gnu stow, a free, portable, lightweight symlink farm manag
 
 Clone onto your laptop:
 
-`git clone git://github.com/mpas/dotfiles.git ~/.dotfiles`
+`git clone git@github.com:mpas/dotfiles.git ~/.dotfiles`
 
 ## Using
 
