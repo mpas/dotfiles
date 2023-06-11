@@ -11,11 +11,10 @@ alias rb='source ~/.zshrc'
 alias f='open -a Finder ./'
 alias c='clear'
 alias nvim=lvim
-# vi/vim/nvim
 alias vi=lvim
 alias vim=lvim
-# alias nvim=$vi
 
+# Kubernetes
 alias k="kubectl"
 alias kctx="kubectx"
 alias kns="kubens"
@@ -37,80 +36,45 @@ alias dpa="docker system prune -a"
 
 # Git
 alias lg="lazygit"
-alias gf="git fetch"
-alias gcl="git clean -xdn"
-alias gclf="git clean -xdf"
-alias gs="git status"
-alias gac="git commit -am ${1}"
-alias gpl="git pull"
-alias gps="git push"
-alias gpsa="git push --all"
-alias gpst="git push --tags"
-alias gco="git checkout ${1}"
-alias gpo="git remote prune origin"
-alias git-cfg-philips='git-cfg "marco.pas@philips.com" "Marco Pas"'
-alias git-cfg-google='git-cfg "marco.pasopas@gmail.com" "Marco Pas"'
 
+# Util
 alias reset-terminal="stty sane"
+alias resetAudio='sudo killall coreaudiod'
 
 # Go
 alias go-reshim='asdf reshim golang && export GOV=$(asdf current golang | sed  '\''s/ *(set by .*)//g'\'') && export GOROOT="$ASDFINSTALLS/golang/$GOV/go/"'
 
 # Terraform
 alias tf="terraform"
-alias tfg="terraform get --update"
-alias tfp="terraform plan"
-alias tfa="terraform apply"
 
 # Aws Vault
 alias avsh="aws-vault exec ${1} --server"
 
 # Multipass
 alias mp="multipass"
-alias mpla="multipass launch"
-alias mpli="multipass list"
-alias mpsh="multipass shell"
-alias mpsto="multipass stop"
-alias mpsta="multipass start"
-alias mpde="multipass delete"
-alias mppu="multipass purge"
-alias mppu="multipass purge"
-
-# ECR Login
-alias ecr='eval "$(aws ecr get-login --no-include-email --region ${1})"'
 
 # CleanUp
 alias cleanupDS="find . -type f -name '*.DS_Store' -ls -delete"
 
 # Process and Networking
 alias myip='curl ip.appspot.com'                    # myip:         Public facing IP Address
-alias netCons='lsof -i'                             # netCons:      Show all open TCP/IP sockets
-alias flushDNS='dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
 alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
 alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
 
-alias resetAudio='sudo killall coreaudiod'
-
-# CarbonBlack
-alias unload-carbonblack='sudo launchctl unload /Library/LaunchDaemons/com.carbonblack.daemon.plist'
-
 # Brew update
-alias brew='PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin brew'
 alias brew-update='brew update && brew upgrade && brew upgrade --cask && brew cleanup'
-alias brew-backup='cd ~/.dotfiles/app-preferences/brew && rm -f Brewfile && brew bundle dump && cd -'
-alias brew-backup-restore='cd ~/.dotfiles/app-preferences/brew/ && brew bundle && cd -'
+alias brew-backup='cd ~/.dotfiles/app.preferences/brew && rm -f Brewfile && brew bundle dump && cd -'
+alias brew-backup-restore='cd ~/.dotfiles/app.preferences/brew/ && brew bundle && cd -'
 
 # System update
 alias system-update='brew-update && tldr --update && kubectl krew upgrade && lvim +LvimUpdate +q && asdf plugin update --all'
 
-# Enable direnv into bash/zsh
-eval "$(direnv hook bash)"
-eval "$(direnv hook zsh)"
-
-alias n='emacs ~/Dropbox/notes/org/ &'
-
-# Poetry
-alias p="poetry"
-
+# Assume
 alias assume="source assume"
+
+# Old can be removed later on!
+
+# ECR Login
+# alias ecr='eval "$(aws ecr get-login --no-include-email --region ${1})"'
+
 
