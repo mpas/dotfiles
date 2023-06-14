@@ -33,6 +33,8 @@ alias drit="docker run -it --rm ${1} /bin/bash"
 alias dr="docker run ${1}"
 alias dp="docker system prune"
 alias dpa="docker system prune -a"
+alias dcs="docker context use ${1}"
+alias dcl="docker context list"
 
 # Git
 alias lg="lazygit"
