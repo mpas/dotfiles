@@ -14,6 +14,7 @@ $git_state\
 $git_metrics\
 $git_status\
 $cmd_duration\
+$docker_context\
 $line_break\
 $character
 """
@@ -21,10 +22,15 @@ $character
 # Inserts a blank line between shell prompts
 add_newline = true
 
+[docker_context]
+disabled = false
+only_with_files = false
+format = 'via [🐋 $context](blue bold)'
+
 [kubernetes]
 disabled = false
 detect_files = ['k8s']
-format = 'on [☸️  $context \($namespace\)]($style) '
+format = 'on [☸️  ($user on )($cluster in )$context \($namespace\)](dimmed green) '
 
 [conda]
 format = "[$symbol$environment]($style) "
@@ -38,7 +44,7 @@ error_symbol = "[❯](red)"
 vimcmd_symbol = "[❮](green)"
 
 [python]
-pyenv_version_name = true
+pyenv_version_name = false
 python_binary = ['./venv/bin/python', 'python', 'python3', 'python2']
 
 [cmd_duration]
