@@ -14,6 +14,15 @@ alias nvim=lvim
 alias vi=lvim
 alias vim=lvim
 
+# Make
+alias m="make"
+
+# Caddy
+alias run-caddy-fileserver="caddy file-server --listen :2015 --browse"
+
+# Set correct aws cli path in kube config
+alias kaws='sed -i "" "s|command: aws|command: $(which aws)|g" ~/.kube/config'
+
 # Microsoft Defender
 alias unload="sudo launchctl unload /Library/LaunchDaemons/com.microsoft.fresno.plist && sudo launchctl unload /Library/LaunchDaemons/com.microsoft.fresno.uninstall.plist"
 
