@@ -1,0 +1,93 @@
+# General
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias mkdir='mkdir -pv'
+alias ls="ls -Al"
+alias h=history
+alias e="$EDITOR"
+alias v="$VISUAL"
+alias eb='e ~/.zshrc'
+alias rb='source ~/.zshrc'
+alias f='open -a Finder ./'
+alias c='clear'
+alias vi=nvim
+alias vim=nvim
+
+# Make
+alias m="make"
+
+# Caddy
+alias run-caddy-fileserver="caddy file-server --listen :2015 --browse"
+
+# Set correct aws cli path in kube config
+alias kaws='sed -i "" "s|command: aws|command: $(which aws)|g" ~/.kube/config'
+
+# Microsoft Defender
+alias unload-ms-defender="sudo launchctl unload /Library/LaunchDaemons/com.microsoft.fresno.plist && sudo launchctl unload /Library/LaunchDaemons/com.microsoft.fresno.uninstall.plist"
+
+# Kubernetes
+alias k="kubectl"
+alias kctx="kubectx"
+alias kns="kubens"
+
+# Ssh
+# alias compile-ssh-config="echo -n > ~/.ssh/config && cat ~/.ssh/ssh-configs/*.config > ~/.ssh/config"
+# alias ssh="compile-ssh-config && ssh"
+alias copy_ssh="pbcopy < ~/.ssh/id_rsa.pub"
+
+# Meld
+alias meld="/Applications/Meld.app/Contents/MacOS/Meld"
+
+# Docker
+alias dc="docker-compose $1"
+alias drit="docker run -it --rm ${1} /bin/bash"
+alias dr="docker run ${1}"
+alias dp="docker system prune"
+alias dpa="docker system prune -a"
+alias dcs="docker context use ${1}"
+alias dcl="docker context list"
+
+# Git
+alias lg="lazygit"
+
+# Util
+alias reset-terminal="stty sane"
+alias resetAudio='sudo killall coreaudiod'
+
+# Go
+alias go-reshim='asdf reshim golang && export GOV=$(asdf current golang | sed  '\''s/ *(set by .*)//g'\'') && export GOROOT="$ASDFINSTALLS/golang/$GOV/go/"'
+
+# Terraform
+alias tf="terraform"
+
+# Aws Vault
+alias avsh="aws-vault exec ${1} --server"
+
+# Multipass
+alias mp="multipass"
+
+# CleanUp
+alias cleanupDS="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Process and Networking
+alias myip='curl ip.appspot.com'                    # myip:         Public facing IP Address
+alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
+alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
+
+# Brew update
+alias brew-update='brew update && brew upgrade && brew upgrade --cask && brew cleanup'
+alias brew-backup='cd ~/.dotfiles/backup/brew && rm -f Brewfile && brew bundle dump && cd -'
+alias brew-backup-restore='cd ~/.dotfiles/backup/brew/ && brew bundle && cd -'
+
+# System update
+alias system-update='brew-update && tldr --update && kubectl krew upgrade && asdf plugin update --all'
+
+# Assume
+alias assume="source assume"
+
+# Old can be removed later on!
+
+# ECR Login
+# alias ecr='eval "$(aws ecr get-login --no-include-email --region ${1})"'
+
+

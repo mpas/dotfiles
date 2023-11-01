@@ -1,0 +1,290 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
+# Start configuration added by Zim install {{{
+#
+# User configuration sourced by interactive shells
+#
+
+# -----------------
+# Zsh configuration
+# -----------------
+
+#
+# History
+#
+
+# Remove older command from the history if a duplicate is to be added.
+setopt HIST_IGNORE_ALL_DUPS
+
+#
+# Input/output
+#
+
+# Set editor default keymap to emacs (`-e`) or vi (`-v`)
+bindkey -v
+
+# Prompt for spelling correction of commands.
+setopt CORRECT
+
+# Customize spelling correction prompt.
+#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+
+# Remove path separator from WORDCHARS.
+WORDCHARS=${WORDCHARS//[\/]}
+
+# -----------------
+# Zim configuration
+# -----------------
+
+# Use degit instead of git as the default tool to install and update modules.
+#zstyle ':zim:zmodule' use 'degit'
+
+# --------------------
+# Module configuration
+# --------------------
+
+#
+# git
+#
+
+# Set a custom prefix for the generated aliases. The default prefix is 'G'.
+#zstyle ':zim:git' aliases-prefix 'g'
+
+#
+# input
+#
+
+# Append `../` to your input for each `.` you type after an initial `..`
+#zstyle ':zim:input' double-dot-expand yes
+
+#
+# termtitle
+#
+
+# Set a custom terminal title format using prompt expansion escape sequences.
+# See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
+# If none is provided, the default '%n@%m: %~' is used.
+#zstyle ':zim:termtitle' format '%1~'
+
+#
+# zsh-autosuggestions
+#
+
+# Disable automatic widget re-binding on each precmd. This can be set when
+# zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+
+# Customize the style that the suggestions are shown with.
+# See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
+
+#
+# zsh-syntax-highlighting
+#
+
+# Set what highlighters will be used.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+# Customize the main highlighter styles.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
+#typeset -A ZSH_HIGHLIGHT_STYLES
+#ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
+
+# ------------------
+# Initialize modules
+# ------------------
+
+ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  if (( ${+commands[curl]} )); then
+    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  else
+    mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  fi
+fi
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init -q
+fi
+# Initialize modules.
+source ${ZIM_HOME}/init.zsh
+
+# ------------------------------
+# Post-init module configuration
+# ------------------------------
+
+#
+# zsh-history-substring-search
+#
+
+zmodload -F zsh/terminfo +p:terminfo
+# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
+for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
+for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
+for key ('k') bindkey -M vicmd ${key} history-substring-search-up
+for key ('j') bindkey -M vicmd ${key} history-substring-search-down
+unset key
+# }}} End configuration added by Zim install
+
+################################################################################
+# Start of my config
+################################################################################
+export LC_ALL=en_US.UTF-8
+
+################################################################################
+# History
+################################################################################
+setopt append_history
+setopt extended_history       # write the history file in the ':start:elapsed;command' format
+setopt inc_append_history     # write to the history file immediately, not when the shell exits
+setopt hist_expire_dups_first # expire a duplicate event first when trimming history
+setopt hist_ignore_dups       # do not record an event that was just recorded again
+setopt hist_ignore_all_dups   # delete an old recorded event if a new event is a duplicate
+setopt hist_save_no_dups      # do not write a duplicate event to the history file
+setopt hist_verify            # do not execute immediately upon history expansion
+setopt share_history          # share history between all sessions
+setopt HIST_IGNORE_SPACE      # space in front of command will not append to history file
+HISTSIZE=4096
+SAVEHIST=4096
+
+################################################################################
+# GPG settings
+################################################################################
+export GPG_TTY=$(tty)
+
+################################################################################
+# Editor settings
+################################################################################
+export EDITOR=nvim
+export VISUAL=$EDITOR
+export TERM=screen-256color
+
+################################################################################
+# Handy keybindings
+################################################################################
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
+bindkey "^K" kill-line
+bindkey "^R" history-incremental-search-backward
+bindkey "^P" history-search-backward
+bindkey "^Y" accept-and-hold
+bindkey "^N" insert-last-word
+bindkey "^Q" push-line-or-edit
+bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
+
+################################################################################
+# Homebrew
+################################################################################
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+
+################################################################################
+# Starship prompt
+# https://starship.rs/
+################################################################################
+eval "$(starship init zsh)"
+
+################################################################################
+# Asdf
+################################################################################
+source /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+################################################################################
+# Atuin
+################################################################################
+eval "$(atuin init zsh)"
+
+################################################################################
+# Direnv
+################################################################################
+eval "$(direnv hook zsh)"
+
+################################################################################
+# Multipass
+################################################################################
+PATH="$PATH:$HOME/Library/Application Support/multipass/bin"
+
+################################################################################
+# Tmux
+################################################################################
+# Auto start tmux when launching a new terminal
+[ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit;}
+
+################################################################################
+# Zoxide
+################################################################################
+eval "$(zoxide init zsh)"
+
+################################################################################
+# ZKNotes
+################################################################################
+# Set path for zk notebook discovery
+export ZK_NOTEBOOK_DIR="$HOME/Dropbox/notes/"
+
+################################################################################
+# Path
+################################################################################
+# Add LunarVim to path
+export PATH="$HOME/.local/bin:$PATH"
+
+# Fix paths for brew installed packages
+# export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:$PATH"
+
+################################################################################
+# Path
+################################################################################
+# Add GO installs to path
+export PATH=$PATH:"$HOME/go/bin/"
+
+################################################################################
+# Ngrok 
+################################################################################
+if command -v ngrok &>/dev/null; then
+  eval "$(ngrok completion)"
+fi
+
+################################################################################
+# Dotfiles
+################################################################################
+# Source custom aliases
+source $HOME/aliases
+
+# Source custom functions
+for f in $HOME/shell-functions/*; do source $f; done
+
+# Add path to custom executables
+export PATH="$PATH:$HOME/.dotfiles/custom-executables"
+
+# Add path to custom shell scripts
+#export PATH="$PATH:$HOME/shell-scripts"
+
+# Set JAVA_HOME for asdf java plugin
+#source ~/.asdf/plugins/java/set-java-home.zsh
+
+# source Cargo
+#. "$HOME/.cargo/env"
+
+################################################################################
+# Kubectl Krew
+################################################################################
+PATH="${PATH}:${HOME}/.krew/bin"
+
+################################################################################
+# CloudNative Buildpacks
+################################################################################
+# . $(pack completion --shell zsh)
+
+alias awsume=". awsume"
+################################################################################
+# Rancher Desktop
+################################################################################
+# export PATH="/Users/mpas/.rd/bin:$PATH"
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+source /Users/mpas/.config/broot/launcher/bash/br
