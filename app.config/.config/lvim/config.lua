@@ -1,6 +1,0 @@
-require "user.plugins"
-require "user.keymapping"
-require "user.options"
-require "user.functions"
-require "user.lint-config"
-require "user.dap-config"
