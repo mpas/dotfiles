@@ -2,11 +2,3 @@
 .DS_Store
 *.lock.*
 node_modules
-
-# doom emacs
-config.el
-
-# clojure
-.clj-kondo
-.lsp
-.cpcache
