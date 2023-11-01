@@ -17,16 +17,14 @@ Clone onto your laptop:
 After the dotfiles repo is checkout into your home folder navigate to one of the packages for example `vim`.
 
 * cd ~\.dotfiles
-* stow vim
+* stow user-root
 
-Do this with all settings that you want to be linked or run the `setup.sh` script to install everything.
+To delete the stowed links use `stow -D user-root`
 
 ## Install all
 
 - Execute the setup script
     - `$ ~/.dotfiles/setup.sh`
-- Vim
-    - `PlugInstall`
 
 ## Addons
 

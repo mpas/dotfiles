@@ -259,9 +259,6 @@ for f in $HOME/shell-functions/*; do source $f; done
 # Add path to custom executables
 export PATH="$PATH:$HOME/.dotfiles/custom-executables"
 
-# Add path to custom shell scripts
-#export PATH="$PATH:$HOME/shell-scripts"
-
 # Set JAVA_HOME for asdf java plugin
 #source ~/.asdf/plugins/java/set-java-home.zsh
 
@@ -286,5 +283,3 @@ alias awsume=". awsume"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
-
-source /Users/mpas/.config/broot/launcher/bash/br
