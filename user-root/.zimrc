@@ -42,8 +42,6 @@ zmodule completion
 
 zmodule fzf
 zmodule asdf
-zmodule exa
-zmodule magic-enter
 zmodule homebrew
 # zmodule https://github.com/agkozak/zsh-z
 
