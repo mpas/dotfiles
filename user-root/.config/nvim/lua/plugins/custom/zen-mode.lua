@@ -4,7 +4,7 @@ return {
   config = function()
     require("zen-mode").setup({
       window = {
-        width = 0.50,
+        width = 0.70,
         options = {
           signcolumn = "no",
         },
