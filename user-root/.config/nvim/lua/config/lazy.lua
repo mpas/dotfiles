@@ -16,6 +16,7 @@ require("lazy").setup({
 
     -- coding
     { import = "lazyvim.plugins.extras.coding.yanky" },
+    { import = "lazyvim.plugins.extras.coding.copilot" },
 
     -- dap
     { import = "lazyvim.plugins.extras.dap.core" },
