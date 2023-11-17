@@ -6,12 +6,12 @@ return {
         sh = { "shfmt" },
         hcl = { "packer_fmt", "terraform_fmt" },
       },
-      formatters = {
-        packer_fmt = {
-          command = "packer",
-          args = { "fmt", "-" },
-        },
-      },
+      -- formatters = {
+      --   packer_fmt = {
+      --     command = "packer",
+      --     args = { "fmt", "-" },
+      --   },
+      -- },
     },
   },
 }
