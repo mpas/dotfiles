@@ -73,41 +73,60 @@ local normal_mode_mappings = {
 
   n = {
     name = "+notes",
-    x = { "<cmd>ZkOpenNoteAndGotoHeader { title = 'inbox', header = '# Inbox' }<cr>", "Inbox" },
-    t = {
-      "<cmd>ZkAddTodo { template = 'todo-with-title.md', title = vim.fn.input('Title: '), file = '/Users/mpas/Dropbox/notes/inbox.md', header = '# Inbox'}<cr>",
-      "Add Todo with title",
-    },
-    T = {
-      "<cmd>ZkAddTodo { template = 'todo-with-title-and-content.md', title = vim.fn.input('Title: '), content = vim.fn.input('Content: '), file = '/Users/mpas/Dropbox/notes/inbox.md', header = '# Inbox'}<cr>",
-      "Add Todo with title and content",
-    },
-    n = {
-      name = "+New",
-      n = { "<cmd>ZkNew { title = vim.fn.input('Title: '), dir = vim.fn.input('Dir: ') }<cr>", "New" },
-      c = {
-        ":'<,'>ZkNewFromContentSelection { title = vim.fn.input('Title: '), dir = vim.fn.input('Dir: ') }<cr>",
-        "With content from selection",
+    -- Dailys
+    d = {
+      name = "+daillies",
+      a = {
+        "<cmd>ZkNew { template = 'daily.md', dir = 'journal/daily' }<cr>",
+        "Add/Open for today",
       },
-      t = { ":'<,'>ZkNewFromTitleSelection { dir = vim.fn.input('Dir: ') }<cr>", "With title from selection" },
+      A = {
+        "<cmd>ZkNew { template = 'daily.md', dir = 'journal/daily', date = vim.fn.input('Date: ')}<cr>",
+        "Add/Open for a specific date",
+      },
+    },
+    -- Todos
+    t = {
+      name = "+todos",
+      l = { "<cmd>ZkOpenNoteAndGotoHeader { title = 'inbox', header = '# Inbox' }<cr>", "Open Inbox" },
+      a = {
+        "<cmd>ZkAddTodo { template = 'todo-with-title.md', title = vim.fn.input('Title: '), file = '/Users/mpas/Dropbox/notes/inbox.md', header = '# Inbox'}<cr>",
+        "Add with title",
+      },
+      A = {
+        "<cmd>ZkAddTodo { template = 'todo-with-title-and-content.md', title = vim.fn.input('Title: '), content = vim.fn.input('Content: '), file = '/Users/mpas/Dropbox/notes/inbox.md', header = '# Inbox'}<cr>",
+        "Add with title and content",
+      },
+    },
+    -- General notes
+    n = {
+      name = "+notes",
+      a = { "<cmd>ZkNew { title = vim.fn.input('Title: '), dir = vim.fn.input('Dir: ') }<cr>", "Add" },
+      A = {
+        ":'<,'>ZkNewFromTitleSelection { dir = vim.fn.input('Dir: ') }<cr>",
+        "Add using current selection as title",
+      },
+      C = {
+        ":'<,'>ZkNewFromContentSelection { title = vim.fn.input('Title: '), dir = vim.fn.input('Dir: ') }<cr>",
+        "Add using current selection as content",
+      },
     },
     i = { "<cmd>ZkIndex { force = true }<cr>", "Index" },
     b = { "<cmd>ZkNotes { sort = { 'modified' } }<cr>", "Browse" },
     l = {
-      name = "+Links",
+      name = "+links",
       b = { "<cmd>ZkBacklinks<cr>", "Inbound" },
       o = { "<cmd>ZkLinks<cr>", "Outbound" },
       i = { "<cmd>ZkInsertLink<cr>", "Insert" },
     },
     s = {
-      name = "+Search",
+      name = "+search",
       t = { "<cmd>ZkNotes { sort = { 'modified' } }<cr>", "Title" },
       T = { "<cmd>ZkTags<cr>", "Tags" },
       c = { "<cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<cr>", "Content" },
       v = { ":'<,'>ZkMatch<cr>", "Visual selection" },
     },
   },
-
   u = {
     -- c = {
     --   name = "codi",

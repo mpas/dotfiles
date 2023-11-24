@@ -260,7 +260,7 @@ for f in $HOME/shell-functions/*; do source $f; done
 export PATH="$PATH:$HOME/.dotfiles/custom-executables"
 
 # Set JAVA_HOME for asdf java plugin
-#source ~/.asdf/plugins/java/set-java-home.zsh
+source ~/.asdf/plugins/java/set-java-home.zsh
 
 # source Cargo
 #. "$HOME/.cargo/env"
