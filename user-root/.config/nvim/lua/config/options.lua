@@ -31,6 +31,11 @@ local vim_options = {
   wrap = true, -- long lines wrap and continue on the next line
   linebreak = true, -- wrap long lines at a blank
   winbar = "%=%m %f",
+  listchars = {
+    tab = "> ",
+    trail = "-",
+    eol = "↵",
+  },
 }
 
 for k, v in pairs(vim_options) do
