@@ -156,6 +156,7 @@ local normal_mode_mappings = {
       name = "markdown",
       p = { "<cmd>MarkdownPreviewToggle<cr>", "Preview" },
       t = { "<cmd>TableModeToggle<cr>", "Table Mode" },
+      m = { ":lua require('marp').toggle()<cr>", "MarpToggle" },
     },
     z = { "<cmd>ZenMode<cr>", "Toggle Zen Mode" },
   },
