@@ -14,5 +14,5 @@ indent_style = space
 indent_size = 2
 
 # 4 space indentation
-[*.{py,md}]
+[*.{py,md,html}]
 indent_size = 4
