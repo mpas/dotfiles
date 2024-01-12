@@ -12,6 +12,7 @@ return {
         "stylua",
         "tflint",
         "bash-language-server",
+        "prettier",
       },
     },
   },

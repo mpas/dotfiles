@@ -5,6 +5,7 @@ return {
       formatters_by_ft = {
         sh = { "shfmt" },
         hcl = { "packer_fmt", "terraform_fmt" },
+        html = { "prettier" },
       },
       -- formatters = {
       --   packer_fmt = {
