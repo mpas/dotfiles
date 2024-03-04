@@ -8,11 +8,17 @@ insert_final_newline = true
 charset = utf-8
 indent_style = space
 
+[justfile]
+indent_size = 2
+
 # Matches multiple files with brace expansion notation
-# Set default charset
 [*.{go,sh,lua}]
 indent_size = 2
 
 # 4 space indentation
-[*.{py,md,html}]
+[*.{py,md}]
 indent_size = 4
+
+[*.html]
+indent_size = 4
+max_line_length = 120
