@@ -1,5 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # Start configuration added by Zim install {{{
 #
 # User configuration sourced by interactive shells
@@ -204,11 +202,6 @@ eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 
 ################################################################################
-# Multipass
-################################################################################
-PATH="$PATH:$HOME/Library/Application Support/multipass/bin"
-
-################################################################################
 # Tmux
 ################################################################################
 # Auto start tmux when launching a new terminal
@@ -229,7 +222,7 @@ export ZK_NOTEBOOK_DIR="$HOME/Dropbox/notes/"
 # Path
 ################################################################################
 # Add LunarVim to path
-export PATH="$HOME/.local/bin:$PATH"
+# export PATH="$HOME/.local/bin:$PATH"
 
 # Fix paths for brew installed packages
 # export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:$PATH"
@@ -239,13 +232,6 @@ export PATH="$HOME/.local/bin:$PATH"
 ################################################################################
 # Add GO installs to path
 export PATH=$PATH:"$HOME/go/bin/"
-
-################################################################################
-# Ngrok 
-################################################################################
-if command -v ngrok &>/dev/null; then
-  eval "$(ngrok completion)"
-fi
 
 ################################################################################
 # Dotfiles
@@ -280,6 +266,3 @@ alias awsume=". awsume"
 # Rancher Desktop
 ################################################################################
 # export PATH="/Users/mpas/.rd/bin:$PATH"
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
