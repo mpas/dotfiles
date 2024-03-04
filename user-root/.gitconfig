@@ -46,6 +46,7 @@
 	protocol = https
 [diff]
   tool = nvimdiff
+	colorMoved = zebra
 [difftool "nvimdiff"]
 	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -62,3 +63,7 @@
 	gpgSign = true
 [gpg]
 	program = /opt/homebrew/bin/gpg
+[pull]
+	rebase = true
+[fetch]
+	prune = true
