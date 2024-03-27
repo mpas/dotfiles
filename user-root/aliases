@@ -90,4 +90,3 @@ alias assume="source assume"
 # ECR Login
 # alias ecr='eval "$(aws ecr get-login --no-include-email --region ${1})"'
 
-

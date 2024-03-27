@@ -266,3 +266,11 @@ alias awsume=". awsume"
 # Rancher Desktop
 ################################################################################
 # export PATH="/Users/mpas/.rd/bin:$PATH"
+
+# if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+#     . /etc bash_completion
+# fi
+
+for al in `git --list-cmds=alias`; do
+    alias g$al="git $al"
+done

@@ -2,8 +2,9 @@
 	user = mpas
 [core]
 	excludesfile = ~/.gitignore
-	editor = nvim
+	# editor = nvim
 	ignorecase = false
+	editor = code --wait
 [push]
 	default = simple
 [color]
@@ -14,29 +15,36 @@
   grep = auto
 	ui = auto
 [alias]
-  a = "!git status --short | peco | awk '{print $2}' | xargs git add"
-  d = diff
+  l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+  a = add
+  brd = "!f() { git branch --merged | grep -Ev \"(\\*|master|main|dev)\" | xargs -r git branch -d; }; f"
+  ; d = diff
   co = checkout
-  ci = commit
-  ca = commit -a
-  ps = "!git push origin $(git rev-parse --abbrev-ref HEAD)"
-  pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
-  st = status
+  ria = '!git rebase -i `git merge-base HEAD main`'
+  ; ci = commit
+  ; ca = commit -a
+  ; ps = "!git push origin $(git rev-parse --abbrev-ref HEAD)"
+  ; pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
+  s = status -s
+  # list branches sorted by last modified
+  b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
   br = branch
-  ba = branch -a
-  bm = branch --merged
-  bn = branch --no-merged
-  df = "!git hist | peco | awk '{print $2}' | xargs -I {} git diff {}^ {}"
-  hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
-  llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
-  open = "!hub browse"
-  type = cat-file -t
-  dump = cat-file -p
-  find = "!f() { git log --pretty=format:\"%h %cd [%cn] %s%d\" --date=relative -S'pretty' -S\"$@\" | peco | awk '{print $1}' | xargs -I {} git diff {}^ {}; }; f"
-  # edit conflicted file on merge
-  edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
-  # add conflicted file on merge
-  add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+  ; ba = branch -a
+  ; bm = branch --merged
+  ; bn = branch --no-merged
+  ; df = "!git hist | peco | awk '{print $2}' | xargs -I {} git diff {}^ {}"
+  ; hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
+  ; llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
+  ; open = "!hub browse"
+  ; type = cat-file -t
+  ; dump = cat-file -p
+  ; find = "!f() { git log --pretty=format:\"%h %cd [%cn] %s%d\" --date=relative -S'pretty' -S\"$@\" | peco | awk '{print $1}' | xargs -I {} git diff {}^ {}; }; f"
+  ; # edit conflicted file on merge
+  ; edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+  ; # add conflicted file on merge
+  ; add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+  # list aliases
+  la = "!git config -l | grep alias | cut -c 7-"
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -44,15 +52,15 @@
 	required = true
 [hub]
 	protocol = https
-[diff]
-  tool = nvimdiff
-	colorMoved = zebra
-[difftool "nvimdiff"]
-	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "nvimdiff"]
-	cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+# [diff]
+#   tool = nvimdiff
+# 	colorMoved = zebra
+# [difftool "nvimdiff"]
+# 	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+# 	path = 
+# [mergetool "nvimdiff"]
+# 	cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+# 	trustExitCode = true
 [user]
 	email = marco.pasopas@gmail.com
 	name = Marco Pas

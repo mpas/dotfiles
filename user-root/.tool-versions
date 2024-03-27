@@ -7,6 +7,6 @@ yarn 1.22.19
 clojure 1.10.3.1075
 lein 2.9.8
 python 3.12.0
-poetry 1.6.1
+poetry 1.8.2
 tflint 0.35.0
 tfenv 0.4.0
