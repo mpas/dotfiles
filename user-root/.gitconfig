@@ -51,7 +51,7 @@
 	process = git-lfs filter-process
 	required = true
 [hub]
-	protocol = https
+	protocol = ssh
 # [diff]
 #   tool = nvimdiff
 # 	colorMoved = zebra

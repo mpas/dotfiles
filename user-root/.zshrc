@@ -205,7 +205,7 @@ eval "$(direnv hook zsh)"
 # Tmux
 ################################################################################
 # Auto start tmux when launching a new terminal
-[ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit;}
+# [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit;}
 
 ################################################################################
 # Zoxide

@@ -15,17 +15,20 @@ require("lazy").setup({
     -- see: https://www.lazyvim.org/extras
 
     -- coding
-    { import = "lazyvim.plugins.extras.coding.yanky" },
     { import = "lazyvim.plugins.extras.coding.copilot" },
+    { import = "lazyvim.plugins.extras.coding.yanky" },
 
     -- dap
     { import = "lazyvim.plugins.extras.dap.core" },
     { import = "lazyvim.plugins.extras.dap.nlua" },
 
     -- editor
-    { import = "lazyvim.plugins.extras.editor.mini-files" },
-    { import = "lazyvim.plugins.extras.editor.outline" },
     { import = "lazyvim.plugins.extras.editor.harpoon2" },
+    { import = "lazyvim.plugins.extras.editor.mini-diff" },
+    { import = "lazyvim.plugins.extras.editor.mini-files" },
+    { import = "lazyvim.plugins.extras.editor.mini-move" },
+    { import = "lazyvim.plugins.extras.editor.outline" },
+    { import = "lazyvim.plugins.extras.editor.trouble-v3" },
 
     -- formatting
     { import = "lazyvim.plugins.extras.formatting.black" },
@@ -51,6 +54,9 @@ require("lazy").setup({
 
     -- ui
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
+
+    -- test
+    { import = "lazyvim.plugins.extras.test.core" },
 
     -- util
     { import = "lazyvim.plugins.extras.util.project" },

@@ -12,6 +12,7 @@ alias f='open -a Finder ./'
 alias c='clear'
 alias vi=nvim
 alias vim=nvim
+alias tm='[ -z "$TMUX" ] && { tmux attach || exec tmux new-session && exit;}'
 
 # Make
 alias m="make"

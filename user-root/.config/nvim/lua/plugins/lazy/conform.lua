@@ -6,6 +6,7 @@ return {
         sh = { "shfmt" },
         hcl = { "packer_fmt", "terraform_fmt" },
         html = { "prettier" },
+        markdown = { "markdownlint" },
       },
       -- formatters = {
       --   packer_fmt = {
