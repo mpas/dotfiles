@@ -1,0 +1,4 @@
+[tools]
+node = "20"
+yarn = "latest"
+chezmoi = "latest"

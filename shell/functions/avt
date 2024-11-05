@@ -1,0 +1,13 @@
+function av {
+  aws-vault "$@"
+}
+
+function avt {
+  profile=$1; shift
+  aws-vault exec $profile -- terraform "$@";
+}
+
+function ave {
+  profile=$1; shift
+  aws-vault exec $profile "$@";
+}

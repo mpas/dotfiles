@@ -1,0 +1,70 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$username\
+$hostname\
+$directory\
+$kubernetes\
+$conda\
+$python\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$cmd_duration\
+$fill\
+$docker_context\
+$aws\
+$line_break\
+$character
+"""
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+[aws]
+format = '[$symbol($profile )(\($region\) )]($style)'
+style = 'bold blue'
+symbol = '🅰 '
+
+[cmd_duration]
+format = "[$duration]($style) "
+style = "yellow"
+
+[conda]
+format = "[$symbol$environment]($style) "
+
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
+
+[directory]
+style = "blue"
+
+[docker_context]
+disabled = false
+format = 'via [🐋 $context](blue bold)'
+
+[fill]
+symbol = ' '
+style = 'bold green'
+
+[git_branch]
+symbol = '🌱 '
+# truncation_length = 10
+# truncation_symbol = ''
+
+[kubernetes]
+disabled = false
+# detect_files = ['k8s']
+format = 'on [⛵ ($user on )($cluster in )$context \($namespace\)](dimmed green) '
+contexts = [
+    { context_pattern = "dev.local.cluster.k8s", style = "green", symbol = "💔 " },
+]
+
+[python]
+pyenv_version_name = false
+python_binary = ['./venv/bin/python', 'python', 'python3', 'python2']

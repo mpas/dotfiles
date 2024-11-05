@@ -1,0 +1,33 @@
+# Select KUBECONFIG file -- allows to use multiple clusters in different terminals at the same time
+ks() {
+  case $# in
+    1)
+      local config_namespace=${ENVTOOLS_CONFIG_NAMESPACE?ERROR: Cannot determine Config Namespace}
+      local kubeconfig_id=${1}
+      ;;
+    2)
+      local config_namespace=${1}
+      local kubeconfig_id=${2}
+      ;;
+    *)
+      echo "USAGE: $0 <config namespace> <Kubeconfig ID>"
+      return 1
+      ;;
+  esac
+
+  local config_dir="${HOME}/.kube/configs/${config_namespace}"
+
+  if [[ ! -d ${config_dir} ]]; then
+    echo "ERROR: Config Namespace does not exist"
+    return 1
+  fi
+
+  local kubeconfig="${config_dir}/${kubeconfig_id}.config"
+
+  if [[ ! -r ${kubeconfig} ]]; then
+    echo "ERROR: Kubeconfig ${kubeconfig_id} not found"
+    return 1
+  fi
+
+  export KUBECONFIG=${kubeconfig}
+}
