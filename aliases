@@ -10,6 +10,8 @@ alias eb='e ~/.zshrc'
 alias rb='source ~/.zshrc'
 alias f='open -a Finder ./'
 alias c='clear'
+alias cm='chezmoi'
+alias cht='cht.sh --shell'
 alias vi=nvim
 alias vim=nvim
 alias tm='[ -z "$TMUX" ] && { tmux attach || exec tmux new-session && exit;}'
@@ -60,6 +62,7 @@ alias go-reshim='asdf reshim golang && export GOV=$(asdf current golang | sed  '
 
 # Terraform
 alias tf="terraform"
+alias tg="terragrunt"
 
 # Aws Vault
 alias avsh="aws-vault exec ${1} --server"
@@ -81,7 +84,7 @@ alias brew-backup='cd ~/.dotfiles/backup/brew && rm -f Brewfile && brew bundle d
 alias brew-backup-restore='cd ~/.dotfiles/backup/brew/ && brew bundle && cd -'
 
 # System update
-alias system-update='brew-update && tldr --update && kubectl krew upgrade && asdf plugin update --all'
+alias system-update='brew-update && tldr --update && kubectl krew upgrade && zimfw upgrade'
 
 # Assume
 alias assume="source assume"

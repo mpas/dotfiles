@@ -25,7 +25,7 @@ bindkey -v
 setopt CORRECT
 
 # Customize spelling correction prompt.
-#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+# SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 
 # Remove path separator from WORDCHARS.
 WORDCHARS=${WORDCHARS//[\/]}
@@ -187,11 +187,6 @@ export PATH="/opt/homebrew/sbin:$PATH"
 eval "$(starship init zsh)"
 
 ################################################################################
-# Asdf
-################################################################################
-source /opt/homebrew/opt/asdf/libexec/asdf.sh
-
-################################################################################
 # Atuin
 ################################################################################
 eval "$(atuin init zsh)"
@@ -221,15 +216,6 @@ export ZK_NOTEBOOK_DIR="$HOME/Dropbox/notes/"
 ################################################################################
 # Path
 ################################################################################
-# Add LunarVim to path
-# export PATH="$HOME/.local/bin:$PATH"
-
-# Fix paths for brew installed packages
-# export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:$PATH"
-
-################################################################################
-# Path
-################################################################################
 # Add GO installs to path
 export PATH=$PATH:"$HOME/go/bin/"
 
@@ -239,21 +225,23 @@ export PATH=$PATH:"$HOME/go/bin/"
 # Source custom aliases
 source $HOME/aliases
 
-# Source custom functions
-for f in $HOME/shell-functions/*; do source $f; done
-
-# Add path to custom executables
-export PATH="$PATH:$HOME/.dotfiles/custom-executables"
+# Source custom functions and add path to custom scripts
+for f in $HOME/shell/functions/*; do source $f; done
+export PATH="$PATH:$HOME/shell/scripts"
 
 # Set JAVA_HOME for asdf java plugin
-source ~/.asdf/plugins/java/set-java-home.zsh
+# source ~/.asdf/plugins/java/set-java-home.zsh
 
 # source Cargo
 #. "$HOME/.cargo/env"
 
 ################################################################################
-# Kubectl Krew
+# CLI Tools 
 ################################################################################
+# navi
+# eval "$(navi widget zsh)"
+
+# kubectl krew
 PATH="${PATH}:${HOME}/.krew/bin"
 
 ################################################################################
@@ -272,5 +260,18 @@ alias awsume=". awsume"
 # fi
 
 for al in `git --list-cmds=alias`; do
-    alias g$al="git $al"
+  alias g$al="git $al"
 done
+
+# export KUBECONFIG="~/.kube/config:$(find ~/.kube/configs/* -type f -maxdepth 1 | tr '\n' ':')" 
+
+################################################################################
+# Terragrunt
+################################################################################
+# autoload -Uz compinit
+# compinit
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terragrunt terragrunt
+
+PATH=~/.console-ninja/.bin:$PATH
+eval "$(/opt/homebrew/bin/mise activate zsh)"

@@ -1,7 +1,7 @@
 [github]
 	user = mpas
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/mpas/.gitignore_global
 	# editor = nvim
 	ignorecase = false
 	editor = code --wait
@@ -75,3 +75,9 @@
 	rebase = true
 [fetch]
 	prune = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
