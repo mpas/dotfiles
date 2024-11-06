@@ -1,0 +1,12 @@
+{
+  "todo": {
+    "prefix": "todo",
+    "body": ["- [ ] ${1:text} #todo"],
+    "description": "Add todo"
+  },
+  "log": {
+    "prefix": "log",
+    "body": ["${CURRENT_HOUR}:${CURRENT_MINUTE} ${1:text}"],
+    "description": "Add log"
+  }
+}

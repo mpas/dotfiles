@@ -45,6 +45,7 @@ wk.add({
 })
 
 wk.add({ "<leader>ga", "<cmd>GhActionsCR<cr>", desc = "Open Github Actions", mode = "n" })
+wk.add({ "<leader>at", functions.toggleCopilot, desc = "Toggle Copilot", mode = "n" })
 
 wk.add({ "<leader>n", group = "notes" })
 wk.add({ "<leader>nb", "<cmd>ObsidianBacklinks<cr>", desc = "View Backlinks", mode = "n" })

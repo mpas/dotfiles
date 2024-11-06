@@ -67,4 +67,17 @@ function M.writefile(filename, content)
   file:close()
 end
 
+function M.toggleCopilot()
+  local copilotClient = require("copilot.client")
+  local copilotCommand = require("copilot.command")
+
+  if copilotClient.is_disabled() then
+    vim.notify("Copilot is disabled, enabling it...", vim.log.levels.INFO)
+    copilotCommand.enable()
+  else
+    vim.notify("Copilot is enabled, disabling it...", vim.log.levels.INFO)
+    copilotCommand.disable()
+  end
+end
+
 return M
