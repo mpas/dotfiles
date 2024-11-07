@@ -80,4 +80,19 @@ function M.toggleCopilot()
   end
 end
 
+-- Function to run vimgrep and populate the Quickfix List
+function M.live_grep_to_quickfix(pattern, directory)
+  -- Ensure that the directory path is expanded (in case of ~ for home directory)
+  local expanded_dir = vim.fn.expand(directory)
+
+  -- Construct the vimgrep command
+  local cmd = string.format("vimgrep /%s/ %s/**/*.md", pattern, expanded_dir)
+
+  -- Execute the vimgrep command
+  vim.cmd(cmd)
+
+  -- Open the quickfix list to show the results
+  vim.cmd("copen")
+end
+
 return M

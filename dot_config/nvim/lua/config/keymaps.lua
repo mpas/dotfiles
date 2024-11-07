@@ -1,10 +1,10 @@
-local functions = require("util.functions")
-
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 local vk = vim.keymap
 local wk = require("which-key")
+
+local custom_functions = require("util.custom_functions")
 
 -- ================================================================================
 -- Remove default keymaps (https://www.lazyvim.org/keymaps)
@@ -17,7 +17,7 @@ vim.keymap.del("n", "<leader>qq")
 
 -- Keymap to delete the current file
 vim.keymap.set("n", "<leader>fD", function()
-  functions.delete_current_file()
+  custom_functions.delete_current_file()
 end, { desc = "[P]Delete current file" })
 
 -- ================================================================================
@@ -45,7 +45,9 @@ wk.add({
 })
 
 wk.add({ "<leader>ga", "<cmd>GhActionsCR<cr>", desc = "Open Github Actions", mode = "n" })
-wk.add({ "<leader>at", functions.toggleCopilot, desc = "Toggle Copilot", mode = "n" })
+
+wk.add({ "<leader>T", group = "toggle" })
+wk.add({ "<leader>Tc", custom_functions.toggleCopilot, desc = "Toggle Copilot", mode = "n" })
 
 wk.add({ "<leader>n", group = "notes" })
 wk.add({ "<leader>nb", "<cmd>ObsidianBacklinks<cr>", desc = "View Backlinks", mode = "n" })
@@ -57,7 +59,14 @@ wk.add({ "<leader>no", "<cmd>ObsidianOpen<cr>", desc = "Open Note in Obsidian", 
 wk.add({ "<leader>np", "<cmd>ObsidianPasteImg<cr>", desc = "Paste Image", mode = "n" })
 wk.add({ "<leader>nr", "<cmd>ObsidianRename<cr>", desc = "Rename/Move Note", mode = "n" })
 wk.add({ "<leader>ns", "<cmd>ObsidianSearch<cr>", desc = "Search Notes", mode = "n" })
-wk.add({ "<leader>nt", "<cmd>ObsidianQuickSwitch tasks<cr>", desc = "Open tasks", mode = "n" })
+wk.add({ "<leader>nt", group = "tasks" })
+wk.add({ "<leader>nto", "<cmd>ObsidianQuickSwitch tasks<cr>", desc = "Open tasks", mode = "n" })
+wk.add({
+  "<leader>nts",
+  "<cmd>lua require('telescope.builtin').grep_string({search_dirs = {'/Users/mpas/Dropbox/notes'}, word_match = '-w', use_regex=true, search = '- \\\\[ \\\\].*#todo'})<cr>",
+  desc = "Unchecked tasks",
+  mode = "n",
+})
 
 wk.add({ "<leader>kk", '<cmd>lua require("kubectl").toggle()<cr>', desc = "Kubectl", mode = "n" })
 

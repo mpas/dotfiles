@@ -4,9 +4,14 @@
     "body": ["- [ ] ${1:text} #todo"],
     "description": "Add todo"
   },
-  "log": {
-    "prefix": "log",
+  "log1": {
+    "prefix": "log1",
     "body": ["${CURRENT_HOUR}:${CURRENT_MINUTE} ${1:text}"],
-    "description": "Add log"
+    "description": "Add single log entry"
+  },
+  "log2": {
+    "prefix": "log2",
+    "body": ["${CURRENT_HOUR}:${CURRENT_MINUTE} - ${1:text}"],
+    "description": "Add double log entry"
   }
 }
