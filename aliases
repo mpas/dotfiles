@@ -55,10 +55,10 @@ alias lg="lazygit"
 
 # Util
 alias reset-terminal="stty sane"
-alias resetAudio='sudo killall coreaudiod'
+alias reset-audio="sudo killall coreaudiod"
 
 # Go
-alias go-reshim='asdf reshim golang && export GOV=$(asdf current golang | sed  '\''s/ *(set by .*)//g'\'') && export GOROOT="$ASDFINSTALLS/golang/$GOV/go/"'
+alias go-reshim='asdf reshim golang && export GOV=$(asdf current golang | sed  '\''s/ *(set by .*)//g'\'') && export GOROOT=""'
 
 # Terraform
 alias tf="terraform"
