@@ -1,0 +1,29 @@
+matches:
+  - trigger: "-m"
+    replace: "- Marco"
+  - trigger: "-grme"
+    replace: |
+      Kind regards
+      - Marco Pas
+  - trigger: "-grmn"
+    replace: |
+      Met vriendelijke groet
+      - Marco Pas
+  - trigger: gpas
+    replace: marco.pasopas@gmail.com
+  - trigger: ppas
+    replace: marco.pas@philips.com
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%a %d-%b-%Y"
+  - trigger: ":tstamp"
+    replace: "{{mytstamp}}"
+    vars:
+      - name: mytstamp
+        type: date
+        params:
+          format: "%Y-%m-%d %H:%M"

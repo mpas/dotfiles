@@ -1,0 +1,37 @@
+# Ignore macOS clutter
+**/.DS_Store
+**/._*
+**/.Trash
+**/.fseventsd
+**/.Spotlight-V100
+**/.AppleDouble
+**/Icon?
+
+# Ignore temp/editor junk
+**/*~
+**/*.swp
+**/*.swo
+**/*.tmp
+**/*.bak
+**/*.orig
+
+# Ignore anything in ~/Library you don’t explicitly manage
+Library/**
+
+# Ignore anything in ~/Downloads, ~/Movies, etc.
+Downloads/**
+Movies/**
+Music/**
+Pictures/**
+Public/**
+Sites/**
+
+# Ignore caches and app support
+Library/Caches/**
+Library/Application Support/**
+
+# Ignore TPM-managed tmux plugins
+.config/tmux/plugins/**
+
+# Ignore all logs
+**/*.log

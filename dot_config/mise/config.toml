@@ -1,0 +1,6 @@
+[tools]
+chezmoi = "latest"
+adr-tools = "latest"
+terraform = "latest"
+terragrunt = "latest"
+hurl = "latest"

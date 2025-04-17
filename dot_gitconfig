@@ -1,0 +1,37 @@
+[alias]
+  a = add
+  co = checkout
+  # list branches sorted by last modified
+  b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+  br = branch
+  la = "!git config -l | grep alias | cut -c 7-"
+[user]
+	email = marco.pasopas@gmail.com
+	name = Marco Pas
+    signingkey = 6FF4DE4E9B8431D6072ED6CDC886FFD68F9AF3F4
+[color]
+    ui = true
+[commit]
+	gpgsign = true
+[core]
+	excludesfile = /Users/mpas/.gitignore_global
+	ignorecase = true
+[credential]
+	helper = osxkeychain
+[github]
+	user = mpas
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[hub]
+	protocol = ssh
+[gpg]
+	program = /opt/homebrew/bin/gpg
+[pull]
+    rebase = true
+[init]
+    defaultBranch = main
+[tag]
+	gpgSign = true
