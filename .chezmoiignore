@@ -35,3 +35,5 @@ Library/Application Support/**
 
 # Ignore all logs
 **/*.log
+
+**/lazy-lock.json
