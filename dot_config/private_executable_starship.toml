@@ -61,7 +61,7 @@ symbol = '🌱 '
 # truncation_symbol = ''
 
 [kubernetes]
-disabled = false
+disabled = true
 # detect_files = ['k8s']
 format = 'on [⛵ ($user on )($cluster in )$context \($namespace\)](dimmed green) '
 contexts = [
