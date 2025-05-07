@@ -233,6 +233,8 @@ for f in $HOME/shell/functions/*; do source $f; done
 ################################################################################
 # CLI Tools 
 ################################################################################
+export PATH=$PATH:$HOME/.docker/bin
+
 # kubectl krew
 PATH="${PATH}:${HOME}/.krew/bin"
 
