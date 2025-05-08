@@ -235,6 +235,10 @@ run = "move-node-to-workspace 3"
 if.app-id = "com.microsoft.teams2"
 run = "move-node-to-workspace 4"
 
+[[on-window-detected]]
+if.app-id = "com.tinyspeck.slackmacgap"
+run = "move-node-to-workspace 4"
+
 ## 9
 [[on-window-detected]]
 if.app-id = "md.obsidian"
@@ -246,7 +250,7 @@ if.app-id = 'com.apple.finder'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-id = 'ccom.cocoatech.PathFinder'
+if.app-id = 'com.cocoatech.PathFinder'
 run = 'layout floating'
 
 [[on-window-detected]]
