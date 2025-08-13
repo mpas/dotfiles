@@ -4,6 +4,8 @@ adr-tools = "latest"
 terraform = "latest"
 terragrunt = "latest"
 hurl = "latest"
+java = "openjdk-21"
+asciidoctorj = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
