@@ -1,0 +1,8 @@
+DefaultBrowser = "FIREFOX"
+CustomBrowserPath = "/Applications/Zen.app/Contents/MacOS/zen"
+CustomSSOBrowserPath = ""
+Ordering = ""
+ExportCredentialSuffix = ""
+
+[Keyring]
+  Backend = "keychain"
