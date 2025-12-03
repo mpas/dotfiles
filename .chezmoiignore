@@ -28,9 +28,9 @@ Sites/**
 
 # Ignore caches and app support
 # Library/Caches/**
-# Library/Application\ Support/**
-# !Library/Application\ Support/presenterm
-# !Library/Application\ Support/presenterm/**
+# Library/Application Support/**
+# !Library/Application Support/presenterm
+# !Library/Application Support/presenterm/**
 
 # Ignore TPM-managed tmux plugins
 .config/tmux/plugins/**
