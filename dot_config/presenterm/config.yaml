@@ -12,7 +12,7 @@ options:
   strict_front_matter_parsing: false
 
   # whether slides are automatically terminated when a slide title is found.
-  implicit_slide_ends: true
+  implicit_slide_ends: false
 
   # whether to treat a thematic break as a slide end.
   end_slide_shorthand: true
