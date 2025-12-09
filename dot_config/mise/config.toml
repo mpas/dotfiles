@@ -8,6 +8,14 @@ cf = "latest"
 uv = "latest"
 python = "3.13"
 just = "latest"
+node = "22"
+"npm:@mermaid-js/mermaid-cli" = "latest"
+tlrc = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
+
+[tools."github:terrastruct/d2"]
+version = "latest"
+bin_path = "d2-v{version}/bin"
+filter_bins = "d2"
