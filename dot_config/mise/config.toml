@@ -11,6 +11,11 @@ just = "latest"
 node = "22"
 "npm:@mermaid-js/mermaid-cli" = "latest"
 tlrc = "latest"
+ripgrep = "latest"
+fd = "latest"
+gopass = "latest"
+age = "latest"
+fzf = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
