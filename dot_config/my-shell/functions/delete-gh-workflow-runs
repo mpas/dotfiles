@@ -1,0 +1,72 @@
+gh_delete_workflow_runs() {
+    local repository="$1"
+    local workflow_file="$2"
+
+    # Validate parameters
+    if [ $# -ne 2 ]; then
+        echo "Usage: gh_delete_workflow_runs <repository> <workflow_file>"
+        echo "Example: gh_delete_workflow_runs owner/repo-name build.yml"
+        return 1
+    fi
+
+    set -euo pipefail
+
+    # Ensure gh CLI is authenticated
+    if ! gh auth status &>/dev/null; then
+        echo "Not logged in. Logging in now..."
+        gh auth login
+    fi
+
+    echo "🎯 Target repository: $repository"
+    echo "📄 Target workflow: $workflow_file"
+
+    # Get workflow ID
+    local workflow_id
+    workflow_id=$(gh api "repos/$repository/actions/workflows" --paginate | jq -r --arg workflow_path ".github/workflows/$workflow_file" '.workflows[] | select(.path == $workflow_path) | .id')
+
+    # Check if workflow was found
+    if [ -z "$workflow_id" ]; then
+        echo "❌ No workflow found with filename: $workflow_file"
+        echo "💡 Available workflows:"
+        gh api "repos/$repository/actions/workflows" --paginate | jq -r '.workflows[] | "  - \(.name) (\(.path))"'
+        return 1
+    fi
+
+    echo "📝 Found workflow ID: $workflow_id"
+    echo "🔍 Fetching runs for workflow..."
+
+    # Get run IDs using array assignment (no mapfile)
+    local run_ids
+    run_ids=($(gh api "repos/$repository/actions/workflows/$workflow_id/runs" --paginate | jq -r '.workflow_runs[].id'))
+
+    # Check if any runs were found
+    if [ ${#run_ids[@]} -eq 0 ]; then
+        echo "✅ No runs found for this workflow"
+        return 0
+    fi
+
+    echo "📊 Found ${#run_ids[@]} runs to delete"
+    echo "⚠️  This will permanently delete all workflow runs. Continue? (y/N)"
+    read -r confirmation
+
+    if [[ ! "$confirmation" =~ ^[Yy]$ ]]; then
+        echo "❌ Operation cancelled"
+        return 0
+    fi
+
+    local deleted_count=0
+    for run_id in "${run_ids[@]}"
+    do
+        echo "🗑️  Deleting Run ID $run_id"
+        if gh api "repos/$repository/actions/runs/$run_id" -X DELETE --silent; then
+            ((deleted_count++))
+        else
+            echo "⚠️  Failed to delete run $run_id"
+        fi
+
+        # Add small delay to avoid rate limiting
+        sleep 0.5
+    done
+
+    echo "✅ Successfully deleted $deleted_count out of ${#run_ids[@]} runs for workflow $workflow_file"
+}
