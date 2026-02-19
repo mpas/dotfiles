@@ -16,6 +16,13 @@ fd = "latest"
 gopass = "latest"
 age = "latest"
 fzf = "latest"
+ollama = "latest"
+terraform = "latest"
+terraform-docs = "latest"
+yq = "latest"
+jq = "latest"
+httpie-go = "latest"
+jujutsu = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
