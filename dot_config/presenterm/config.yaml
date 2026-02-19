@@ -1,18 +1,8 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mfontanini/presenterm/master/config-file-schema.json
 
-defaults:
-  # the theme to use by default in every presentation unless overridden.
-  theme: dark
-
 options:
   # this option tells presenterm you don't care about extra parameters in
   # presentation's front matter. This can be useful if you're trying to load a
   # presentation made for another tool
   strict_front_matter_parsing: false
-
-  # whether slides are automatically terminated when a slide title is found.
-  implicit_slide_ends: false
-
-  # whether to treat a thematic break as a slide end.
-  end_slide_shorthand: true
