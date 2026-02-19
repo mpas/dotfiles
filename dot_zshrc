@@ -192,11 +192,6 @@ eval "$(starship init zsh)"
 eval "$(atuin init zsh)"
 
 ################################################################################
-# Direnv
-################################################################################
-eval "$(direnv hook zsh)"
-
-################################################################################
 # Tmux
 ################################################################################
 # Auto start tmux when launching a new terminal
@@ -208,30 +203,18 @@ eval "$(direnv hook zsh)"
 eval "$(zoxide init zsh)"
 
 ################################################################################
-# ZKNotes
-################################################################################
-# Set path for zk notebook discovery
-export ZK_NOTEBOOK_DIR="$HOME/Dropbox/notes/"
-
-################################################################################
 # Path
 ################################################################################
 
 ################################################################################
 # Dotfiles
 ################################################################################
-# Source custom aliases
-source $HOME/aliases
-
-# Source custom functions and add path to custom scripts
-for f in $HOME/shell/functions/*; do source $f; done
-# export PATH="$PATH:$HOME/shell/scripts"
-
-# Set JAVA_HOME for asdf java plugin
-# source ~/.asdf/plugins/java/set-java-home.zsh
+# Source custom aliases & functions
+source $HOME/.config/my-shell/aliases/aliases
+for f in $HOME/.config/my-shell/functions/*; do source $f; done
 
 ################################################################################
-# CLI Tools 
+# CLI Tools
 ################################################################################
 export PATH=$PATH:$HOME/.docker/bin
 
@@ -244,7 +227,7 @@ for al in `git --list-cmds=alias`; do
   alias g$al="git $al"
 done
 
-# export KUBECONFIG="~/.kube/config:$(find ~/.kube/configs/* -type f -maxdepth 1 | tr '\n' ':')" 
+# export KUBECONFIG="~/.kube/config:$(find ~/.kube/configs/* -type f -maxdepth 1 | tr '\n' ':')"
 
 ################################################################################
 # Terragrunt
@@ -259,3 +242,4 @@ eval "$(/opt/homebrew/bin/mise activate zsh)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
