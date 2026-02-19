@@ -96,7 +96,7 @@ alias brew-backup='cd ~/.brew/backup && rm -f Brewfile && brew bundle dump && cd
 alias brew-backup-restore='cd ~/.brew/backup/brew/ && brew bundle && cd -'
 
 # System update
-alias system-update='brew-update && tldr --update && zimfw upgrade'
+# alias system-update='brew-update && brew-backup && tldr --update && zimfw upgrade'
 
 # Assume
 alias assume="source assume"
