@@ -1,0 +1,11 @@
+[[actions]]
+name = "move commit down"
+lua = '''
+jj("rebase", "-r", context.change_id(), "--insert-before", context.change_id() .. "-")
+jj(revisions.refresh())
+'''
+[[bindings]]
+action = "move commit down"
+key = "alt+down"
+scope = "revisions"
+desc = "move commit down"
