@@ -1,0 +1,41 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[user]
+name = "Marco Pas"
+email = "marco.pasopas@gmail.com"
+
+[ui]
+editor           = "nvim"               # Sets Neovim as your default text editor for writing commit messages
+default-command  = "log"                # Running just `jj` will default to `jj log` instead of showing help
+
+[aliases]
+# --- Squashing & Combining ---
+sq               = ["squash", "-i"]                    # Interactive squash (select exactly which files to combine
+
+# --- Commit & Change Management ---
+cc               = ["commit", "-m"]                    # Quickly commit changes with a message
+cd               = ["describe", "-m"]                  # Updates the message of the current working change
+cn               = ["new", "-m"]                       # Creates a new change on top of the current one with a message
+
+# --- Diffing & Git Integration ---
+difft            = ["diff", "--tool", "difft"]         # Runs structural diffs using the Difftastic tool
+init             = ["git", "init", "--colocate"]       # Initializes a git repo where the .git and .jj folders live together
+
+# --- Logging (Viewing History) ---
+l                = ["log"]                             # Standard view of your revision history tree
+lr               = [ "log", "-r", "@::" ]              # Logs history starting from the current working copy (@) and backwards
+
+# --- Bookmarks (Jujutsu's name for branches) ---
+bc               = ['util', 'exec', '--', 'sh', '-c', '''
+  jj b create $1 -r ${2:-@}
+  ''', '']
+bf               = ["bookmark", "forget"]
+mine             = ["bookmark", "list", "-r", "mine()"]# Lists all bookmarks/branches that you have authored
+tug              = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "@"] # Moves the nearest bookmark up to your current change
+
+# --- Repository Housekeeping ---
+abandon-empty    = ["abandon", "empty()"]              # Abandons all changes that have zero file diffs
+
+[revset-aliases]
+# A custom query to find the nearest ancestor branch/bookmark relative to a specific revision
+"closest_bookmark(to)" = "heads(::to & bookmarks())"
