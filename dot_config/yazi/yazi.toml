@@ -1,0 +1,3 @@
+[mgr]
+show_hidden = true # show hidden by default
+show_symlink = true # show the path that the symlink points to after the filename

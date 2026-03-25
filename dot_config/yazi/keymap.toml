@@ -1,0 +1,17 @@
+# Dropping to the shell
+[[mgr.prepend_keymap]]
+on   = "!"
+for  = "unix"
+run  = 'shell "$SHELL" --block'
+desc = "Open $SHELL here"
+
+# Preview files with the system Quick Look
+[[mgr.prepend_keymap]]
+on = "<C-p>"
+run = "shell -- qlmanage -p %s"
+
+# Close input by once Esc press
+[[input.prepend_keymap]]
+on   = "<Esc>"
+run  = "close"
+desc = "Cancel input"
