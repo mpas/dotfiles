@@ -162,51 +162,6 @@ export VISUAL=$EDITOR
 export TERM=screen-256color
 
 ################################################################################
-# Handy keybindings
-################################################################################
-bindkey "^A" beginning-of-line
-bindkey "^E" end-of-line
-bindkey "^K" kill-line
-bindkey "^R" history-incremental-search-backward
-bindkey "^P" history-search-backward
-bindkey "^Y" accept-and-hold
-bindkey "^N" insert-last-word
-bindkey "^Q" push-line-or-edit
-bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
-
-################################################################################
-# Homebrew
-################################################################################
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH="/opt/homebrew/sbin:$PATH"
-
-################################################################################
-# Starship prompt
-# https://starship.rs/
-################################################################################
-eval "$(starship init zsh)"
-
-################################################################################
-# Atuin
-################################################################################
-eval "$(atuin init zsh)"
-
-################################################################################
-# Tmux
-################################################################################
-# Auto start tmux when launching a new terminal
-# [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit;}
-
-################################################################################
-# Zoxide
-################################################################################
-eval "$(zoxide init zsh)"
-
-################################################################################
-# Path
-################################################################################
-
-################################################################################
 # Dotfiles
 ################################################################################
 # Source custom aliases & functions
@@ -216,25 +171,36 @@ for f in $HOME/.config/my-shell/functions/*; do source $f; done
 ################################################################################
 # CLI Tools
 ################################################################################
+# Homebrew
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+
+# Docker
 export PATH=$PATH:$HOME/.docker/bin
 
-# kubectl krew
-PATH="${PATH}:${HOME}/.krew/bin"
+# Tmux
+# Auto start tmux when launching a new terminal
+# [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit;}
 
-alias awsume=". awsume"
+# Zoxide
+eval "$(zoxide init zsh)"
 
-for al in `git --list-cmds=alias`; do
-  alias g$al="git $al"
-done
+# Starship prompt https://starship.rs/
+eval "$(starship init zsh)"
 
-# export KUBECONFIG="~/.kube/config:$(find ~/.kube/configs/* -type f -maxdepth 1 | tr '\n' ':')"
+# Atuin
+eval "$(atuin init zsh)"
+
+# JJ
+source <(COMPLETE=zsh jj)
+
+# Mise
+eval "$(/opt/homebrew/bin/mise activate zsh)"
 
 ################################################################################
 # Terragrunt
 ################################################################################
 # autoload -Uz compinit
 # compinit
-autoload -U +X bashcompinit && bashcompinit
+# autoload -U +X bashcompinit && bashcompinit
 # complete -o nospace -C /opt/homebrew/bin/terragrunt terragrunt
-
-eval "$(/opt/homebrew/bin/mise activate zsh)"
