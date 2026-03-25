@@ -4,21 +4,35 @@ alias ...="cd ../.."     # Up two levels
 alias ....="cd ../../.." # Up three levels
 
 # General
-alias cp='cp -iv'
-alias mv='mv -iv'
-alias mkdir='mkdir -pv'
-alias ls="ls -Al"
-alias h=history
-alias e="$EDITOR"
-alias v="$VISUAL"
-alias eb='e ~/.zshrc'
-alias rb='source ~/.zshrc'
-alias f='open -a Finder ./'
 alias c='clear'
+alias cat="bat -p"
 alias cm='chezmoi'
+alias cp='cp -iv'
+alias d="docker"
+alias dc="docker-compose"
+alias e="$EDITOR"
+alias eb='e ~/.zshrc'
+alias f='open -a Finder ./'
+alias h=history
+alias j='jj'
+alias k=kubectl
+alias ld=lazydocker
+alias lg=lazygit
+alias lj=jjui
+alias ls="ls -Al"
+alias ls='eza'
+alias mkdir='mkdir -pv'
+alias mv='mv -iv'
+alias n='nnn'
+alias rb='source ~/.zshrc'
+alias tf=terraform
+alias tm='[ -z "$TMUX" ] && { tmux attach || exec tmux new-session && exit;}'
+alias v="$VISUAL"
+alias v="nvim"
 alias vi=nvim
 alias vim=nvim
-alias tm='[ -z "$TMUX" ] && { tmux attach || exec tmux new-session && exit;}'
+alias y="yazi"
+alias .j='just --justfile ~/.config/just/justfile --working-directory .'
 
 # Git
 alias ga="git add"
