@@ -5,10 +5,12 @@ name = "Marco Pas"
 email = "marco.pasopas@gmail.com"
 
 [ui]
-editor           = "nvim"               # Sets Neovim as your default text editor for writing commit messages
-default-command  = "log"                # Running just `jj` will default to `jj log` instead of showing help
+editor           = "nvim --noplugin"                   # Sets Neovim as your default text editor for writing commit messages
+default-command  = "log"                               # Running just `jj` will default to `jj log` instead of showing help
 
 [aliases]
+e                = ["edit"]                            # Edit a change
+
 # --- Squashing & Combining ---
 sq               = ["squash", "-i"]                    # Interactive squash (select exactly which files to combine
 
@@ -30,11 +32,12 @@ bc               = ['util', 'exec', '--', 'sh', '-c', '''
   jj b create $1 -r ${2:-@}
   ''', '']
 bf               = ["bookmark", "forget"]
-mine             = ["bookmark", "list", "-r", "mine()"]# Lists all bookmarks/branches that you have authored
-tug              = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "@"] # Moves the nearest bookmark up to your current change
+mine             = ["bookmark", "list", "-r", "mine()"] # Lists all bookmarks/branches that you have authored
+tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]   # Moves bookmark to the current revision
+tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"] # Moves bookmark to the parent revision
 
 # --- Repository Housekeeping ---
-abandon-empty    = ["abandon", "empty()"]              # Abandons all changes that have zero file diffs
+abandon-empty    = ["abandon", "empty()"]               # Abandons all changes that have zero file diffs
 
 [revset-aliases]
 # A custom query to find the nearest ancestor branch/bookmark relative to a specific revision
