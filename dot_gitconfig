@@ -14,9 +14,11 @@
     ui = true
 [commit]
 	gpgsign = true
+	template = /Users/mpas/.stCommitMsg
 [core]
 	excludesfile = /Users/mpas/.gitignore_global
 	ignorecase = true
+	editor = nvim --noplugin
 [credential]
 	helper = osxkeychain
 [github]
