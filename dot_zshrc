@@ -159,7 +159,8 @@ export GPG_TTY=$(tty)
 ################################################################################
 export EDITOR=nvim
 export VISUAL=$EDITOR
-export TERM=screen-256color
+# export TERM=screen-256color
+export TERM=xterm-256color
 
 ################################################################################
 # Dotfiles
@@ -191,11 +192,11 @@ eval "$(starship init zsh)"
 # Atuin
 eval "$(atuin init zsh)"
 
-# JJ
-source <(COMPLETE=zsh jj)
-
 # Mise
 eval "$(/opt/homebrew/bin/mise activate zsh)"
+
+# JJ
+source <(COMPLETE=zsh jj)
 
 ################################################################################
 # Terragrunt
@@ -204,3 +205,4 @@ eval "$(/opt/homebrew/bin/mise activate zsh)"
 # compinit
 # autoload -U +X bashcompinit && bashcompinit
 # complete -o nospace -C /opt/homebrew/bin/terragrunt terragrunt
+export GITHUB_TOKEN="$(gh auth token 2>/dev/null)"
