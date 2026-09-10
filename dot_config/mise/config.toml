@@ -1,44 +1,109 @@
 [tools]
+"aqua:aws/session-manager-plugin" = "latest"
+"aqua:go-to-k/cls3" = "latest"
+"aqua:im2nguyen/rover" = "latest"
+"github:AlexNabokikh/tfsort" = "latest"
+"github:micro-editor/micro" = "latest"
+"github:nushell/nushell" = "latest"
+"github:rest-sh/restish" = "latest"
+"github:sethvargo/ratchet" = "latest"
+"github:so-fancy/diff-so-fancy" = "latest"
 "github:sxyazi/yazi" = "latest"
+"github:tealdeer-rs/tealdeer" = { version = "latest", bin = "tldr" }
+"github:tw93/Mole" = "latest"
+"npm:@github/copilot" = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
+"pipx:posting" = "latest"
 adr-tools = "latest"
 age = "latest"
-aws = { version = "latest", symlink_bins = "true" }
+aws-cli = { version = "latest", symlink_bins = true }
+aws-sam-cli = { version = "latest", symlink_bins = true }
 bat = "latest"
+bats = "latest"
+bottom = "latest"
 cf = "latest"
 chezmoi = "latest"
-eza = "latest"
+clojure = "1.12"
+croc = "latest"
+difftastic = "latest"
+duf = "latest"
 fd = "latest"
 fzf = "latest"
+gdu = "latest"
+git-lfs = "latest"
+github-cli = "latest"
 gopass = "latest"
-granted = "latest"
+gron = "latest"
+gum = "latest"
 httpie-go = "latest"
+hugo = "latest"
 hurl = "latest"
+java = "openjdk-26"
 jjui = "latest"
 jq = "latest"
 jujutsu = "latest"
 just = "latest"
-node = "22"
-ollama = "latest"
+lazydocker = "latest"
+lazygit = "latest"
+marp-cli = "latest"
+node = "24"
+opencode = "latest"
 pre-commit = "latest"
-python = "3.13"
+python = "latest"
+rclone = "latest"
 ripgrep = "latest"
+ruff = "latest"
 rust = "1.94.0"
+sops = "latest"
 terraform = "latest"
 terraform-docs = "latest"
-tlrc = "latest"
 uv = "latest"
 yq = "latest"
-difftastic = "latest"
-"github:sethvargo/ratchet" = "latest"
-github-cli = "latest"
-terragrunt = "latest"
+yt-dlp = { version = "latest", rename_exe = "yt-dlp" }
+zellij = "latest"
+jless = "latest"
+hyperfine = "latest"
+"github:tsenart/vegeta" = "latest"
+"github:sachaos/viddy" = "latest"
+fnox = "latest"
+"github:gruntwork-io/terragrunt" = "latest"
+"npm:@fission-ai/openspec" = "latest"
+"pipx:detect-secrets" = "latest"
+dua = "latest"
+rtk = "latest"
+"github:terrastruct/d2" = { version = "latest", bin_path = "d2-v{{ version }}/bin", filter_bins = "d2" }
+yarn = "latest"
+"cargo:tokensave" = "latest"
+"github:pete911/certinfo" = "latest"
+superfile = "latest"
+
+[env]
+RTK_TELEMETRY_DISABLED = "1"
+GRANTED_BROWSER_PROFILE = "Default"
+
+[tasks]
+ai-setup = { description = "Setup AI and install skills", run = [
+  'npx skills add JuliusBrussee/caveman -g',
+  'npx skills add https://github.com/anthropics/skills --skill docx -g',
+  'npx skills add https://github.com/anthropics/skills --skill pptx -g',
+  'npx skills add https://github.com/github/awesome-copilot --skill create-agentsmd -g',
+  'npx skills add https://github.com/github/awesome-copilot --skill create-readme -g',
+  'npx skills add https://github.com/github/awesome-copilot --skill editor-config -g',
+  'npx skills add https://github.com/github/awesome-copilot --skill secret-scanning -g',
+  'npx skills add https://github.com/mattpocock/skills --skill code-review -g',
+  'npx skills add https://github.com/mattpocock/skills --skill codebase-design -g',
+  'npx skills add https://github.com/mattpocock/skills --skill grill-me -g',
+  'npx skills add https://github.com/mattpocock/skills --skill grill-with-docs -g',
+  'npx skills add https://github.com/mattpocock/skills --skill research -g',
+  'npx skills add https://github.com/mattpocock/skills --skill tdd -g',
+  'npx skills add https://github.com/mattpocock/skills --skill teach -g',
+  'npx skills add https://github.com/hashicorp/agent-skills --skill terraform-style-guide -g',
+  'npx skills add vercel-labs/find-skills -g',
+] }
+
+ai-update = { description = "Update AI skills", run = ['npx skills update'] }
+
 
 [settings]
 idiomatic_version_file_enable_tools = []
-
-[tools."github:terrastruct/d2"]
-version = "latest"
-bin_path = "d2-v{version}/bin"
-filter_bins = "d2"
-
+github = { use_git_credentials = true }
