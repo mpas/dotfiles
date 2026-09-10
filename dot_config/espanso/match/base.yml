@@ -1,14 +1,12 @@
 matches:
-  - trigger: "-m"
-    replace: "- Marco"
   - trigger: "-grme"
     replace: |
-      Kind regards
-      - Marco Pas
+      Kind regards,
+      Marco Pas
   - trigger: "-grmn"
     replace: |
-      Met vriendelijke groet
-      - Marco Pas
+      Met vriendelijke groet,
+      Marco Pas
   - trigger: gpas
     replace: marco.pasopas@gmail.com
   - trigger: ppas
