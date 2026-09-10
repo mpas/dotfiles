@@ -11,6 +11,7 @@ alias cp='cp -iv'
 alias d="docker"
 alias dc="docker-compose"
 alias e="$EDITOR"
+alias m="micro"
 alias eb='e ~/.zshrc'
 alias f='open -a Finder ./'
 alias h=history
@@ -111,4 +112,15 @@ alias brew-backup-restore='cd ~/.brew/backup/brew/ && brew bundle && cd -'
 # alias system-update='brew-update && brew-backup && tldr --update && zimfw upgrade'
 
 # Assume
-alias assume="source assume"
+alias assume="source $(brew --prefix)/bin/assume"
+alias assumeb='source $(brew --prefix)/bin/assume -c --browser-profile "Default"'
+
+# Copilot
+alias cpc="copilot --resume"
+
+# Opencode
+alias occ="opencode -c"
+alias oc="opencode"
+
+# Yazi - File Manager
+alias y="yazi"
