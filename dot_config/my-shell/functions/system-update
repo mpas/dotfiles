@@ -1,7 +1,8 @@
 system-update() {
   brew-update
   brew-backup
-  tldr --update
   zimfw upgrade
+  mise upgrade
+  tldr -u
 }
 
