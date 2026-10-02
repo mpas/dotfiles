@@ -23,7 +23,7 @@ quick-terminal-animation-duration = 0
 quick-terminal-position = center
 quick-terminal-size = 50%,50%
 
-keybind = super+apostrophe=toggle_quick_terminal
+keybind = ctrl+/=toggle_quick_terminal
 
 # -----------------------------------------------------------------------------
 # Tab
