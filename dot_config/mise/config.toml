@@ -8,9 +8,7 @@
 "github:rest-sh/restish" = "latest"
 "github:sethvargo/ratchet" = "latest"
 "github:so-fancy/diff-so-fancy" = "latest"
-"github:sxyazi/yazi" = "latest"
 "github:tealdeer-rs/tealdeer" = { version = "latest", bin = "tldr" }
-"github:tw93/Mole" = "latest"
 "npm:@github/copilot" = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
 "pipx:posting" = "latest"
@@ -29,7 +27,6 @@ difftastic = "latest"
 duf = "latest"
 fd = "latest"
 fzf = "latest"
-gdu = "latest"
 git-lfs = "latest"
 github-cli = "latest"
 gopass = "latest"
@@ -69,13 +66,22 @@ fnox = "latest"
 "github:gruntwork-io/terragrunt" = "latest"
 "npm:@fission-ai/openspec" = "latest"
 "pipx:detect-secrets" = "latest"
-dua = "latest"
 rtk = "latest"
 "github:terrastruct/d2" = { version = "latest", bin_path = "d2-v{{ version }}/bin", filter_bins = "d2" }
 yarn = "latest"
 "cargo:tokensave" = "latest"
 "github:pete911/certinfo" = "latest"
-superfile = "latest"
+yazi = "latest"
+broot = { version = "latest", bin_path = '{{ arch(x64="x86_64", arm64="aarch64") }}-{{ os(macos="apple-darwin", linux="unknown-linux-gnu", windows="pc-windows-gnu") }}' }
+glow = "latest"
+duckdb = "latest"
+"github:ouch-org/ouch" = "latest"
+"github:ip7z/7zip" = "latest"
+cliamp = "latest"
+"github:openziti/zrok" = { version = "latest", rename_exe = "zrok" }
+onefetch = "latest"
+delta = "latest"
+"github:Byron/dua-cli" = "latest"
 
 [env]
 RTK_TELEMETRY_DISABLED = "1"
@@ -103,6 +109,9 @@ ai-setup = { description = "Setup AI and install skills", run = [
 
 ai-update = { description = "Update AI skills", run = ['npx skills update'] }
 
+[shell_alias]
+# spf = 'export XDG_CONFIG_HOME="$HOME/.config" && command spf --hotkey-file "$XDG_CONFIG_HOME/superfile/vimHotkeys.toml"'
+spf = 'export XDG_CONFIG_HOME="$HOME/.config" && command spf'
 
 [settings]
 idiomatic_version_file_enable_tools = []
