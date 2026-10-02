@@ -1,3 +1,27 @@
 [mgr]
-show_hidden = true # show hidden by default
-show_symlink = true # show the path that the symlink points to after the filename
+linemode = "size_and_mtime"
+
+# Markdown
+[[plugin.prepend_previewers]]
+url = "*.md"
+run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"'
+
+# JSON
+[[plugin.prepend_previewers]]
+url = "*.json"
+run = 'piper -- jq -C . "$1"'
+
+# Archives
+[[plugin.prepend_previewers]]
+url = "*.tar*"
+run = 'piper --format=url -- tar tf "$1"'
+
+# Directories
+[[plugin.prepend_previewers]]
+url = "*/"
+run = 'piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"'
+
+# Ouch
+[[plugin.prepend_previewers]]
+mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}"
+run = "ouch"
