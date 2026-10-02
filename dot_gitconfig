@@ -3,7 +3,7 @@
   co = checkout
   # list branches sorted by last modified
   b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
-  br = branch
+  br=  branch
   la = "!git config -l | grep alias | cut -c 7-"
   cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 -r git branch -d"
 [user]
@@ -18,9 +18,15 @@
 [core]
 	excludesfile = /Users/mpas/.gitignore_global
 	ignorecase = true
-	editor = nvim --noplugin
+  editor = nvim --noplugin
+  pager = delta
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    dark = true      # or light = true, or omit for auto-detection
 [github]
 	user = mpas
 [filter "lfs"]
@@ -38,9 +44,5 @@
     defaultBranch = main
 [tag]
 	gpgSign = true
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+[merge]
+  conflictStyle = zdiff3
